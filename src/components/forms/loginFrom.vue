@@ -1,6 +1,7 @@
 <template>
   <q-form
-    class="fixed-center col-xl-1 col-md-2 col-sm-3 col-xs-12"
+    class="fixed-center col-xl-1 col-md-3 col-xs-12"
+    ref="loginForm"
     @submit="login()"
   >
     <q-input
@@ -42,8 +43,14 @@ const rules = {
     config.regex_email.test(value) || 'Zadejte platný email',
 };
 
+const loginForm = ref();
 async function login() {
-  console.log('funguju');
+  // Validace formuláře
+  if (!loginForm.value.validate()) {
+    // TODO: Notify s chybou
+    return;
+  }
+  await userStore.login(email.value, password.value);
   return;
 }
 </script>
