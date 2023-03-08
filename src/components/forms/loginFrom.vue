@@ -1,15 +1,12 @@
 <template>
-  <q-form
-    class="fixed-center col-xl-1 col-md-3 col-xs-12"
-    ref="loginForm"
-    @submit="login()"
-  >
+  <q-form class="" ref="loginForm" @submit="login()">
     <q-input
       v-model="email"
       label="email"
       type="email"
       lazy-rules
       :rules="[rules.required, rules.isEmail]"
+      siz
     />
     <q-input
       v-model="password"
@@ -30,9 +27,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import config from 'src/config';
+import useNotify from 'src/composables/useNotify';
 import { useUserStore } from 'src/stores/user-store';
 
 const userStore = useUserStore();
+const notify = useNotify();
 
 const email = ref('');
 const password = ref('');
@@ -47,8 +46,7 @@ const loginForm = ref();
 async function login() {
   // Validace formuláře
   if (!loginForm.value.validate()) {
-    // TODO: Notify s chybou
-    return;
+    notify.fail('Something is wrong');
   }
   await userStore.login(email.value, password.value);
   return;

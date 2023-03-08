@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import axios from 'axios';
 import { ref, computed } from 'vue';
 import config from 'src/config';
+import { Notify } from 'quasar';
 
 export const useUserStore = defineStore('userStore', () => {
   const token = ref(localStorage.getItem('token'));
@@ -28,10 +29,18 @@ export const useUserStore = defineStore('userStore', () => {
 
       localStorage.setItem('token', token.value as string);
       isProcessing.value = false;
+      Notify.create({
+        type: 'positive',
+        message: 'Success!'
+      })
 
     } catch (response) {
       //TODO doladit errorové zprávy podle kódu
       isProcessing.value = false;
+      Notify.create({
+        type: 'negative',
+        message: 'something went wrong'
+      })
       //Přidat notify na error
     }
   }
