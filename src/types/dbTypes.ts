@@ -47,8 +47,19 @@ export type Post = {
   text: string | null
   time_of_creation: Date
   authorId: number
-  post_comments: Post_comment[]
 }
+
+export type Post_extended = (Post & {
+  author: User;
+  groups: Group[];
+  event: Event | null;
+  images: Image[];
+  likes: User[];
+  comments: Post_comment[];
+  survey_options: Survey_option[];
+  user_notification: User[];
+})
+
 
 /**
  * Model Post_comment

@@ -15,6 +15,7 @@ import NavBar from 'src/components/navBar/NavBar.vue';
 import LeftDrawer from 'src/components/LeftDrawer.vue';
 
 const leftDrawerOpen = ref(false);
+console.log(leftDrawerOpen.value);
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;

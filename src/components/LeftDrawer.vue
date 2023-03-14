@@ -1,5 +1,5 @@
 <template>
-  <q-drawer show-if-above bordered>
+  <q-drawer bordered>
     <q-list>
       <q-item-label header> Essential Links </q-item-label>
       <EssentialLink

@@ -8,7 +8,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         name: 'login',
-        component: () => import('pages/loginPage.vue')
+        component: () => import('src/pages/LoginPage.vue')
       }
     ]
   },
@@ -19,7 +19,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         name: 'home',
-        component: () => import('pages/IndexPage.vue')
+        component: () => import('src/pages/HomePage.vue')
       }
     ],
   },
