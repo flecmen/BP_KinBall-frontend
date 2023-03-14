@@ -3,5 +3,30 @@
 
 export default {
   failed: 'Action failed',
-  success: 'Action was successful'
+  success: 'Action was successful',
+  btn: {
+    log: {
+      in: 'Log in'
+    }
+  },
+  email: {
+    address: 'Email address'
+  },
+  password: 'Password',
+  forgot: {
+    your: {
+      password: 'Forgot your password?'
+    }
+  },
+  form: {
+    rules: {
+      required: 'Required',
+      isEmail: 'Enter a valid email',
+    }
+  },
+  notify: {
+    wrong: {
+      credentials: 'Wrong credentials'
+    }
+  }
 };
