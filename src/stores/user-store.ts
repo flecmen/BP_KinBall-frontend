@@ -3,6 +3,8 @@ import axios from 'axios';
 import { ref, computed } from 'vue';
 import config from 'src/config';
 import { Notify } from 'quasar';
+import { User } from 'src/types/dbTypes';
+import { i18n } from 'src/utils/i18n';
 
 export const useUserStore = defineStore('userStore', () => {
   const token = ref(localStorage.getItem('token'));
@@ -10,10 +12,10 @@ export const useUserStore = defineStore('userStore', () => {
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + token.value;
   }
 
-  //TODO: user datatype!!
-  const user = ref({})
+  const user = ref<User>({} as User)
   const afterLoginRoute = ref<string | null>(null);
   const isProcessing = ref<boolean>(false);
+  const error = ref<string>()
 
   const isAuthenticated = computed(() => token.value !== null)
 
@@ -29,20 +31,21 @@ export const useUserStore = defineStore('userStore', () => {
 
       localStorage.setItem('token', token.value as string);
       isProcessing.value = false;
-      Notify.create({
-        type: 'positive',
-        message: 'Success!'
-      })
-
     } catch (response) {
       //TODO doladit errorové zprávy podle kódu
       isProcessing.value = false;
+
       Notify.create({
         type: 'negative',
-        message: 'something went wrong'
+        message: i18n.t('notify.wrong.credentials')
       })
-      //Přidat notify na error
     }
+  }
+
+  function logout() {
+    token.value = null;
+    delete axios.defaults.headers.common['Authorization'];
+    localStorage.removeItem('token');
   }
 
   return {
@@ -50,6 +53,8 @@ export const useUserStore = defineStore('userStore', () => {
     afterLoginRoute,
     isProcessing,
     isAuthenticated,
+    error,
     login,
+    logout,
   }
 })

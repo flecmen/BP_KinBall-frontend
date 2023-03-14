@@ -2,22 +2,22 @@
   <q-form class="" ref="loginForm" @submit="login()">
     <q-input
       v-model="email"
-      label="email"
+      :label="$t('email.address')"
       type="email"
       lazy-rules
-      :rules="[rules.required, rules.isEmail]"
+      :rules="[formRules.required, formRules.isEmail]"
       siz
     />
     <q-input
       v-model="password"
-      label="heslo"
+      :label="$t('password')"
       type="password"
-      :rules="[rules.required]"
+      :rules="[formRules.required]"
     />
     <q-btn
       class="float-right"
       color="primary"
-      label="přihlásit"
+      :label="$t('btn.log.in')"
       type="submit"
       :loading="userStore.isProcessing"
     ></q-btn>
@@ -26,29 +26,34 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import config from 'src/config';
+import { useRouter } from 'vue-router';
+import formRules from 'src/helpers/formRules';
 import useNotify from 'src/composables/useNotify';
 import { useUserStore } from 'src/stores/user-store';
+import { useI18n } from 'vue-i18n';
 
 const userStore = useUserStore();
+const { t } = useI18n();
 const notify = useNotify();
+const router = useRouter();
 
 const email = ref('');
 const password = ref('');
-
-const rules = {
-  required: (value: string) => !!value || 'Required',
-  isEmail: (value: string) =>
-    config.regex_email.test(value) || 'Zadejte platný email',
-};
 
 const loginForm = ref();
 async function login() {
   // Validace formuláře
   if (!loginForm.value.validate()) {
-    notify.fail('Something is wrong');
+    notify.fail(t('failed'));
+    return;
   }
   await userStore.login(email.value, password.value);
+  if (!userStore.error) {
+    notify.success(t('success'));
+    router.push(userStore.afterLoginRoute ?? { name: 'home' });
+    userStore.afterLoginRoute = null;
+  }
+  userStore.error = '';
   return;
 }
 </script>

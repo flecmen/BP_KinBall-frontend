@@ -6,8 +6,8 @@ export default {
   success: 'Action was successful',
   btn: {
     log: {
-      in: 'Log in',
-      out: 'Log out'
+      in: 'Přihlásit se',
+      out: 'Odhlásit se'
     }
   },
   email: {
