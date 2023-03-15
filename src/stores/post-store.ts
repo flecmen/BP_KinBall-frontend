@@ -4,6 +4,8 @@ import axios from 'axios';
 import { ref } from 'vue';
 import config from 'src/config';
 import { Post } from 'src/types/dbTypes';
+import { Notify } from 'quasar';
+import { i18n } from 'src/utils/i18n';
 
 
 export const usePostStore = defineStore('postStore', () => {
@@ -13,7 +15,22 @@ export const usePostStore = defineStore('postStore', () => {
 
   async function loadPosts() {
     const response = await axios.get(config.backendUrl + '/post');
+    // Fail check
+    if (!response.data) {
+      Notify.create({
+        type: 'negative',
+        message: i18n.t('failed')
+      })
+      return;
+    }
+    // posts loaded
     posts.value = response.data;
+    return;
+  }
+
+  async function likePost(postId: Post['id']) {
+    const response = await axios.get(config.backendUrl + '')
+    return
   }
 
 
@@ -21,6 +38,7 @@ export const usePostStore = defineStore('postStore', () => {
     newPost,
     posts,
     loadPosts,
+    likePost,
   }
 },
   {
