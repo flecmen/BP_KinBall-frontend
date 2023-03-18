@@ -55,7 +55,7 @@ export type Post_extended = (Post & {
   event: Event | null;
   images: Image[];
   likes: User[];
-  comments: Post_comment[];
+  comments: Post_comment_extended[];
   survey_options: Survey_option[];
   user_notification: User[];
 })
@@ -72,6 +72,11 @@ export type Post_comment = {
   postId: number
   authorId: number
 }
+
+export type Post_comment_extended = (Post_comment & {
+  author: User;
+  likes: User[];
+})
 
 /**
  * Model Event

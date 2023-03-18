@@ -8,7 +8,11 @@
     >
       <q-badge color="orange" floating>{{ props.post.likes.length }}</q-badge>
     </q-btn>
-    <q-btn flat icon="comment" label="Comment" />
+    <q-btn flat icon="comment" label="Comments" @click="emit('showComments')">
+      <q-badge color="orange" floating>{{
+        props.post.comments.length
+      }}</q-badge>
+    </q-btn>
     <q-toggle v-model="isFollowing" flat label="Follow" />
   </q-card-section>
 </template>
@@ -23,6 +27,10 @@ export interface Props {
   isMobile: boolean;
 }
 const props = defineProps<Props>();
+const emit = defineEmits<{
+  (event: 'showComments'): void;
+}>();
+
 const postStore = usePostStore();
 
 const isFollowing = ref<boolean>(false);
