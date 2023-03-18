@@ -1,6 +1,6 @@
 <template>
   <q-card>
-    <row
+    <div
       class="justify-center"
       v-for="comment in post.comments"
       :key="comment.id"
@@ -10,7 +10,7 @@
         :comment="comment"
         :isMobile="isMobile"
       />
-    </row>
+    </div>
   </q-card>
 </template>
 
