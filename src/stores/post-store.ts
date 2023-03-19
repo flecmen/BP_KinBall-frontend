@@ -26,6 +26,7 @@ export const usePostStore = defineStore('postStore', () => {
       })
       return;
     }
+
     // posts loaded
     posts.value = response.data;
     return;

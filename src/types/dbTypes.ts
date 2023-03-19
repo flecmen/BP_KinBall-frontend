@@ -14,6 +14,7 @@ export type User = {
   instagram: string | null
   settings: Settings
   reward_system: Reward_system
+  groups: Group[]
 }
 
 /**

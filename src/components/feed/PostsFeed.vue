@@ -1,5 +1,5 @@
 <template>
-  <div class="col-6">
+  <div>
     <PostComponent
       v-for="post in postStore.posts"
       v-bind:key="post.id"
