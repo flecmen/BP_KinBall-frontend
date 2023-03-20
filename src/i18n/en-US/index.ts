@@ -29,5 +29,12 @@ export default {
     wrong: {
       credentials: 'Wrong credentials'
     }
-  }
+  },
+  post: {
+    type: {
+      text: 'Text',
+      event: 'Event',
+      survey: 'Survey',
+    }
+  },
 };

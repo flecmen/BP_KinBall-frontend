@@ -1,7 +1,7 @@
-import { Post_extended, Post_comment_extended } from './../types/dbTypes';
+import { Post_extended, Post_comment_extended, Group } from './../types/dbTypes';
 import { defineStore } from 'pinia';
 import axios from 'axios';
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 import config from 'src/config';
 import { Post } from 'src/types/dbTypes';
 import { Notify } from 'quasar';
@@ -15,8 +15,36 @@ export const usePostStore = defineStore('postStore', () => {
 
   const newPost = ref<Post>();
   const posts = ref<Post_extended[]>();
+  const postTypeFilter = reactive<{
+    text: boolean,
+    event: boolean,
+    survey: boolean,
+  }>({
+    text: true,
+    event: true,
+    survey: true,
+  })
+  const groupsFilter = ref<{ group: Group, visible: boolean }[]>([])
+  const filterReady = ref(false);
+
+  function initFeedFilter() {
+    const groups = userStore.user.groups
+    console.log(groups)
+    if (!groups) {
+      Notify.create({
+        type: 'negative',
+        message: i18n.t('Groups cannot be loaded')
+      })
+      return;
+    }
+    groups.forEach((g: Group) => {
+      groupsFilter.value.push({ group: g, visible: true })
+    })
+    filterReady.value = true;
+  }
 
   async function loadPosts() {
+    filterReady.value = false;
     const response = await axios.get(config.backendUrl + '/post');
     // Fail check
     if (!response.data) {
@@ -29,6 +57,7 @@ export const usePostStore = defineStore('postStore', () => {
 
     // posts loaded
     posts.value = response.data;
+    initFeedFilter();
     return;
   }
 
@@ -119,8 +148,8 @@ export const usePostStore = defineStore('postStore', () => {
     likePost,
     likeComment,
     sendComment,
+    postTypeFilter,
+    groupsFilter,
+    filterReady,
   }
-},
-  {
-    persist: true
-  })
+})
