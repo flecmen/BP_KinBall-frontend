@@ -13,7 +13,12 @@
         label="send"
         :loading="isCommentBeingSent"
         @click="sendComment()"
-      />
+        color="primary"
+      >
+        <template v-slot:loading>
+          <q-spinner-facebook />
+        </template>
+      </q-btn>
     </div>
   </q-item>
 </template>
@@ -39,8 +44,11 @@ const commentText = ref('');
 const isCommentBeingSent = ref(false);
 
 async function sendComment() {
+  if (commentText.value.length === 0) {
+    notify.fail(i18n.t('emptyComment'));
+    return;
+  }
   isCommentBeingSent.value = true;
-  if (commentText.value.length === 0) return;
   await postStore.sendComment(props.post.id, commentText.value);
   notify.success(i18n.t('success'));
   isCommentBeingSent.value = false;

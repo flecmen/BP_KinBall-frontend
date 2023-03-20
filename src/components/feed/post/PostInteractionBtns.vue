@@ -4,9 +4,16 @@
       flat
       icon="favorite"
       label="Like"
-      @click="postStore.likePost(props.post.id)"
+      @click="likePost"
+      :loading="isBeingLiked"
+      :color="
+        post.likes.some((u) => u.id === userStore.user.id) ? 'positive' : ''
+      "
     >
       <q-badge color="orange" floating>{{ props.post.likes.length }}</q-badge>
+      <template v-slot:loading>
+        <q-spinner-facebook />
+      </template>
     </q-btn>
     <q-btn flat icon="comment" label="Comments" @click="emit('showComments')">
       <q-badge color="orange" floating>{{
@@ -21,6 +28,7 @@
 import { defineProps, ref } from 'vue';
 import { Post_extended } from 'src/types/dbTypes';
 import { usePostStore } from 'src/stores/post-store';
+import { useUserStore } from 'src/stores/user-store';
 
 export interface Props {
   post: Post_extended;
@@ -32,8 +40,18 @@ const emit = defineEmits<{
 }>();
 
 const postStore = usePostStore();
+const userStore = useUserStore();
 
+const isBeingLiked = ref<boolean>(false);
+
+//TODO: implement follow
 const isFollowing = ref<boolean>(false);
+
+async function likePost() {
+  isBeingLiked.value = true;
+  await postStore.likePost(props.post.id);
+  isBeingLiked.value = false;
+}
 </script>
 
 <style scoped></style>

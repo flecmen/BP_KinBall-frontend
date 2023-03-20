@@ -14,6 +14,11 @@
         <q-btn
           label="like"
           @click="postStore.likeComment(comment.postId, comment.id)"
+          :color="
+            comment.likes.some((u) => u.id === userStore.user.id)
+              ? 'positive'
+              : 'primary'
+          "
         >
           <q-badge
             v-if="props.comment.likes.length > 0"
@@ -32,6 +37,7 @@ import dateFormat from 'src/helpers/dateFormat';
 import { defineProps, onMounted, ref } from 'vue';
 import { Post_comment_extended } from 'src/types/dbTypes';
 import { usePostStore } from 'src/stores/post-store';
+import { useUserStore } from 'src/stores/user-store';
 
 export interface Props {
   comment: Post_comment_extended;
@@ -40,6 +46,7 @@ export interface Props {
 const props = defineProps<Props>();
 
 const postStore = usePostStore();
+const userStore = useUserStore();
 
 const text = ref('');
 

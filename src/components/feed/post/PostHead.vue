@@ -17,7 +17,7 @@
       <q-badge
         v-for="group in props.post.groups"
         v-bind:key="group.id"
-        :color="group.color ?? 'gray'"
+        :color="group.color ?? 'primary'"
         text-color="white"
         >{{ group.name }}</q-badge
       >
