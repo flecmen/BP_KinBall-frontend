@@ -26,8 +26,8 @@ export const usePostStore = defineStore('postStore', () => {
   const groupsFilter = ref<{ group: Group, visible: boolean }[]>([])
 
   function initFeedFilter() {
+    groupsFilter.value = [];
     const groups = userStore.user.groups
-    console.log(groups)
     if (!groups) {
       Notify.create({
         type: 'negative',
