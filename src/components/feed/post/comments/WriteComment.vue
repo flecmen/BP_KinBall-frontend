@@ -1,9 +1,10 @@
 <template>
   <q-item>
     <q-item-section side>
-      <q-avatar :size="isMobile ? '40px' : '50px'">
-        <img src="src/assets/avatar.jpg" alt="avatar" />
-      </q-avatar>
+      <userAvatar
+        :image="userStore.user.profile_picture"
+        :isMobile="props.isMobile"
+      />
     </q-item-section>
     <q-item-section>
       <q-input
@@ -37,6 +38,7 @@ import { usePostStore } from 'src/stores/post-store';
 import { ref } from 'vue';
 import useNotify from 'src/composables/useNotify';
 import { i18n } from 'src/utils/i18n';
+import userAvatar from 'src/components/userAvatar.vue';
 export interface Props {
   post: Post_extended;
   isMobile: boolean;

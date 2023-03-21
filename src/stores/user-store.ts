@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import { Notify } from 'quasar';
-import { User } from 'src/types/dbTypes';
+import { User_extended } from 'src/types/dbTypes';
 import { i18n } from 'src/utils/i18n';
 import { router } from 'src/router/index'
 import { api } from 'src/boot/axios';
@@ -12,7 +12,7 @@ export const useUserStore = defineStore('userStore', () => {
     api.defaults.headers.common['Authorization'] = 'Bearer ' + token.value;
   }
 
-  const user = ref<User>({} as User)
+  const user = ref<User_extended>({} as User_extended)
   const afterLoginRoute = ref<string | null>(null);
   const isProcessing = ref<boolean>(false);
   const error = ref<string>()

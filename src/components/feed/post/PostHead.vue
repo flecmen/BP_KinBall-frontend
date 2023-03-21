@@ -1,9 +1,10 @@
 <template>
   <q-item>
     <q-item-section avatar>
-      <q-avatar :size="isMobile ? '40px' : '50px'">
-        <img src="src/assets/avatar.jpg" alt="avatar" />
-      </q-avatar>
+      <user-avatar
+        :image="props.post.author.profile_picture"
+        :isMobile="props.isMobile"
+      />
     </q-item-section>
     <q-item-section>
       <div class="post-name text-bold">
@@ -32,6 +33,7 @@
 import dateFormat from 'src/helpers/dateFormat';
 import { defineProps } from 'vue';
 import { Post_extended } from 'src/types/dbTypes';
+import userAvatar from 'src/components/userAvatar.vue';
 
 export interface Props {
   post: Post_extended;

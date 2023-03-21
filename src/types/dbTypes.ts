@@ -17,6 +17,9 @@ export type User = {
   groups: Group[]
 }
 
+export type User_extended = (User & {
+  profile_picture: Image | null;
+})
 /**
  * Model Settings
  *
@@ -51,7 +54,7 @@ export type Post = {
 }
 
 export type Post_extended = (Post & {
-  author: User;
+  author: User_extended;
   groups: Group[];
   event: Event_extended | null;
   images: Image[];
@@ -101,8 +104,8 @@ export type Event = {
 }
 
 export type Event_extended = (Event & {
-  organiser: User;
-  players: UserOnEvent[];
+  organiser: User_extended;
+  players: UserOnEvent_extended[];
   teams: Team[];
 })
 
@@ -111,6 +114,10 @@ export type UserOnEvent = {
   userId: number
   eventId: number
 }
+
+export type UserOnEvent_extended = (UserOnEvent & {
+  user: User_extended;
+})
 
 /**
  * Model Team

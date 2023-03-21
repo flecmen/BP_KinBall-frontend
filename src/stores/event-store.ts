@@ -1,7 +1,6 @@
 import { Post_extended, Event_extended } from './../types/dbTypes';
 import { defineStore } from 'pinia';
 import { ref, reactive } from 'vue';
-import { Post } from 'src/types/dbTypes';
 import { Notify } from 'quasar';
 import { i18n } from 'src/utils/i18n';
 import { useUserStore } from './user-store';
@@ -30,9 +29,33 @@ export const useEventStore = defineStore('eventStore', () => {
     return;
   }
 
+  function getEvent(eventId: Event_extended['id']) {
+    return events.value.find(e => e.id == eventId)
+  }
+
+  async function registerOnEvent(eventId: Event_extended['id']) {
+    const response = await api.put('/event/' + eventId + '/addUser/' + userStore.user.id);
+    if (!response.data) {
+      Notify.create({
+        type: 'negative',
+        message: i18n.t('failed to load event id:' + eventId)
+      })
+      return;
+    }
+    if (response.status == 201) {
+      Notify.create({
+        type: 'positive',
+        message: i18n.t('You are registered to event id:' + eventId)
+      })
+
+    }
+  }
+
 
   return {
     events,
     loadEvent,
+    registerOnEvent,
+    getEvent,
   }
 })
