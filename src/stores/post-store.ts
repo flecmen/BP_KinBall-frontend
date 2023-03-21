@@ -1,12 +1,11 @@
 import { Post_extended, Post_comment_extended, Group } from './../types/dbTypes';
 import { defineStore } from 'pinia';
-import axios from 'axios';
 import { ref, reactive } from 'vue';
-import config from 'src/config';
 import { Post } from 'src/types/dbTypes';
 import { Notify } from 'quasar';
 import { i18n } from 'src/utils/i18n';
 import { useUserStore } from './user-store';
+import { api } from 'src/boot/axios';
 
 const userStore = useUserStore();
 
@@ -25,7 +24,6 @@ export const usePostStore = defineStore('postStore', () => {
     survey: true,
   })
   const groupsFilter = ref<{ group: Group, visible: boolean }[]>([])
-  const filterReady = ref(false);
 
   function initFeedFilter() {
     const groups = userStore.user.groups
@@ -40,12 +38,10 @@ export const usePostStore = defineStore('postStore', () => {
     groups.forEach((g: Group) => {
       groupsFilter.value.push({ group: g, visible: true })
     })
-    filterReady.value = true;
   }
 
   async function loadPosts() {
-    filterReady.value = false;
-    const response = await axios.get(config.backendUrl + '/post');
+    const response = await api.get('/post');
     // Fail check
     if (!response.data) {
       Notify.create({
@@ -65,7 +61,7 @@ export const usePostStore = defineStore('postStore', () => {
     // Check if post was already liked by user
     if (getLocalPost(postId)?.likes.some(u => u.id === userStore.user.id)) {
       // Removing like
-      const response = await axios.delete(config.backendUrl + '/post/' + postId + '/like/' + userStore.user.id)
+      const response = await api.delete('/post/' + postId + '/like/' + userStore.user.id)
       if (response.status !== 204) {
         Notify.create({
           type: 'negative',
@@ -77,7 +73,7 @@ export const usePostStore = defineStore('postStore', () => {
       return
     } else {
       // Adding like
-      const response = await axios.post(config.backendUrl + '/post/' + postId + '/like/' + userStore.user.id)
+      const response = await api.post('/post/' + postId + '/like/' + userStore.user.id)
       if (response.status !== 201) {
         Notify.create({
           type: 'negative',
@@ -94,7 +90,7 @@ export const usePostStore = defineStore('postStore', () => {
     // Check if post was already liked by user
     if (getLocalComment(postId, commentId)?.likes.some(u => u.id === userStore.user.id)) {
       //removing like
-      const response = await axios.delete(config.backendUrl + '/post/' + postId + '/comment/' + commentId + '/like/' + userStore.user.id)
+      const response = await api.delete('/post/' + postId + '/comment/' + commentId + '/like/' + userStore.user.id)
       if (response.status !== 204) {
         Notify.create({
           type: 'negative',
@@ -106,7 +102,7 @@ export const usePostStore = defineStore('postStore', () => {
       return
     } else {
       // Adding like
-      const response = await axios.post(config.backendUrl + '/post/' + postId + '/comment/' + commentId + '/like/' + userStore.user.id)
+      const response = await api.post('/post/' + postId + '/comment/' + commentId + '/like/' + userStore.user.id)
       if (response.status !== 201) {
         Notify.create({
           type: 'negative',
@@ -120,7 +116,7 @@ export const usePostStore = defineStore('postStore', () => {
   }
 
   async function sendComment(postId: Post['id'], text: string) {
-    const response = await axios.post(`${config.backendUrl}/post/${postId}/comment/${userStore.user.id}`, { text: text })
+    const response = await api.post(`/post/${postId}/comment/${userStore.user.id}`, { text: text })
     if (response.status !== 201) {
       Notify.create({
         type: 'negative',
@@ -150,6 +146,5 @@ export const usePostStore = defineStore('postStore', () => {
     sendComment,
     postTypeFilter,
     groupsFilter,
-    filterReady,
   }
 })

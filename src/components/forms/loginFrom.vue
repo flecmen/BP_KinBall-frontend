@@ -26,7 +26,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { router } from 'src/router/index';
 import formRules from 'src/helpers/formRules';
 import useNotify from 'src/composables/useNotify';
 import { useUserStore } from 'src/stores/user-store';
@@ -35,7 +35,6 @@ import { useI18n } from 'vue-i18n';
 const userStore = useUserStore();
 const { t } = useI18n();
 const notify = useNotify();
-const router = useRouter();
 
 const email = ref('');
 const password = ref('');
@@ -48,12 +47,5 @@ async function login() {
     return;
   }
   await userStore.login(email.value, password.value);
-  if (!userStore.error) {
-    notify.success(t('success'));
-    router.push(userStore.afterLoginRoute ?? { name: 'home' });
-    userStore.afterLoginRoute = null;
-  }
-  userStore.error = '';
-  return;
 }
 </script>
