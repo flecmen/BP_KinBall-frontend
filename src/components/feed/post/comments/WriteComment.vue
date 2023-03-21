@@ -6,7 +6,14 @@
       </q-avatar>
     </q-item-section>
     <q-item-section>
-      <q-input v-model="commentText" filled autogrow dense> </q-input>
+      <q-input
+        v-model="commentText"
+        label="Write a comment"
+        filled
+        autogrow
+        dense
+      >
+      </q-input>
     </q-item-section>
     <div class="q-ml-md">
       <q-btn

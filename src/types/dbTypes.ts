@@ -53,7 +53,7 @@ export type Post = {
 export type Post_extended = (Post & {
   author: User;
   groups: Group[];
-  event: Event | null;
+  event: Event_extended | null;
   images: Image[];
   likes: User[];
   comments: Post_comment_extended[];
@@ -99,6 +99,12 @@ export type Event = {
   address_lat: string | null
   address_lng: string | null
 }
+
+export type Event_extended = (Event & {
+  organiser: User;
+  players: User[];
+  teams: Team[];
+})
 
 /**
  * Model Team
