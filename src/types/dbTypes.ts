@@ -102,9 +102,15 @@ export type Event = {
 
 export type Event_extended = (Event & {
   organiser: User;
-  players: User[];
+  players: UserOnEvent[];
   teams: Team[];
 })
+
+export type UserOnEvent = {
+  status: UserOnEventStatus
+  userId: number
+  eventId: number
+}
 
 /**
  * Model Team
@@ -157,12 +163,19 @@ export type Group = {
   color: string | null
 }
 
+export const UserOnEventStatus = {
+  going: 'going',
+  not_going: 'not going',
+  dont_know: 'dont know',
+  substitue: 'substitue'
+};
+export type UserOnEventStatus = (typeof UserOnEventStatus)[keyof typeof UserOnEventStatus]
 
 export const eventType = {
-  trenink: 'trenink',
-  kurz_pro_mladez: 'kurz_pro_mladez',
+  trenink: 'trénink',
+  kurz_pro_mladez: 'kurz pro mládež',
   turnaj: 'turnaj',
-  jednorazova_akce: 'jednorazova_akce'
+  jednorazova_akce: 'jednorázová akce',
 };
 
 export type eventType = (typeof eventType)[keyof typeof eventType]
