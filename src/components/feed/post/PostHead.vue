@@ -11,6 +11,7 @@
         {{ props.post.author.full_name }}
       </div>
       <div class="text-caption">
+        <RoleChip :user="props.post.author" />
         {{ dateFormat(props.post.time_of_creation) }}
       </div>
     </q-item-section>
@@ -34,6 +35,7 @@ import dateFormat from 'src/helpers/dateFormat';
 import { defineProps } from 'vue';
 import { Post_extended } from 'src/types/dbTypes';
 import userAvatar from 'src/components/userAvatar.vue';
+import RoleChip from 'src/components/RoleChip.vue';
 
 export interface Props {
   post: Post_extended;
