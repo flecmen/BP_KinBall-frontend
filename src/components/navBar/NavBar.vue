@@ -14,6 +14,13 @@
           <img src="src/assets/kin-ball_institut_logo2-300x112.png" />
         </q-avatar>
       </q-item>
+      <q-btn
+        label="Write a post"
+        flat
+        dense
+        @click="emit('openCreatePostDialog')"
+      >
+      </q-btn>
       <q-toolbar-title> </q-toolbar-title>
 
       <div>
@@ -42,5 +49,6 @@ function logout() {
 
 const emit = defineEmits<{
   (event: 'toggleLeftDrawer'): void;
+  (event: 'openCreatePostDialog'): void;
 }>();
 </script>

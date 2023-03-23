@@ -16,20 +16,10 @@ declare module '@vue/runtime-core' {
 // "export default () => {}" function below (which runs individually
 // for each client)
 const api = axios.create({ baseURL: config.backendUrl });
-const userStore = useUserStore();
 
 
-// přidat interceptor pro zachycení 401 chyb
-api.interceptors.response.use(
-  response => response,
-  error => {
-    if (error.response.status === 401) {
-      // odstranit token z úložiště
-      userStore.logout();
-    }
-    return Promise.reject(error);
-  }
-);
+
+
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
@@ -41,6 +31,19 @@ export default boot(({ app }) => {
   app.config.globalProperties.$api = api;
   // ^ ^ ^ this will allow you to use this.$api (for Vue Options API form)
   //       so you can easily perform requests against your app's API
+
+  const userStore = useUserStore();
+  // přidat interceptor pro zachycení 401 chyb
+  api.interceptors.response.use(
+    response => response,
+    error => {
+      if (error.response.status === 401) {
+        // odstranit token z úložiště
+        userStore.logout();
+      }
+      return Promise.reject(error);
+    }
+  );
 });
 
 export { api };

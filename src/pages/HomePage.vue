@@ -1,8 +1,5 @@
 <template>
   <q-page class="row items-center justify-evenly">
-    <q-page-sticky position="top" :offset="[0, 15]">
-      <NewPost :isMobile="false" />
-    </q-page-sticky>
     <q-page-sticky position="left" :offset="[18, 0]">
       <FeedFilter class="q-ma-none" />
     </q-page-sticky>
@@ -14,7 +11,6 @@
 <script setup lang="ts">
 import PostsFeed from 'src/components/feed/PostsFeed.vue';
 import FeedFilter from 'src/components/feed/post/filter/FeedFilter.vue';
-import NewPost from 'src/components/feed/NewPost.vue';
 </script>
 
 <style></style>
