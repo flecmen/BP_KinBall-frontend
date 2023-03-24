@@ -35,7 +35,7 @@ onMounted(async () => {
 });
 
 const displayedPosts = computed(() => {
-  return postStore.posts?.filter((post) => {
+  return postStore.posts_sorted?.filter((post) => {
     // Filter by Type
     if (postStore.postTypeFilter[post.type] === true) {
       for (const group of post.groups) {

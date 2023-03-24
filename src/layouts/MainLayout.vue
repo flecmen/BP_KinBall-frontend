@@ -5,7 +5,7 @@
       @openCreatePostDialog="openPostDialog()"
     />
     <LeftDrawer v-model="leftDrawerOpen" />
-
+    <NewPostModal v-model="createPostDialogOpen" />
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -16,6 +16,7 @@
 import { ref } from 'vue';
 import NavBar from 'src/components/navBar/NavBar.vue';
 import LeftDrawer from 'src/components/LeftDrawer.vue';
+import NewPostModal from 'src/components/modals/NewPostModal.vue';
 
 const leftDrawerOpen = ref(false);
 const createPostDialogOpen = ref(false);

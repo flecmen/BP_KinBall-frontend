@@ -30,12 +30,9 @@
 </template>
 
 <script setup lang="ts">
-import { Post_extended } from 'src/types/dbTypes';
 import { usePostStore } from 'src/stores/post-store';
-import { useUserStore } from 'src/stores/user-store';
 
 const postStore = usePostStore();
-const userStore = useUserStore();
 </script>
 
 <style scoped></style>

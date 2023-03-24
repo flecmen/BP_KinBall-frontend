@@ -1,6 +1,6 @@
-import { Post_extended, Post_comment_extended, Group } from './../types/dbTypes';
+import { Post_extended, Post_comment_extended, Group, Event_extended } from './../types/dbTypes';
 import { defineStore } from 'pinia';
-import { ref, reactive } from 'vue';
+import { ref, reactive, computed } from 'vue';
 import { Post } from 'src/types/dbTypes';
 import { Notify } from 'quasar';
 import { i18n } from 'src/utils/i18n';
@@ -12,8 +12,11 @@ const userStore = useUserStore();
 
 export const usePostStore = defineStore('postStore', () => {
 
-  const newPost = ref<Post>();
+  const newPost = ref<Post_extended>({} as Post_extended);
   const posts = ref<Post_extended[]>();
+  const posts_sorted = computed(() => {
+    return posts.value?.sort((a, b) => new Date(b.time_of_creation).getTime() - new Date(a.time_of_creation).getTime())
+  })
   const postTypeFilter = reactive<{
     text: boolean,
     event: boolean,
@@ -38,6 +41,12 @@ export const usePostStore = defineStore('postStore', () => {
     groups.forEach((g: Group) => {
       groupsFilter.value.push({ group: g, visible: true })
     })
+  }
+
+  function initNewPost() {
+    newPost.value = {
+      author: userStore.user
+    } as Post_extended
   }
 
   async function loadPosts() {
@@ -136,15 +145,30 @@ export const usePostStore = defineStore('postStore', () => {
     return getLocalPost(postId)?.comments.find(c => c.id === commentId)
   }
 
+  async function postNewPost() {
+    const response = await api.post('/post', newPost.value)
+    if (response.status !== 201) {
+      Notify.create({
+        type: 'negative',
+        message: i18n.t('failed')
+      })
+      return;
+    }
+    posts.value?.push(response.data)
+  }
+
 
   return {
     newPost,
     posts,
+    posts_sorted,
     loadPosts,
     likePost,
     likeComment,
     sendComment,
     postTypeFilter,
     groupsFilter,
+    postNewPost,
+    initNewPost,
   }
 })
