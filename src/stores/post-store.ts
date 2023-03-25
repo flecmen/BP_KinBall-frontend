@@ -1,4 +1,4 @@
-import { Post_extended, Post_comment_extended, Group, Survey_option } from './../types/dbTypes';
+import { Post_extended, Post_comment_extended, Group, Survey_option, Survey_option_extended } from './../types/dbTypes';
 import { defineStore } from 'pinia';
 import { ref, reactive, computed } from 'vue';
 import { Post } from 'src/types/dbTypes';
@@ -160,10 +160,28 @@ export const usePostStore = defineStore('postStore', () => {
   }
 
   function addSurvey_option(text: string) {
-    newPost.value.survey_options.push({ text } as Survey_option)
+    newPost.value.survey_options.push({ text } as Survey_option_extended)
   }
   function removeSurvey_option(index: number) {
     newPost.value.survey_options.splice(index, 1)
+  }
+  async function changeSurvey_optionValue(value: boolean, postId: Post['id'], optionId: Survey_option['id']) {
+    console.log(1)
+    const response = await api.post('/post/' + postId + '/survey/' + optionId + '/user/' + userStore.user.id + '/' + value)
+    console.log(2)
+    if (response.status !== 200) {
+      Notify.create({
+        type: 'negative',
+        message: i18n.t('failed')
+      })
+      return;
+    }
+    console.log(3)
+
+    if (value) getLocalPost(postId)?.survey_options.find(o => o.id === optionId)?.votes.push(userStore.user)
+    else getLocalPost(postId)?.survey_options.find(o => o.id === optionId)?.votes.splice(getLocalPost(postId)?.survey_options.find(o => o.id === optionId)?.votes.indexOf(userStore.user) as number)
+    console.log(4)
+    return;
   }
 
 
@@ -181,5 +199,6 @@ export const usePostStore = defineStore('postStore', () => {
     initNewPost,
     addSurvey_option,
     removeSurvey_option,
+    changeSurvey_optionValue,
   }
 })

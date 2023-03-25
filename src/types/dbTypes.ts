@@ -60,7 +60,7 @@ export type Post_extended = (Post & {
   images: Image[];
   likes: User[];
   comments: Post_comment_extended[];
-  survey_options: Survey_option[];
+  survey_options: Survey_option_extended[];
   user_notification: User[];
 })
 
@@ -159,6 +159,10 @@ export type Survey_option = {
   text: string
   postId: number
 }
+
+export type Survey_option_extended = (Survey_option & {
+  votes: User[];
+})
 
 /**
  * Model Group
