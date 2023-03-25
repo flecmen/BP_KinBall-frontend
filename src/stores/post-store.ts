@@ -1,4 +1,4 @@
-import { Post_extended, Post_comment_extended, Group, Event_extended } from './../types/dbTypes';
+import { Post_extended, Post_comment_extended, Group, Survey_option } from './../types/dbTypes';
 import { defineStore } from 'pinia';
 import { ref, reactive, computed } from 'vue';
 import { Post } from 'src/types/dbTypes';
@@ -45,7 +45,9 @@ export const usePostStore = defineStore('postStore', () => {
 
   function initNewPost() {
     newPost.value = {
-      author: userStore.user
+      author: userStore.user,
+      groups: [] as Group[],
+      survey_options: [] as Survey_option[],
     } as Post_extended
   }
 
@@ -157,6 +159,13 @@ export const usePostStore = defineStore('postStore', () => {
     posts.value?.push(response.data)
   }
 
+  function addSurvey_option(text: string) {
+    newPost.value.survey_options.push({ text } as Survey_option)
+  }
+  function removeSurvey_option(index: number) {
+    newPost.value.survey_options.splice(index, 1)
+  }
+
 
   return {
     newPost,
@@ -170,5 +179,7 @@ export const usePostStore = defineStore('postStore', () => {
     groupsFilter,
     postNewPost,
     initNewPost,
+    addSurvey_option,
+    removeSurvey_option,
   }
 })

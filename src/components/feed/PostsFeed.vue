@@ -8,7 +8,7 @@
       />
     </div>
     <div v-else>
-      <q-card class="q-mt-md">
+      <q-card class="q-mt-md" flat>
         <q-card-section>
           <div class="text-h5 text-center">
             No posts to display. Try changing the filters.

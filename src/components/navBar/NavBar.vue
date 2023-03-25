@@ -14,12 +14,7 @@
           <img src="src/assets/kin-ball_institut_logo2-300x112.png" />
         </q-avatar>
       </q-item>
-      <q-btn
-        label="Write a post"
-        flat
-        dense
-        @click="emit('openCreatePostDialog')"
-      >
+      <q-btn label="Write a post" flat dense @click="openCreatePostDialog()">
       </q-btn>
       <q-toolbar-title> </q-toolbar-title>
 
@@ -37,9 +32,11 @@ import AccountCirleButton from 'src/components/navBar/buttons/AccoutCircleButton
 import LanguageButton from './buttons/LanguageButton.vue';
 import NotificationButton from './buttons/NotificationButton.vue';
 import { useUserStore } from 'src/stores/user-store';
+import { usePostStore } from 'src/stores/post-store';
 import { useRouter } from 'vue-router';
 
 const userStore = useUserStore();
+const postStore = usePostStore();
 const router = useRouter();
 
 function logout() {
@@ -51,4 +48,9 @@ const emit = defineEmits<{
   (event: 'toggleLeftDrawer'): void;
   (event: 'openCreatePostDialog'): void;
 }>();
+
+function openCreatePostDialog() {
+  postStore.initNewPost();
+  emit('openCreatePostDialog');
+}
 </script>

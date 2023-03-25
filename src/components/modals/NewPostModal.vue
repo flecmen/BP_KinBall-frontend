@@ -17,9 +17,15 @@
           :label="postType.survey"
         />
       </q-card-section>
+      <q-card-section class="q-pt-none">
+        <GroupsSelector
+          :groups="postStore.newPost.groups"
+          @GroupsUpdate="updateGroups"
+        />
+      </q-card-section>
 
       <q-card-section class="q-pt-none">
-        <newPostForm />
+        <newPostForm :type="postStore.newPost.type" />
       </q-card-section>
 
       <q-card-actions align="right">
@@ -36,15 +42,15 @@
 
 <script setup lang="ts">
 import { usePostStore } from 'src/stores/post-store';
-import { postType, eventType } from 'src/types/dbTypes';
+import { postType, Group } from 'src/types/dbTypes';
 import newPostForm from '../forms/newPostForm.vue';
-import { onMounted } from 'vue';
+import GroupsSelector from '../forms/GroupsSelector.vue';
 
 const postStore = usePostStore();
 
-onMounted(() => {
-  postStore.initNewPost();
-});
+function updateGroups(groups: Group[]) {
+  postStore.newPost.groups = groups;
+}
 </script>
 
 <style scoped></style>
