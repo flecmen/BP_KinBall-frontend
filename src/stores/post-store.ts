@@ -166,9 +166,8 @@ export const usePostStore = defineStore('postStore', () => {
     newPost.value.survey_options.splice(index, 1)
   }
   async function changeSurvey_optionValue(value: boolean, postId: Post['id'], optionId: Survey_option['id']) {
-    console.log(1)
+
     const response = await api.post('/post/' + postId + '/survey/' + optionId + '/user/' + userStore.user.id + '/' + value)
-    console.log(2)
     if (response.status !== 200) {
       Notify.create({
         type: 'negative',
@@ -176,11 +175,9 @@ export const usePostStore = defineStore('postStore', () => {
       })
       return;
     }
-    console.log(3)
 
     if (value) getLocalPost(postId)?.survey_options.find(o => o.id === optionId)?.votes.push(userStore.user)
     else getLocalPost(postId)?.survey_options.find(o => o.id === optionId)?.votes.splice(getLocalPost(postId)?.survey_options.find(o => o.id === optionId)?.votes.indexOf(userStore.user) as number)
-    console.log(4)
     return;
   }
 

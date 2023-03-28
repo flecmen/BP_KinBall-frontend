@@ -1,5 +1,5 @@
 <template>
-  <q-item class="col-12">
+  <q-item class="col-12 q-pa-none">
     <q-checkbox v-model="checked" @vnode-updated="checking()" />
     <q-item-section>
       <div class="text-weight-bold">
@@ -8,13 +8,14 @@
       <div class="bg-grey-2">
         <div :style="{ width: percentage + '%' }" :class="color"></div>
       </div>
+      <div>votes: {{ option.votes.length }}</div>
     </q-item-section>
   </q-item>
 </template>
 
 <script setup lang="ts">
 import { Survey_option_extended } from 'src/types/dbTypes';
-import { computed, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
 import useNotify from 'src/composables/useNotify';
 import { usePostStore } from 'src/stores/post-store';
 import { useUserStore } from 'src/stores/user-store';

@@ -2,14 +2,15 @@
   <q-item>
     {{ props.post.text }}
   </q-item>
-  <q-item v-for="option in props.post.survey_options" v-bind:key="option.id">
-    <survey-option
-      :postId="props.post.id"
-      :option="option"
-      :total_votes="total_votes"
-      class="row"
-    />
-  </q-item>
+
+  <survey-option
+    v-for="option in props.post.survey_options"
+    v-bind:key="option.id"
+    :postId="props.post.id"
+    :option="option"
+    :total_votes="total_votes"
+    class="row"
+  />
 </template>
 
 <script setup lang="ts">

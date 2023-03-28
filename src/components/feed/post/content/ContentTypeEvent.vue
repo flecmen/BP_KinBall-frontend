@@ -51,10 +51,6 @@ onMounted(() => {
 });
 
 const isEventLoading = ref(true);
-
-async function going() {
-  return;
-}
 </script>
 
 <style scoped></style>

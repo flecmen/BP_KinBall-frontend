@@ -1,33 +1,97 @@
 <template>
-  <div class="text-h6" @mouseover="showGoing" @mouseleave="hideGoing">
-    Přihlášeno:
-    {{
-      eventStore
-        .getEvent(props.eventId)
-        ?.players.filter((ue) => ue.status === UserOnEventStatus.going).length
-    }}/{{ eventStore.getEvent(props.eventId)?.people_limit }}
-
-    <UserPopupList
-      :isMobile="true"
-      :players="eventStore.getEvent(props.eventId)?.players"
-      :visible="areGoingVisible"
+  <div class="row justify-evenly q-mt-md">
+    <q-btn
+      :label="goingBtnLabel"
+      @click="react('going' as keyof UserOnEventStatus)"
       @mouseover="showGoing"
       @mouseleave="hideGoing"
-    />
-  </div>
-
-  <div class="row justify-evenly q-mt-md">
-    <q-btn label="Going" @click="going()" color="green-5"> </q-btn>
-    <q-btn label="Don't know" @click="going()" color="orange"></q-btn>
-    <q-btn label="Not going" @click="going()" color="red"></q-btn>
+      color="green-5"
+      :loading="isLoading.going"
+      :disable="blocked"
+    >
+      <UserPopupList
+        :isMobile="true"
+        :users="
+          eventStore
+            .getEvent(props.eventId)
+            ?.players.filter((p) => p.status === 'going')
+            .map((p) => p.user)
+        "
+        :visible="areGoingVisible"
+        @mouseover="showGoing"
+        @mouseleave="hideGoing"
+      />
+      <q-badge floating
+        >{{
+          eventStore
+            .getEvent(props.eventId)
+            ?.players.filter((p) => p.status === 'going').length
+        }}/{{ eventStore.getEvent(props.eventId)?.people_limit }}</q-badge
+      >
+    </q-btn>
+    <q-btn
+      :label="dunnoBtnLabel"
+      :loading="isLoading.dont_know"
+      @click="react('dont_know' as keyof UserOnEventStatus)"
+      @mouseover="showDont_knowList"
+      @mouseleave="hideDont_knowList"
+      color="orange"
+      :disable="blocked"
+    >
+      <UserPopupList
+        :isMobile="true"
+        :users="
+          eventStore
+            .getEvent(props.eventId)
+            ?.players.filter((p) => p.status === 'dont_know')
+            .map((p) => p.user)
+        "
+        :visible="dont_knowListVisible"
+        @mouseover="showDont_knowList"
+        @mouseleave="hideDont_knowList"
+      />
+      <q-badge floating>{{
+        eventStore
+          .getEvent(props.eventId)
+          ?.players.filter((p) => p.status === 'dont_know').length
+      }}</q-badge>
+    </q-btn>
+    <q-btn
+      :label="NotGoingBtnLabel"
+      :loading="isLoading.not_going"
+      :disable="blocked"
+      @click="react('not_going' as keyof UserOnEventStatus)"
+      color="red"
+      @mouseover="showNot_goingList"
+      @mouseleave="hideNot_goingList"
+    >
+      <UserPopupList
+        :isMobile="true"
+        :users="
+          eventStore
+            .getEvent(props.eventId)
+            ?.players.filter((p) => p.status === 'not_going')
+            .map((p) => p.user)
+        "
+        :visible="not_goingListVisible"
+        @mouseover="showNot_goingList"
+        @mouseleave="hideNot_goingList"
+      />
+      <q-badge floating>{{
+        eventStore
+          .getEvent(props.eventId)
+          ?.players.filter((p) => p.status === 'not_going').length
+      }}</q-badge>
+    </q-btn>
   </div>
 </template>
 
 <script setup lang="ts">
 import { Event_extended, UserOnEventStatus } from 'src/types/dbTypes';
 import { useEventStore } from 'src/stores/event-store';
-import { ref } from 'vue';
+import { computed, ref, reactive } from 'vue';
 import UserPopupList from 'src/components/lists/UserPopupList.vue';
+import { useUserStore } from 'src/stores/user-store';
 
 export interface Props {
   eventId: Event_extended['id'];
@@ -36,8 +100,51 @@ export interface Props {
 const props = defineProps<Props>();
 
 const eventStore = useEventStore();
+const userStore = useUserStore();
 
 const areGoingVisible = ref(false);
+const dont_knowListVisible = ref(false);
+const not_goingListVisible = ref(false);
+
+const blocked = ref(false);
+const goingBtnLabel = computed(() => {
+  if (
+    eventStore
+      .getEvent(props.eventId)
+      ?.players.some(
+        (ue) =>
+          ue.status === UserOnEventStatus.going &&
+          ue.user.id === userStore.user.id
+      )
+  ) {
+    return "I'm going";
+  }
+  return 'Going';
+});
+
+const dunnoBtnLabel = computed(() => {
+  if (
+    eventStore
+      .getEvent(props.eventId)
+      ?.players.some(
+        (ue) => ue.status === 'dont_know' && ue.user.id === userStore.user.id
+      )
+  ) {
+    return "I don't know";
+  } else return "Don't know";
+});
+
+const NotGoingBtnLabel = computed(() => {
+  if (
+    eventStore
+      .getEvent(props.eventId)
+      ?.players.some(
+        (ue) => ue.status === 'not_going' && ue.user.id === userStore.user.id
+      )
+  ) {
+    return "I'm not going";
+  } else return 'Not going';
+});
 
 function showGoing() {
   areGoingVisible.value = true;
@@ -47,9 +154,34 @@ function hideGoing() {
   areGoingVisible.value = false;
 }
 
-function going() {
-  console.log('ahoj');
-  return;
+function showDont_knowList() {
+  dont_knowListVisible.value = true;
+}
+
+function hideDont_knowList() {
+  dont_knowListVisible.value = false;
+}
+
+function showNot_goingList() {
+  not_goingListVisible.value = true;
+}
+
+function hideNot_goingList() {
+  not_goingListVisible.value = false;
+}
+
+const isLoading = reactive({
+  going: false,
+  dont_know: false,
+  not_going: false,
+});
+
+async function react(reaction: keyof UserOnEventStatus) {
+  isLoading[String(reaction)] = true;
+  blocked.value = true;
+  await eventStore.reactOnEvent(props.eventId, reaction);
+  isLoading[String(reaction)] = false;
+  blocked.value = false;
 }
 </script>
 
