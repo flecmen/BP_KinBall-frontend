@@ -1,7 +1,7 @@
 <template>
   <ContentTypeEvent
     v-if="props.post.type === postType.event"
-    :eventId="props.post.event?.id"
+    :eventId="props.post.event?.id as number"
     :isMobile="props.isMobile"
   />
   <ContentTypeText

@@ -1,12 +1,33 @@
 <template>
   <div v-if="displayedPosts !== undefined">
     <div v-if="displayedPosts.length > 0">
-      <PostComponent
-        v-for="post in displayedPosts"
-        v-bind:key="post.id"
-        :post="post"
-      />
+      <q-infinite-scroll
+        @load="postStore.loadPosts"
+        :offset="250"
+        :disable="postStore.areWeOnFeedBedrock"
+      >
+        <PostComponent
+          v-for="post in displayedPosts"
+          v-bind:key="post.id"
+          :post="post"
+          class="post-component"
+        />
+        <template v-slot:loading>
+          <div class="row justify-center q-my-md">
+            <q-spinner-dots color="primary" size="40px" />
+          </div>
+        </template>
+      </q-infinite-scroll>
+      <!-- We are on bedrock message -->
+      <q-card v-if="postStore.areWeOnFeedBedrock" class="q-mt-md" flat>
+        <q-card-section>
+          <div class="text-h5 text-center">
+            No more posts to display. Try changing the filters.
+          </div>
+        </q-card-section>
+      </q-card>
     </div>
+    <!-- No posts to show message -->
     <div v-else>
       <q-card class="q-mt-md" flat>
         <q-card-section>
@@ -23,14 +44,11 @@
 import PostComponent from './post/PostComponent.vue';
 import { onMounted, computed } from 'vue';
 import { usePostStore } from 'src/stores/post-store';
-import { useUserStore } from 'src/stores/user-store';
-import useNotify from 'src/composables/useNotify';
 
 const postStore = usePostStore();
-const userStore = useUserStore();
-const notify = useNotify();
 
 onMounted(async () => {
+  postStore.initFeedFilter();
   await postStore.loadPosts();
 });
 
@@ -50,6 +68,8 @@ const displayedPosts = computed(() => {
     // Filter by Group
   });
 });
-</script>
 
-<style scoped></style>
+if (displayedPosts.value.length > 0 && postStore.areWeOnFeedBedrock) {
+  postStore.loadPosts();
+}
+</script>

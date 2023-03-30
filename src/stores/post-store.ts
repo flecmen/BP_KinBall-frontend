@@ -13,7 +13,8 @@ const userStore = useUserStore();
 export const usePostStore = defineStore('postStore', () => {
 
   const newPost = ref<Post_extended>({} as Post_extended);
-  const posts = ref<Post_extended[]>();
+  const posts = ref<Post_extended[]>([]);
+  // posts sorted by date, newest first
   const posts_sorted = computed(() => {
     return posts.value?.sort((a, b) => new Date(b.time_of_creation).getTime() - new Date(a.time_of_creation).getTime())
   })
@@ -27,6 +28,11 @@ export const usePostStore = defineStore('postStore', () => {
     survey: true,
   })
   const groupsFilter = ref<{ group: Group, visible: boolean }[]>([])
+
+  // pagination and lazy loading
+  const lastLoadedPostIndex = ref(0);
+  const postPerPage = ref(10);
+  const areWeOnFeedBedrock = ref(false);
 
   function initFeedFilter() {
     groupsFilter.value = [];
@@ -53,7 +59,23 @@ export const usePostStore = defineStore('postStore', () => {
   }
 
   async function loadPosts() {
-    const response = await api.get('/post');
+    console.log('posts.value.lenght: ' + posts.value?.length)
+    console.log('postPerPage: ' + postPerPage.value)
+    console.log('dělení: ' + posts.value?.length / postPerPage.value)
+    console.log('page: ' + (Math.ceil(posts.value?.length / postPerPage.value ?? 1) || 1))
+
+    const page = Math.ceil((posts.value?.length / postPerPage.value ?? 1) + 1);
+    console.log('page: ' + page)
+    const response = await api.get('/post', { params: { page, limit: postPerPage.value } });
+
+    if (response.status === 204) {
+      Notify.create({
+        type: 'info',
+        message: i18n.t('No more posts')
+      })
+      areWeOnFeedBedrock.value = true;
+      return;
+    }
     // Fail check
     if (!response.data) {
       Notify.create({
@@ -64,8 +86,7 @@ export const usePostStore = defineStore('postStore', () => {
     }
 
     // posts loaded
-    posts.value = response.data;
-    initFeedFilter();
+    posts.value?.push(...response.data);
     return;
   }
 
@@ -187,6 +208,8 @@ export const usePostStore = defineStore('postStore', () => {
     newPost,
     posts,
     posts_sorted,
+    lastLoadedPostIndex,
+    postPerPage,
     loadPosts,
     likePost,
     likeComment,
@@ -198,5 +221,7 @@ export const usePostStore = defineStore('postStore', () => {
     addSurvey_option,
     removeSurvey_option,
     changeSurvey_optionValue,
+    initFeedFilter,
+    areWeOnFeedBedrock,
   }
 })

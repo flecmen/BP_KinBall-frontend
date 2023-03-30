@@ -23,6 +23,9 @@ export const useEventStore = defineStore('eventStore', () => {
   }
 
   async function loadEvent(eventId: Event_extended['id']) {
+    // Pokud je již event načtený v events, tak znovu načítat nebudeme
+    if (getEvent(eventId) !== undefined) return;
+    // Načtení ještě nenačteného eventu
     const response = await api.get('/event/' + eventId);
     // Fail check
     if (!response.data) {
