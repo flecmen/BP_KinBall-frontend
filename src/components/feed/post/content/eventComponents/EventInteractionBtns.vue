@@ -21,13 +21,20 @@
         @mouseover="showGoing"
         @mouseleave="hideGoing"
       />
-      <q-badge floating
+      <q-badge floating v-if="eventStore.getEvent(props.eventId)?.people_limit"
         >{{
           eventStore
             .getEvent(props.eventId)
             ?.players.filter((p) => p.status === 'going').length
-        }}/{{ eventStore.getEvent(props.eventId)?.people_limit }}</q-badge
-      >
+        }}/{{ eventStore.getEvent(props.eventId)?.people_limit }}
+      </q-badge>
+      <q-badge floating v-else
+        >{{
+          eventStore
+            .getEvent(props.eventId)
+            ?.players.filter((p) => p.status === 'going').length
+        }}
+      </q-badge>
     </q-btn>
     <q-btn
       :label="dunnoBtnLabel"
