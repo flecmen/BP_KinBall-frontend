@@ -48,6 +48,7 @@ export const usePostStore = defineStore('postStore', () => {
       author: userStore.user,
       groups: [] as Group[],
       survey_options: [] as Survey_option[],
+      type: 'text',
     } as Post_extended
   }
 

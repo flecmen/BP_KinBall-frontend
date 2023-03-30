@@ -4,34 +4,39 @@
       <q-card-section>
         <div class="text-h6">Create a new event</div>
       </q-card-section>
-
-      <q-card-section v-if="postStore.newPost.type === postType.event">
-        <q-select
-          outlined
-          v-model="postStore.newPost.event.eventType"
-          :options="eventTypes"
-          label="Event"
+      <q-card-section class="q-pt-none">
+        <GroupsSelector
+          :groups="eventStore.newEvent.event.groups"
+          @GroupsUpdate="updateGroups"
         />
       </q-card-section>
+      <q-card-section>
+        <NewEventForm />
+      </q-card-section>
+
       <q-card-actions align="right">
-        <q-btn flat label="OK" color="primary" v-close-popup />
+        <q-btn
+          label="Submit"
+          color="primary"
+          @click="eventStore.createEvent()"
+          v-close-popup
+        />
       </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
 
 <script setup lang="ts">
-import { usePostStore } from 'src/stores/post-store';
-import { postType, eventType, Event_extended } from 'src/types/dbTypes';
-import { onMounted } from 'vue';
+import GroupsSelector from '../forms/GroupsSelector.vue';
+import NewEventForm from '../forms/NewEventForm.vue';
+import { useEventStore } from 'src/stores/event-store';
+import { Event_extended } from 'src/types/dbTypes';
 
-onMounted(() => {
-  postStore.newPost.event = {} as Event_extended;
-});
+const eventStore = useEventStore();
 
-const postStore = usePostStore();
-
-const eventTypes = Object.values(eventType);
+function updateGroups(groups: Event_extended['groups']) {
+  eventStore.newEvent.event.groups = groups;
+}
 </script>
 
 <style scoped></style>

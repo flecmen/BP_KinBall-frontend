@@ -3,9 +3,11 @@
     <NavBar
       @toggle-left-drawer="toggleLeftDrawer()"
       @openCreatePostDialog="openPostDialog()"
+      @openCreateEventDialog="openEventDialog()"
     />
     <LeftDrawer v-model="leftDrawerOpen" />
-    <NewPostModal v-model="createPostDialogOpen" />
+    <NewPostModal v-model="isNewPostDialogVisible" />
+    <NewEventModal v-model="isNewEventDialogVisible" />
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -17,15 +19,21 @@ import { ref } from 'vue';
 import NavBar from 'src/components/navBar/NavBar.vue';
 import LeftDrawer from 'src/components/LeftDrawer.vue';
 import NewPostModal from 'src/components/modals/NewPostModal.vue';
+import NewEventModal from 'src/components/modals/NewEventModal.vue';
 
 const leftDrawerOpen = ref(false);
-const createPostDialogOpen = ref(false);
+const isNewPostDialogVisible = ref(false);
+const isNewEventDialogVisible = ref(false);
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 
 function openPostDialog() {
-  createPostDialogOpen.value = !createPostDialogOpen.value;
+  isNewPostDialogVisible.value = !isNewPostDialogVisible.value;
+}
+
+function openEventDialog() {
+  isNewEventDialogVisible.value = !isNewEventDialogVisible.value;
 }
 </script>

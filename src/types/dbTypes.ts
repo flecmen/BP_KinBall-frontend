@@ -107,6 +107,7 @@ export type Event_extended = (Event & {
   organiser: User_extended;
   players: UserOnEvent_extended[];
   teams: Team[];
+  groups: Group[];
 })
 
 export type UserOnEvent = {
