@@ -12,13 +12,13 @@ export type User = {
   last_signed_in: Date | null
   facebook: string | null
   instagram: string | null
-  settings: Settings
-  reward_system: Reward_system
-  groups: Group[]
+  imageId: number | null
 }
 
 export type User_extended = (User & {
-  profile_picture: Image | null;
+  profile_picture: Image | null
+  settings: Settings
+  reward_system: Reward_system
 })
 /**
  * Model Settings

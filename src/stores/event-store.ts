@@ -57,14 +57,11 @@ export const useEventStore = defineStore('eventStore', () => {
       return;
     }
     // Change frontend
-    console.log('time to change frontend')
     const index = events.value.findIndex(e => e.id == eventId)
     if (index > -1) {
       events.value.splice(index, 1)
-      console.log('splicing')
     }
     events.value.push(response.data)
-    console.log('pushing')
 
     if (response.status == 201) {
       Notify.create({

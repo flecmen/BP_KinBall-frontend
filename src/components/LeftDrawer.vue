@@ -1,5 +1,5 @@
 <template>
-  <q-drawer bordered>
+  <q-drawer bordered :width="200" :breakpoint="500">
     <q-list>
       <q-item-label header> Essential Links </q-item-label>
       <EssentialLink

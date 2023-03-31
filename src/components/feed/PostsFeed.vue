@@ -3,7 +3,7 @@
     <div v-if="displayedPosts.length > 0">
       <q-infinite-scroll
         @load="postStore.loadPosts"
-        :offset="250"
+        :offset="500"
         :disable="postStore.areWeOnFeedBedrock"
       >
         <PostComponent

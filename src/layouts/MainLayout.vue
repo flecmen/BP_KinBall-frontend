@@ -8,6 +8,9 @@
     <LeftDrawer v-model="leftDrawerOpen" />
     <NewPostModal v-model="isNewPostDialogVisible" />
     <NewEventModal v-model="isNewEventDialogVisible" />
+
+    <EventListDrawer v-model="rightDrawerOpen" />
+
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -20,6 +23,7 @@ import NavBar from 'src/components/navBar/NavBar.vue';
 import LeftDrawer from 'src/components/LeftDrawer.vue';
 import NewPostModal from 'src/components/modals/NewPostModal.vue';
 import NewEventModal from 'src/components/modals/NewEventModal.vue';
+import EventListDrawer from 'src/components/feed/eventList/eventListDrawer.vue';
 
 const leftDrawerOpen = ref(false);
 const isNewPostDialogVisible = ref(false);
@@ -36,4 +40,6 @@ function openPostDialog() {
 function openEventDialog() {
   isNewEventDialogVisible.value = !isNewEventDialogVisible.value;
 }
+
+const rightDrawerOpen = ref(true);
 </script>

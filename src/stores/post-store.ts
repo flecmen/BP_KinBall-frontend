@@ -30,7 +30,6 @@ export const usePostStore = defineStore('postStore', () => {
   const groupsFilter = ref<{ group: Group, visible: boolean }[]>([])
 
   // pagination and lazy loading
-  const lastLoadedPostIndex = ref(0);
   const postPerPage = ref(10);
   const areWeOnFeedBedrock = ref(false);
 
@@ -208,7 +207,6 @@ export const usePostStore = defineStore('postStore', () => {
     newPost,
     posts,
     posts_sorted,
-    lastLoadedPostIndex,
     postPerPage,
     loadPosts,
     likePost,
