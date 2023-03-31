@@ -2,7 +2,12 @@
   <q-btn flat round dense icon="account_circle">
     <q-menu>
       <q-list>
-        <q-item v-close-popup tabindex="0">
+        <q-item
+          v-close-popup
+          tabindex="0"
+          clickable
+          :to="{ name: 'user-profile', params: { userId: userStore.user.id } }"
+        >
           <q-item-section>
             {{ userStore.user.full_name }}
           </q-item-section>

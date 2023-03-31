@@ -20,7 +20,17 @@ const routes: RouteRecordRaw[] = [
         path: '',
         name: 'home',
         component: () => import('src/pages/HomePage.vue')
-      }
+      },
+      {
+        path: 'user/:userId',
+        children: [
+          {
+            path: 'profile',
+            name: 'user-profile',
+            component: () => import('src/pages/UserProfile.vue')
+          },
+        ]
+      },
     ],
   },
 

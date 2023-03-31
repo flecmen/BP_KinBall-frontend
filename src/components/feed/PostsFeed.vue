@@ -1,13 +1,13 @@
 <template>
-  <div v-if="displayedPosts !== undefined">
-    <div v-if="displayedPosts.length > 0">
+  <div v-if="props.posts !== undefined">
+    <div v-if="props.posts.length > 0">
       <q-infinite-scroll
         @load="postStore.loadPosts"
         :offset="500"
         :disable="postStore.areWeOnFeedBedrock"
       >
         <PostComponent
-          v-for="post in displayedPosts"
+          v-for="post in props.posts"
           v-bind:key="post.id"
           :post="post"
           class="post-component"
@@ -42,34 +42,17 @@
 
 <script setup lang="ts">
 import PostComponent from './post/PostComponent.vue';
-import { onMounted, computed } from 'vue';
+import { onMounted } from 'vue';
 import { usePostStore } from 'src/stores/post-store';
+import { Post_extended } from 'src/types/dbTypes';
+
+const props = defineProps<{
+  posts: Post_extended[];
+}>();
 
 const postStore = usePostStore();
 
 onMounted(async () => {
   postStore.initFeedFilter();
-  await postStore.loadPosts();
 });
-
-const displayedPosts = computed(() => {
-  return postStore.posts_sorted?.filter((post) => {
-    // Filter by Type
-    if (postStore.postTypeFilter[post.type] === true) {
-      for (const group of post.groups) {
-        if (
-          postStore.groupsFilter.find((o) => o.group.id === group.id)
-            ?.visible === true
-        ) {
-          return true;
-        }
-      }
-    }
-    // Filter by Group
-  });
-});
-
-if (displayedPosts.value.length > 0 && postStore.areWeOnFeedBedrock) {
-  postStore.loadPosts();
-}
 </script>

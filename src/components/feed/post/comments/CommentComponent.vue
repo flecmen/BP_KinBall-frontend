@@ -1,9 +1,7 @@
 <template>
   <q-card flat>
     <q-card-section>
-      <div class="post-name text-bold">
-        {{ props.comment.author.full_name }}
-      </div>
+      <UserName :user="props.comment.author" />
       <div class="text-caption">
         {{ dateFormat(props.comment.time_of_creation) }}
       </div>
@@ -38,6 +36,7 @@ import { defineProps, onMounted, ref } from 'vue';
 import { Post_comment_extended } from 'src/types/dbTypes';
 import { usePostStore } from 'src/stores/post-store';
 import { useUserStore } from 'src/stores/user-store';
+import UserName from '../components/UserName.vue';
 
 export interface Props {
   comment: Post_comment_extended;

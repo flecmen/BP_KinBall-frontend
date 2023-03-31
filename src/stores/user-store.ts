@@ -56,9 +56,10 @@ export const useUserStore = defineStore('userStore', () => {
     router.push({ name: 'login' })
   }
 
-  async function getUserImage(image: User_extended['profile_picture']) {
+  async function getUser(userId: User_extended['id']) {
     try {
-      //const response = await api.get('/static/image/' + image?.image_path)
+      const response = await api.get(`/user/${userId}`)
+      return response.data;
     } catch (error) {
       console.log(error)
     }
@@ -71,6 +72,7 @@ export const useUserStore = defineStore('userStore', () => {
     isAuthenticated,
     login,
     logout,
+    getUser,
   }
 },
   {

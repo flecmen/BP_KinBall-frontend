@@ -13,7 +13,7 @@ import config from 'src/config';
 
 export interface Props {
   image: User_extended['profile_picture'];
-  isMobile: boolean;
+  isMobile: boolean | null | undefined;
 }
 const props = defineProps<Props>();
 </script>

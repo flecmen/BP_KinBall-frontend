@@ -19,6 +19,7 @@ export type User_extended = (User & {
   profile_picture: Image | null
   settings: Settings
   reward_system: Reward_system
+  groups: Group[]
 })
 /**
  * Model Settings
@@ -78,7 +79,7 @@ export type Post_comment = {
 }
 
 export type Post_comment_extended = (Post_comment & {
-  author: User;
+  author: User_extended;
   likes: User[];
 })
 
