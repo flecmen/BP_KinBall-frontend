@@ -3,19 +3,16 @@
     <q-btn
       flat
       icon="favorite"
-      label="Like"
       @click="likePost"
       :loading="isBeingLiked"
-      :color="
-        post.likes.some((u) => u.id === userStore.user.id) ? 'positive' : ''
-      "
+      :color="post.likes.some((u) => u.id === userStore.user.id) ? 'red' : ''"
     >
       <q-badge color="orange" floating>{{ props.post.likes.length }}</q-badge>
       <template v-slot:loading>
         <q-spinner-facebook />
       </template>
     </q-btn>
-    <q-btn flat icon="comment" label="Comments" @click="emit('showComments')">
+    <q-btn flat icon="comment" @click="emit('showComments')">
       <q-badge color="orange" floating>{{
         props.post.comments.length
       }}</q-badge>

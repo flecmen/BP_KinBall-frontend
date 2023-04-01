@@ -109,6 +109,22 @@ export const useEventStore = defineStore('eventStore', () => {
     return;
   }
 
+  async function deleteEvent(eventId: Event_extended['id']) {
+    const response = await api.delete(`/event/${eventId}`)
+    if (response.status !== 204) {
+      Notify.create({
+        type: 'negative',
+        message: i18n.t('failed to delete event')
+      })
+      return;
+    }
+    const index = events.value.findIndex(e => e.id == eventId)
+    if (index > -1) {
+      events.value.splice(index, 1)
+    }
+    return;
+  }
+
   return {
     events,
     chronologicEvents,
@@ -118,5 +134,6 @@ export const useEventStore = defineStore('eventStore', () => {
     getEvent,
     initNewEvent,
     createEvent,
+    deleteEvent,
   }
 })

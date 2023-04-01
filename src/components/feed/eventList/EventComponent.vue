@@ -28,10 +28,9 @@
         "
         text-color="white"
         icon="expand_more"
-        @click="menuVisible = true"
       >
         {{ selectedOption || 'Select option' }}
-        <q-menu v-if="menuVisible">
+        <q-menu auto-close>
           <q-list>
             <q-item
               v-for="option in options"
@@ -50,7 +49,7 @@
 
 <script setup lang="ts">
 import { Event_extended } from 'src/types/dbTypes';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { useUserStore } from 'src/stores/user-store';
 import { useEventStore } from 'src/stores/event-store';
 
@@ -68,8 +67,6 @@ const selectedOption = computed(() => {
   );
 });
 const options = ['going', 'not_going', 'dont_know'];
-const showOptions = ref(false);
-const menuVisible = ref(false);
 
 const daysOfWeek = [
   'Sunday',
@@ -83,7 +80,6 @@ const daysOfWeek = [
 
 async function react(option: string) {
   await eventStore.reactOnEvent(props.event.id, option);
-  menuVisible.value = false;
 }
 </script>
 

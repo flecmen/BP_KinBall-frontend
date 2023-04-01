@@ -44,7 +44,7 @@ onMounted(() => {
 });
 
 const groupsSelection = ref<Group[]>([]);
-const selectedGroups = ref<Group[]>([]);
+const selectedGroups = ref<Group[]>(props.groups);
 
 function filterGroups(val: string, update) {
   if (val === '') {

@@ -5,9 +5,11 @@ import { Post } from 'src/types/dbTypes';
 import { Notify } from 'quasar';
 import { i18n } from 'src/utils/i18n';
 import { useUserStore } from './user-store';
+import { useEventStore } from './event-store';
 import { api } from 'src/boot/axios';
 
 const userStore = useUserStore();
+const eventStore = useEventStore();
 
 
 export const usePostStore = defineStore('postStore', () => {
@@ -58,13 +60,7 @@ export const usePostStore = defineStore('postStore', () => {
   }
 
   async function loadPosts() {
-    console.log('posts.value.lenght: ' + posts.value?.length)
-    console.log('postPerPage: ' + postPerPage.value)
-    console.log('dělení: ' + posts.value?.length / postPerPage.value)
-    console.log('page: ' + (Math.ceil(posts.value?.length / postPerPage.value ?? 1) || 1))
-
     const page = Math.ceil((posts.value?.length / postPerPage.value ?? 1) + 1);
-    console.log('page: ' + page)
     const response = await api.get('/post', { params: { page, limit: postPerPage.value } });
 
     if (response.status === 204) {
@@ -180,6 +176,25 @@ export const usePostStore = defineStore('postStore', () => {
     posts.value?.push(response.data)
   }
 
+  async function updatePost(post: Post_extended) {
+    // update backend
+    const response = await api.put('/post/' + post.id, post)
+    if (response.status !== 202) {
+      Notify.create({
+        type: 'negative',
+        message: i18n.t('failed')
+      })
+      return;
+    }
+    // update frontend
+    const index = posts.value?.indexOf(posts.value.find(p => p.id === post.id) as Post_extended)
+    posts.value?.splice(index, 1, response.data)
+    Notify.create({
+      type: 'positive',
+      message: i18n.t('success')
+    })
+  }
+
   function addSurvey_option(text: string) {
     newPost.value.survey_options.push({ text } as Survey_option_extended)
   }
@@ -202,6 +217,23 @@ export const usePostStore = defineStore('postStore', () => {
     return;
   }
 
+  async function deletePost(postId: Post_extended['id']) {
+    const post = posts.value.find(p => p.id === postId)
+    if (!post) return;
+    const response = await api.delete('/post/' + postId)
+    if (response.status !== 204) {
+      Notify.create({
+        type: 'negative',
+        message: i18n.t('failed')
+      })
+      return;
+    }
+    if (post.type === 'event' && post.event) {
+      await eventStore.deleteEvent(post.event.id)
+    }
+    posts.value?.splice(posts.value?.findIndex(p => p.id === postId) as number, 1)
+  }
+
 
   return {
     newPost,
@@ -221,5 +253,8 @@ export const usePostStore = defineStore('postStore', () => {
     changeSurvey_optionValue,
     initFeedFilter,
     areWeOnFeedBedrock,
+    deletePost,
+    getLocalPost,
+    updatePost,
   }
 })

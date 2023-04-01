@@ -11,6 +11,7 @@
           v-bind:key="post.id"
           :post="post"
           class="post-component"
+          @edit-post="emit('edit-post', post.id)"
         />
         <template v-slot:loading>
           <div class="row justify-center q-my-md">
@@ -48,6 +49,10 @@ import { Post_extended } from 'src/types/dbTypes';
 
 const props = defineProps<{
   posts: Post_extended[];
+}>();
+
+const emit = defineEmits<{
+  (event: 'edit-post', postIt: Post_extended['id']): void;
 }>();
 
 const postStore = usePostStore();

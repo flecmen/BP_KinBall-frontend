@@ -6,13 +6,17 @@
       @openCreateEventDialog="openEventDialog()"
     />
     <LeftDrawer v-model="leftDrawerOpen" />
-    <NewPostModal v-model="isNewPostDialogVisible" />
+    <PostModal
+      v-if="isPostDialogVisible"
+      v-model="isPostDialogVisible"
+      :postId_to_edit="postId_to_edit"
+    />
     <NewEventModal v-model="isNewEventDialogVisible" />
 
     <EventListDrawer v-model="rightDrawerOpen" />
 
     <q-page-container>
-      <router-view />
+      <router-view @edit-post="openPostDialog" />
     </q-page-container>
   </q-layout>
 </template>
@@ -21,20 +25,27 @@
 import { ref } from 'vue';
 import NavBar from 'src/components/navBar/NavBar.vue';
 import LeftDrawer from 'src/components/LeftDrawer.vue';
-import NewPostModal from 'src/components/modals/NewPostModal.vue';
+import PostModal from 'src/components/modals/PostModal.vue';
 import NewEventModal from 'src/components/modals/NewEventModal.vue';
 import EventListDrawer from 'src/components/feed/eventList/eventListDrawer.vue';
+import { usePostStore } from 'src/stores/post-store';
+
+const postStore = usePostStore();
 
 const leftDrawerOpen = ref(false);
-const isNewPostDialogVisible = ref(false);
+const isPostDialogVisible = ref(false);
 const isNewEventDialogVisible = ref(false);
+
+let postId_to_edit = ref(-1);
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 
-function openPostDialog() {
-  isNewPostDialogVisible.value = !isNewPostDialogVisible.value;
+function openPostDialog(postId?: number) {
+  if (postId) postId_to_edit.value = postId;
+  else postId_to_edit.value = -1;
+  isPostDialogVisible.value = !isPostDialogVisible.value;
 }
 
 function openEventDialog() {

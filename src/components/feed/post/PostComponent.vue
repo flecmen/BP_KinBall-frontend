@@ -1,7 +1,11 @@
 <template>
   <q-card class="post q-ma-sm">
     <q-card-section>
-      <PostHead :post="props.post" :isMobile="isMobile" />
+      <PostHead
+        :post="props.post"
+        :isMobile="isMobile"
+        @edit-post="emit('edit-post', props.post.id)"
+      />
       <PostContent :post="props.post" :isMobile="isMobile" />
     </q-card-section>
     <q-separator />
@@ -33,6 +37,10 @@ export interface Props {
   post: Post_extended;
 }
 const props = defineProps<Props>();
+
+const emit = defineEmits<{
+  (event: 'edit-post', postIt: Post_extended['id']): void;
+}>();
 
 const isCommentSectionVisible = ref(false);
 
