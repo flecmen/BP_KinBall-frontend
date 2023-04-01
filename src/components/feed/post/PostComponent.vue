@@ -1,6 +1,6 @@
 <template>
   <q-card class="post q-ma-sm">
-    <q-card-section class="post-header">
+    <q-card-section>
       <PostHead :post="props.post" :isMobile="isMobile" />
       <PostContent :post="props.post" :isMobile="isMobile" />
     </q-card-section>

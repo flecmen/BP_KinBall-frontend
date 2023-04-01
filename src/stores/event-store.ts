@@ -1,6 +1,6 @@
 import { Event_extended, UserOnEventStatus } from './../types/dbTypes';
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { Notify } from 'quasar';
 import { i18n } from 'src/utils/i18n';
 import { useUserStore } from './user-store';
@@ -17,6 +17,10 @@ export const useEventStore = defineStore('eventStore', () => {
     period: number // weeks
     isPeriodic: boolean
   }>({ event: { time: new Date(), organiser: userStore.user } as Event_extended, period: 1, isPeriodic: false })
+
+  const chronologicEvents = computed(() => {
+    return events.value.sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
+  });
 
   function initNewEvent() {
     newEvent.value = { event: { time: new Date(), organiser: userStore.user } as Event_extended, period: 1, isPeriodic: false }
@@ -104,8 +108,10 @@ export const useEventStore = defineStore('eventStore', () => {
     events.value.push(response.data);
     return;
   }
+
   return {
     events,
+    chronologicEvents,
     newEvent,
     loadEvent,
     reactOnEvent,
