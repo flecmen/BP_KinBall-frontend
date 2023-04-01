@@ -21,6 +21,7 @@
         dense
         @click="openCreateEventDialog()"
       />
+      <q-btn label="Admin" flat dense @click="router.push({ name: 'admin' })" />
 
       <q-toolbar-title> </q-toolbar-title>
 

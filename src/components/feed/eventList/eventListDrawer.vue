@@ -15,7 +15,6 @@
 <script setup lang="ts">
 import { useEventStore } from 'src/stores/event-store';
 import EventComponent from './EventComponent.vue';
-import { computed } from 'vue';
 
 const eventStore = useEventStore();
 </script>

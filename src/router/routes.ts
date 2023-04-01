@@ -27,10 +27,21 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'profile',
             name: 'user-profile',
-            component: () => import('src/pages/UserProfile.vue')
+            component: () => import('src/pages/UserProfile.vue'),
           },
         ]
       },
+    ],
+  },
+  {
+    path: '/admin',
+    component: () => import('layouts/SimpleLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: 'admin',
+        component: () => import('src/pages/AdminPage.vue'),
+      }
     ],
   },
 
