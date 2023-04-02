@@ -180,7 +180,7 @@ export const UserOnEventStatus = {
   going: 'going',
   not_going: 'not going',
   dont_know: 'dont know',
-  substitue: 'substitue'
+  substitute: 'substitute'
 };
 export type UserOnEventStatus = (typeof UserOnEventStatus)[keyof typeof UserOnEventStatus]
 
@@ -205,11 +205,11 @@ export type postType = (typeof postType)[keyof typeof postType]
 
 export const role = {
   admin: 'admin',
-  trener: 'trener',
-  clen_spolku_hrac: 'clen_spolku_hrac',
-  neclen_spolku_hrac: 'neclen_spolku_hrac',
-  hrac_z_jineho_klubu: 'hrac_z_jineho_klubu',
-  zajemce: 'zajemce'
+  trener: 'trenér',
+  clen_spolku_hrac: 'hráč',
+  neclen_spolku_hrac: 'hráč nečlen',
+  hrac_z_jineho_klubu: 'hráč jiného klubu',
+  zajemce: 'zájemce'
 };
 
 export type role = (typeof role)[keyof typeof role]

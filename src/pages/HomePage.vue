@@ -5,14 +5,12 @@
     </q-page-sticky>
 
     <PostsFeed :posts="displayedPosts" class="col-6" @edit-post="editPost" />
-    <PostModal />
   </q-page>
 </template>
 
 <script setup lang="ts">
 import PostsFeed from 'src/components/feed/PostsFeed.vue';
 import FeedFilter from 'src/components/feed/post/filter/FeedFilter.vue';
-import PostModal from 'src/components/modals/PostModal.vue';
 import { onMounted, computed } from 'vue';
 import { usePostStore } from 'src/stores/post-store';
 

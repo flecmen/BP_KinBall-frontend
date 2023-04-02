@@ -45,13 +45,11 @@
       </div>
     </q-item-section>
     <q-item-section side>
-      <q-badge
+      <GroupChip
         v-for="group in props.post.groups"
         v-bind:key="group.id"
-        :color="group.color ?? 'primary'"
-        text-color="white"
-        >{{ group.name }}</q-badge
-      >
+        :group="group"
+      />
     </q-item-section>
   </q-item>
   <q-item>
@@ -67,6 +65,7 @@ import userAvatar from 'src/components/userAvatar.vue';
 import RoleChip from 'src/components/RoleChip.vue';
 import UserName from './components/UserName.vue';
 import { usePostStore } from 'src/stores/post-store';
+import GroupChip from 'src/components/GroupChip.vue';
 
 export interface Props {
   post: Post_extended;
