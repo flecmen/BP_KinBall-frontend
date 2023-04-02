@@ -71,8 +71,10 @@
           ></q-btn>
         </q-td>
       </template>
+
+      <!-- GROUPS -->
       <template v-slot:body-cell-groups="props">
-        <q-td :props="props" class="">
+        <q-td :props="props">
           <GroupChip
             v-for="group in props.row.groups"
             v-bind:key="group.id"
@@ -90,6 +92,7 @@ import { useAdminStore } from 'src/stores/admin-store';
 import useNotify from 'src/composables/useNotify';
 import GroupChip from 'src/components/GroupChip.vue';
 import UserModal from 'src/components/modals/UserModal.vue';
+import { role } from 'src/types/dbTypes';
 
 const adminStore = useAdminStore();
 const notify = useNotify();
@@ -180,6 +183,7 @@ const table = reactive({
       label: 'Role',
       field: 'role',
       align: 'left',
+      format: (val: string) => role[val as keyof typeof role],
     },
     {
       name: 'last_login',
