@@ -37,4 +37,8 @@ export default {
       survey: 'Survey',
     }
   },
+  settings: {
+    email_notification: 'Email notification',
+    push_notification: 'Push notification',
+  }
 };

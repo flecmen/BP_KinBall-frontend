@@ -22,13 +22,23 @@ const routes: RouteRecordRaw[] = [
         component: () => import('src/pages/HomePage.vue')
       },
       {
-        path: 'user/:userId',
+        path: 'user',
         children: [
           {
-            path: 'profile',
-            name: 'user-profile',
-            component: () => import('src/pages/UserProfile.vue'),
+            path: 'settings',
+            name: 'user-settings',
+            component: () => import('src/pages/user/UserSettings.vue'),
           },
+          {
+            path: 'id/:userId',
+            children: [
+              {
+                path: 'profile',
+                name: 'user-profile',
+                component: () => import('src/pages/user/UserProfile.vue'),
+              },
+            ]
+          }
         ]
       },
     ],

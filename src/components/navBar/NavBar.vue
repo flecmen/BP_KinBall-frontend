@@ -28,7 +28,10 @@
       <div>
         <LanguageButton />
         <NotificationButton />
-        <AccountCirleButton @logout="logout()" />
+        <AccountCirleButton
+          @logout="logout()"
+          @settings="router.push({ name: 'user-settings' })"
+        />
       </div>
     </q-toolbar>
   </q-header>

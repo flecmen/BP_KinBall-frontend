@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import { Notify } from 'quasar';
-import { User_extended } from 'src/types/dbTypes';
+import { Settings, User_extended } from 'src/types/dbTypes';
 import { i18n } from 'src/utils/i18n';
 import { router } from 'src/router/index'
 import { api } from 'src/boot/axios';
@@ -65,6 +65,36 @@ export const useUserStore = defineStore('userStore', () => {
     }
   }
 
+  async function updateSettings(settings: Settings) {
+    const new_user = JSON.parse(JSON.stringify(user.value))
+    new_user.settings = settings
+    const response = await api.put(`/user/${user.value.id}`, new_user)
+    user.value = response.data;
+    Notify.create({
+      type: 'positive',
+      message: i18n.t('success')
+    })
+    return;
+  }
+
+  async function changePassword(password: string) {
+    const response = await api.put(`/user/changePassword/${user.value.id}`, { password })
+    if (response.status === 400) {
+      Notify.create({
+        type: 'negative',
+        message: i18n.t(response.data.error)
+      })
+      return;
+    }
+    if (response.status === 200) {
+      Notify.create({
+        type: 'positive',
+        message: i18n.t('success')
+      })
+    }
+    return;
+  }
+
   return {
     user,
     afterLoginRoute,
@@ -73,6 +103,8 @@ export const useUserStore = defineStore('userStore', () => {
     login,
     logout,
     getUser,
+    updateSettings,
+    changePassword,
   }
 },
   {

@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia';
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { Notify } from 'quasar';
 import { User_extended } from 'src/types/dbTypes';
 import { i18n } from 'src/utils/i18n';
-import { router } from 'src/router/index'
+
 import { api } from 'src/boot/axios';
 
 export const useAdminStore = defineStore('adminStore', () => {
