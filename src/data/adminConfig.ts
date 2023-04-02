@@ -9,6 +9,6 @@ export const tiles = [
     icon: 'person',
     title: 'users',
     description: 'users description',
-    link: '/users',
+    link: 'admin/users',
   },
 ]
