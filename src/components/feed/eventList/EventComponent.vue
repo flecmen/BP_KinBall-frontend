@@ -34,11 +34,14 @@
           <q-list>
             <q-item
               v-for="option in options"
-              :key="option"
+              :key="option.value"
               clickable
-              @click="react(option)"
+              emit-label
+              map-options
+              dense
+              @click="react(option.value)"
             >
-              <q-item-section>{{ option }}</q-item-section>
+              <q-item-section>{{ option.label }}</q-item-section>
             </q-item>
           </q-list>
         </q-menu>
@@ -52,6 +55,7 @@ import { Event_extended } from 'src/types/dbTypes';
 import { computed } from 'vue';
 import { useUserStore } from 'src/stores/user-store';
 import { useEventStore } from 'src/stores/event-store';
+import { UserOnEventStatus } from 'src/types/dbTypes';
 
 const props = defineProps<{
   event: Event_extended;
@@ -66,7 +70,10 @@ const selectedOption = computed(() => {
     'Choose option'
   );
 });
-const options = ['going', 'not_going', 'dont_know'];
+const options = Object.entries(UserOnEventStatus).map(([key, value]) => ({
+  label: value,
+  value: key,
+}));
 
 const daysOfWeek = [
   'Sunday',
