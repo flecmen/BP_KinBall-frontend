@@ -42,6 +42,11 @@ export const useEventStore = defineStore('eventStore', () => {
     }
 
     // event loaded
+    // if event with same id already is in events.value, remove it and replace with this one
+    const index = events.value.findIndex(e => e.id == eventId)
+    if (index > -1) {
+      events.value.splice(index, 1)
+    }
     events.value.push(response.data)
     return;
   }
@@ -150,4 +155,7 @@ export const useEventStore = defineStore('eventStore', () => {
     createEvent,
     deleteEvent,
   }
-})
+},
+  {
+    persist: true
+  })

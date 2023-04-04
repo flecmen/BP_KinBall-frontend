@@ -77,7 +77,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'events/myEvents',
         name: 'events-crud',
-        component: () => import('src/pages/admin/events/EventsCrudPage.vue'),
+        component: () => import('src/pages/admin/events/MyEventsCrud.vue'),
       },
 
       {

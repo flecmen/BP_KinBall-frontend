@@ -80,6 +80,16 @@ export const usePostStore = defineStore('postStore', () => {
     }
 
     // posts loaded
+    // parse the response.data and for each event, check if it is already in the store
+    // if it is, update it, if not, add it
+    response.data.forEach((p: Post_extended) => {
+      const index = posts.value?.findIndex((e: Post_extended) => e.id === p.id);
+      if (index === -1) {
+        posts.value?.push(p);
+      } else {
+        posts.value?.splice(index, 1, p);
+      }
+    })
     posts.value?.push(...response.data);
     return;
   }
@@ -270,4 +280,7 @@ export const usePostStore = defineStore('postStore', () => {
     getLocalPost,
     updatePost,
   }
-})
+},
+  {
+    persist: true
+  })
