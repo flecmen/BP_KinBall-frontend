@@ -4,12 +4,13 @@
   </div>
   <div class="row q-mt-md q-gutter-xl q-pa-md">
     <AdminTile
-      v-for="tile in tiles"
+      v-for="tile in props.tiles"
       v-bind:key="tile.title"
       :title="tile.title"
       :link="tile.link"
       :iconClass="tile.icon"
       :description="tile.description"
+      :icon="tile.icon"
       class="tile"
     />
   </div>
@@ -17,7 +18,11 @@
 
 <script setup lang="ts">
 import AdminTile from 'src/components/admin/AdminTile.vue';
-import { tiles } from 'src/data/adminConfig';
+import { Tile } from 'src/data/adminConfig';
+
+const props = defineProps<{
+  tiles: Tile[];
+}>();
 </script>
 
 <style scoped>

@@ -9,7 +9,6 @@ import { useEventStore } from './event-store';
 import { api } from 'src/boot/axios';
 
 const userStore = useUserStore();
-const eventStore = useEventStore();
 
 
 export const usePostStore = defineStore('postStore', () => {
@@ -229,9 +228,22 @@ export const usePostStore = defineStore('postStore', () => {
       return;
     }
     if (post.type === 'event' && post.event) {
-      await eventStore.deleteEvent(post.event.id)
+      await useEventStore().deleteEvent(post.event.id)
     }
     posts.value?.splice(posts.value?.findIndex(p => p.id === postId) as number, 1)
+  }
+
+  // Load multiple posts by ID array
+  async function loadMultiplePosts(postIds: Post_extended['id'][]) {
+    const response = await api.get('/post/multiple', { params: { postIdArray: postIds.join(',') } })
+    if (response.status !== 200) {
+      Notify.create({
+        type: 'negative',
+        message: i18n.t('failed')
+      })
+      return;
+    }
+    posts.value.push(...response.data)
   }
 
 
@@ -241,6 +253,7 @@ export const usePostStore = defineStore('postStore', () => {
     posts_sorted,
     postPerPage,
     loadPosts,
+    loadMultiplePosts,
     likePost,
     likeComment,
     sendComment,

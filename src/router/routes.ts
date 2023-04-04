@@ -1,4 +1,5 @@
 import { RouteRecordRaw } from 'vue-router';
+import { AdminTiles, EventsTiles } from 'src/data/adminConfig';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -51,7 +52,34 @@ const routes: RouteRecordRaw[] = [
         path: '',
         name: 'admin',
         component: () => import('src/pages/admin/AdminPage.vue'),
+        props: {
+          tiles: AdminTiles,
+        },
       },
+      {
+        path: 'events',
+        name: 'admin-events',
+        component: () => import('src/pages/admin/AdminPage.vue'),
+        props: {
+          tiles: EventsTiles,
+        },
+      },
+      {
+        path: 'events/create',
+        name: 'create-event',
+        component: () => import('src/pages/admin/events/CreateEventPage.vue'),
+      },
+      {
+        path: 'events/today',
+        name: 'today-agenda',
+        component: () => import('src/pages/admin/events/TodayAgendaPage.vue'),
+      },
+      {
+        path: 'events/myEvents',
+        name: 'events-crud',
+        component: () => import('src/pages/admin/events/EventsCrudPage.vue'),
+      },
+
       {
         path: 'users',
         name: 'users-crud',

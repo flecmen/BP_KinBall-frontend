@@ -4,6 +4,7 @@ import { ref, computed } from 'vue';
 import { Notify } from 'quasar';
 import { i18n } from 'src/utils/i18n';
 import { useUserStore } from './user-store';
+import { usePostStore } from './post-store';
 import { api } from 'src/boot/axios';
 
 const userStore = useUserStore();
@@ -79,8 +80,10 @@ export const useEventStore = defineStore('eventStore', () => {
     //format date correctly
     const [day, month, year, hours, minutes] = newEvent.value.event.time.toString().split(/[.: ]/);
     newEvent.value.event.time = new Date(`${year}-${month}-${day}T${hours}:${minutes}:00`);
-
-    // Periodic event, creating all events by period
+    const newPostsIds: number[] = []
+    /*
+    *Periodic event, creating all events by period
+    */
     if (newEvent.value.isPeriodic && newEvent.value.period > 1) {
       for (let i = 0; i < newEvent.value.period; i++) {
         const response = await api.post('/event', newEvent.value.event)
@@ -91,21 +94,32 @@ export const useEventStore = defineStore('eventStore', () => {
           })
           return;
         }
+        // save event on FE
         events.value.push(response.data);
+        // save post ID for later load of posts
+        newPostsIds.push(response.data.postId)
+        // prepare next event time for next week
         newEvent.value.event.time = new Date(newEvent.value.event.time.getTime() + 7 * 24 * 60 * 60 * 1000)
       }
-      return;
+      /*
+      * only one event
+      */
+    } else {
+      const response = await api.post('/event', newEvent.value.event)
+      if (!response.data) {
+        Notify.create({
+          type: 'negative',
+          message: i18n.t('failed to create event')
+        })
+        return;
+      }
+      // save event on FE
+      events.value.push(response.data);
+      // save post ID for later load of posts
+      newPostsIds.push(response.data.postId)
     }
-    // only one event
-    const response = await api.post('/event', newEvent.value.event)
-    if (!response.data) {
-      Notify.create({
-        type: 'negative',
-        message: i18n.t('failed to create event')
-      })
-      return;
-    }
-    events.value.push(response.data);
+    // load posts for new events
+    await usePostStore().loadMultiplePosts(newPostsIds);
     return;
   }
 

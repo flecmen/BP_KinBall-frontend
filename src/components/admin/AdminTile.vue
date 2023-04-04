@@ -1,8 +1,9 @@
 <template>
-  <router-link :to="{ path: props.link }" class="router-link">
+  <router-link :to="{ name: props.link }" class="router-link">
     <q-card class="text-grey q-hoverable">
       <span class="q-focus-helper"></span>
       <q-card-section>
+        <q-icon :name="props.icon" />
         <h2 class="text-primary">{{ props.title }}</h2>
         <p class="font-light">{{ props.description }}</p>
       </q-card-section>
@@ -12,10 +13,10 @@
 
 <script setup lang="ts">
 const props = defineProps<{
+  icon: string;
   title: string;
-  link: string;
-  iconClass: string;
   description: string;
+  link: string;
 }>();
 </script>
 
