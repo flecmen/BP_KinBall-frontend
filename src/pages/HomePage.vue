@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import PostsFeed from 'src/components/feed/PostsFeed.vue';
 import FeedFilter from 'src/components/feed/post/filter/FeedFilter.vue';
-import { onMounted, computed } from 'vue';
+import { computed } from 'vue';
 import { usePostStore } from 'src/stores/post-store';
 
 const emit = defineEmits<{
@@ -19,10 +19,6 @@ const emit = defineEmits<{
 }>();
 
 const postStore = usePostStore();
-
-onMounted(async () => {
-  await postStore.loadPosts();
-});
 
 const displayedPosts = computed(() => {
   return postStore.posts_sorted?.filter((post) => {

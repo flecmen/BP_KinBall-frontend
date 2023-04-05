@@ -1,43 +1,30 @@
 <template>
   <div v-if="props.posts !== undefined">
-    <div v-if="props.posts.length > 0">
-      <q-infinite-scroll
-        @load="postStore.loadPosts"
-        :offset="500"
-        :disable="postStore.areWeOnFeedBedrock"
-      >
-        <PostComponent
-          v-for="post in props.posts"
-          v-bind:key="post.id"
-          :post="post"
-          class="post-component"
-          @edit-post="emit('edit-post', post.id)"
-        />
-        <template v-slot:loading>
-          <div class="row justify-center q-my-md">
-            <q-spinner-dots color="primary" size="40px" />
-          </div>
-        </template>
-      </q-infinite-scroll>
-      <!-- We are on bedrock message -->
-      <q-card v-if="postStore.areWeOnFeedBedrock" class="q-mt-md" flat>
-        <q-card-section>
-          <div class="text-h5 text-center">
-            No more posts to display. Try changing the filters.
-          </div>
-        </q-card-section>
-      </q-card>
-    </div>
-    <!-- No posts to show message -->
-    <div v-else>
-      <q-card class="q-mt-md" flat>
-        <q-card-section>
-          <div class="text-h5 text-center">
-            No posts to display. Try changing the filters.
-          </div>
-        </q-card-section>
-      </q-card>
-    </div>
+    <q-infinite-scroll
+      @load="fetchPosts"
+      :disable="postStore.areWeOnFeedBedrock"
+    >
+      <PostComponent
+        v-for="post in props.posts"
+        v-bind:key="post.id"
+        :post="post"
+        class="post-component"
+        @edit-post="emit('edit-post', post.id)"
+      />
+      <template v-slot:loading>
+        <div class="row justify-center q-my-md">
+          <q-spinner-dots color="primary" size="40px" />
+        </div>
+      </template>
+    </q-infinite-scroll>
+    <!-- We are on bedrock message -->
+    <q-card v-if="postStore.areWeOnFeedBedrock" class="q-mt-md" flat>
+      <q-card-section>
+        <div class="text-h5 text-center">
+          No more posts to display. Try changing the filters.
+        </div>
+      </q-card-section>
+    </q-card>
   </div>
 </template>
 
@@ -56,6 +43,12 @@ const emit = defineEmits<{
 }>();
 
 const postStore = usePostStore();
+
+async function fetchPosts(index: number, done: () => void) {
+  console.log('loadMore()');
+  await postStore.loadPosts();
+  done();
+}
 
 onMounted(async () => {
   postStore.initFeedFilter();

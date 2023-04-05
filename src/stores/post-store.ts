@@ -62,16 +62,7 @@ export const usePostStore = defineStore('postStore', () => {
     const page = Math.ceil((posts.value?.length / postPerPage.value ?? 1) + 1);
     const response = await api.get('/post', { params: { page, limit: postPerPage.value } });
 
-    // Fail check
-    if (!response.data) {
-      Notify.create({
-        type: 'negative',
-        message: i18n.t('failed')
-      })
-      return;
-    }
-
-    // No more posts
+    // No more posts, must be before fail check!!
     if (response.status === 204) {
       Notify.create({
         type: 'info',
@@ -81,17 +72,21 @@ export const usePostStore = defineStore('postStore', () => {
       return;
     }
 
+    // Fail check
+    if (!response.data) {
+      Notify.create({
+        type: 'negative',
+        message: i18n.t('failed')
+      })
+      return;
+    }
+
     // posts loaded
     // parse the response.data and for each event, check if it is already in the store
     // if it is, update it, if not, add it
     const eventsToBeLoadedByPostId: number[] = [];
     response.data.forEach((p: Post_extended) => {
-      const index = posts.value?.findIndex((e: Post_extended) => e.id === p.id);
-      if (index === -1) {
-        posts.value?.push(p);
-      } else {
-        posts.value?.splice(index, 1, p);
-      }
+      pushPost(p)
       if (p.type === 'event') {
         eventsToBeLoadedByPostId.push(p.id);
       }
@@ -262,6 +257,13 @@ export const usePostStore = defineStore('postStore', () => {
       return;
     }
     posts.value.push(...response.data)
+  }
+
+  function pushPost(post: Post_extended) {
+    const index = posts.value.findIndex(p => p.id === post.id)
+    if (index !== -1) posts.value.splice(index, 1, post)
+    else posts.value.push(post)
+    return;
   }
 
 
