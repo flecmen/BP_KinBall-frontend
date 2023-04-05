@@ -1,6 +1,6 @@
 <template>
   <div class="row q-pa-lg bg-blue">
-    <div class="text-h3">Welcome to Admin</div>
+    <div class="text-h3 text-white">Welcome to Admin</div>
   </div>
   <div class="row q-mt-md q-gutter-xl q-pa-md">
     <AdminTile
