@@ -30,7 +30,6 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
 import { Event_extended } from 'src/types/dbTypes';
 import { useEventStore } from 'src/stores/event-store';
 import dateFormat from 'src/helpers/dateFormat';
@@ -43,14 +42,11 @@ export interface Props {
 }
 const props = defineProps<Props>();
 
+// const emit = defineEmits<{
+//   (event: 'edit-post', postIt: Post_extended['id']): void;
+// }>();
+
 const eventStore = useEventStore();
-
-onMounted(() => {
-  eventStore.loadEvent(props.eventId);
-  isEventLoading.value = false;
-});
-
-const isEventLoading = ref(true);
 </script>
 
 <style scoped></style>

@@ -22,6 +22,7 @@ export const useEventStore = defineStore('eventStore', () => {
   const chronologicEvents = computed(() => {
     return events.value.sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
   });
+  const areWeOnEventsFeedBedrock = ref(false);
 
   function initNewEvent() {
     newEvent.value = { event: { time: new Date(), organiser: userStore.user } as Event_extended, period: 1, isPeriodic: false }
@@ -42,13 +43,36 @@ export const useEventStore = defineStore('eventStore', () => {
     }
 
     // event loaded
-    // if event with same id already is in events.value, remove it and replace with this one
-    const index = events.value.findIndex(e => e.id == eventId)
-    if (index > -1) {
-      events.value.splice(index, 1)
-    }
-    events.value.push(response.data)
+    pushEvent(response.data)
     return;
+  }
+
+  async function loadEvents() {
+    const page = Math.ceil((events.value?.length / 10 ?? 1) + 1);
+    const response = await api.get('/event', { params: { page, limit: 10 } });
+
+    // Fail check
+    if (!response.data) {
+      Notify.create({
+        type: 'negative',
+        message: i18n.t('failed to load events')
+      })
+      return;
+    }
+
+    // no more events
+    if (response.status === 204) {
+      Notify.create({
+        type: 'info',
+        message: i18n.t('No more posts')
+      })
+      areWeOnEventsFeedBedrock.value = true;
+      return;
+    }
+
+    response.data.forEach((e: Event_extended) => {
+      pushEvent(e);
+    })
   }
 
   function getEvent(eventId: Event_extended['id']) {
@@ -119,7 +143,7 @@ export const useEventStore = defineStore('eventStore', () => {
         return;
       }
       // save event on FE
-      events.value.push(response.data);
+      pushEvent(response.data)
       // save post ID for later load of posts
       newPostsIds.push(response.data.postId)
     }
@@ -144,16 +168,44 @@ export const useEventStore = defineStore('eventStore', () => {
     return;
   }
 
+  async function loadMultipleEventsByPostId(postIds: number[]) {
+    if (postIds.length < 1) return;
+    const response = await api.get('/event/multiple/byPostIds', { params: { postIdArray: postIds.join(',') } })
+    if (!response.data) {
+      Notify.create({
+        type: 'negative',
+        message: i18n.t('failed to load events')
+      })
+      return;
+    }
+    response.data.forEach((event: Event_extended) => {
+      pushEvent(event)
+    })
+  }
+
+  function pushEvent(event: Event_extended) {
+    const index = events.value.findIndex(e => e.id == event.id)
+    if (index > -1) {
+      events.value.splice(index, 1, event)
+    } else {
+      events.value.push(event)
+    }
+    return;
+  }
+
   return {
     events,
     chronologicEvents,
     newEvent,
+    loadEvents,
     loadEvent,
     reactOnEvent,
     getEvent,
     initNewEvent,
     createEvent,
     deleteEvent,
+    loadMultipleEventsByPostId,
+    areWeOnEventsFeedBedrock
   }
 },
   // {
