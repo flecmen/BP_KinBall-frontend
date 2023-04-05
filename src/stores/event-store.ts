@@ -20,7 +20,8 @@ export const useEventStore = defineStore('eventStore', () => {
   }>({ event: { time: new Date(), organiser: userStore.user } as Event_extended, period: 1, isPeriodic: false })
 
   const chronologicEvents = computed(() => {
-    return events.value.sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
+    return events.value.filter(e => new Date(e.time).getTime() > new Date().getTime())
+      .sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
   });
   const areWeOnEventsFeedBedrock = ref(false);
 
@@ -47,9 +48,15 @@ export const useEventStore = defineStore('eventStore', () => {
     return;
   }
 
-  async function loadEvents() {
-    const page = Math.ceil((events.value?.length / 10 ?? 1) + 1);
-    const response = await api.get('/event', { params: { page, limit: 10 } });
+  async function loadEvents(index: number, limit: number) {
+    const response = await api.get('/event', { params: { page: index, limit } });
+
+    // no more events
+    if (response.status === 204) {
+      console.log('no more events')
+      areWeOnEventsFeedBedrock.value = true;
+      return;
+    }
 
     // Fail check
     if (!response.data) {
@@ -57,16 +64,6 @@ export const useEventStore = defineStore('eventStore', () => {
         type: 'negative',
         message: i18n.t('failed to load events')
       })
-      return;
-    }
-
-    // no more events
-    if (response.status === 204) {
-      Notify.create({
-        type: 'info',
-        message: i18n.t('No more posts')
-      })
-      areWeOnEventsFeedBedrock.value = true;
       return;
     }
 

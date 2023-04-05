@@ -3,7 +3,7 @@
     <q-scroll-area class="fit" visible>
       <q-infinite-scroll
         class="q-pa-sm q-gutter-sm"
-        @load="eventStore.loadEvents"
+        @load="fetchEvents"
         :disable="eventStore.areWeOnEventsFeedBedrock"
       >
         <EventComponent
@@ -20,15 +20,17 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
 import { useEventStore } from 'src/stores/event-store';
 import EventComponent from './EventComponent.vue';
 
 const eventStore = useEventStore();
 
-onMounted(() => {
-  //eventStore.getEvents();
-});
+const limit = 10;
+
+async function fetchEvents(index: number, done: () => void) {
+  await eventStore.loadEvents(index, limit);
+  done();
+}
 </script>
 
 <style scoped></style>
