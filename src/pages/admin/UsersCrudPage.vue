@@ -43,9 +43,12 @@
               <q-card class="my-card">
                 <q-card-section class="bg-primary text-white">
                   <div class="text">
-                    Určitě TRVALE smazat zákazníka "{{
-                      props.row.nazev_firmy
-                    }}"?
+                    {{
+                      $t('Are you sure to permanently delete') +
+                      ' ' +
+                      props.row.full_name +
+                      '?'
+                    }}
                   </div>
                 </q-card-section>
                 <q-card-actions align="right">
@@ -100,17 +103,6 @@ const notify = useNotify();
 onMounted(async () => {
   table.isLoading = true;
   await adminStore.loadUsers();
-  table.rows = computed(() => {
-    return adminStore.users.filter((user) => {
-      return (
-        user.full_name
-          .toLowerCase()
-          .includes(table.searchfilter.toLowerCase()) ||
-        user.email.toLowerCase().includes(table.searchfilter.toLowerCase()) ||
-        user.role.toLowerCase().includes(table.searchfilter.toLowerCase())
-      );
-    });
-  });
   table.isLoading = false;
 });
 
@@ -198,7 +190,17 @@ const table = reactive({
       align: 'left',
     },
   ],
-  rows: [] as typeof adminStore.users,
+  rows: computed(() => {
+    return adminStore.users.filter((user) => {
+      return (
+        user.full_name
+          .toLowerCase()
+          .includes(table.searchfilter.toLowerCase()) ||
+        user.email.toLowerCase().includes(table.searchfilter.toLowerCase()) ||
+        user.role.toLowerCase().includes(table.searchfilter.toLowerCase())
+      );
+    });
+  }),
   isLoading: true,
   searchCol: '',
   searchfilter: '',
