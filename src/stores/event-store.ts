@@ -156,6 +156,7 @@ export const useEventStore = defineStore('eventStore', () => {
     deleteEvent,
   }
 },
-  {
-    persist: true
-  })
+  // {
+  //   persist: true
+  // }
+)

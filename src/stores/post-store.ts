@@ -281,6 +281,7 @@ export const usePostStore = defineStore('postStore', () => {
     updatePost,
   }
 },
-  {
-    persist: true
-  })
+  // {
+  //   persist: true
+  // }
+)
