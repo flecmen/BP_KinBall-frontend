@@ -170,7 +170,7 @@ export const useEventStore = defineStore('eventStore', () => {
 
   async function loadMultipleEventsByPostId(postIds: number[]) {
     if (postIds.length < 1) return;
-    const response = await api.get('/event/multiple/byPostIds', { params: { postIdArray: postIds.join(',') } })
+    const response = await api.get('/event/multiple/byPostIds', { params: { idArray: postIds.join(',') } })
     if (!response.data) {
       Notify.create({
         type: 'negative',
