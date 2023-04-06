@@ -165,8 +165,9 @@ async function createOrUpdateEvent() {
   if (isThisNewEvent.value) {
     await eventStore.createEvent();
   } else {
-    await eventStore.updateEvent(event.value);
+    await eventStore.updateEvent(props.eventId, event.value.event);
   }
+  isLoading.value = false;
 }
 
 const eventTypeOptions = Object.entries(eventType).map(([key, value]) => ({

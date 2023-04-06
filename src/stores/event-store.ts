@@ -210,8 +210,8 @@ export const useEventStore = defineStore('eventStore', () => {
     })
   }
 
-  async function updateEvent(event: Event_extended) {
-    const response = await api.put(`/event/${event.id}`, event)
+  async function updateEvent(eventId: Event_extended['id'], event: Event_extended) {
+    const response = await api.put(`/event/${eventId}`, event)
     if (!response.data) {
       Notify.create({
         type: 'negative',
