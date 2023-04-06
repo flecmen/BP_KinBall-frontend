@@ -1,17 +1,17 @@
-<!-- eslint-disable vue/no-mutating-props -->
 <template>
   <q-select
-    filled
     v-model="selectedGroups"
+    :options="groupOptions"
+    filled
     multiple
-    :options="groupsSelection"
     use-chips
-    stack-label
     label="Groups"
     option-label="name"
-    @filter="filterGroups"
     use-input
     @update:model-value="emit('groupsUpdate', selectedGroups)"
+    emit-value
+    hide-dropdown-icon
+    @filter="updateInput"
   >
     <template v-slot:option="scope">
       <q-item v-bind="scope.itemProps">
@@ -21,7 +21,6 @@
       </q-item>
     </template>
   </q-select>
-  {{ groupSelection }}
 </template>
 
 <script setup lang="ts">
@@ -46,23 +45,27 @@ onMounted(async () => {
   await adminStore.loadGroups();
 });
 
-const groupsSelection = ref<Group[]>(
+const selectedGroups = ref(props.groups);
+const groupOptions = ref<Group[]>(
   JSON.parse(JSON.stringify(adminStore.groups))
 );
-const selectedGroups = ref<Group[]>(props.groups);
 
-function filterGroups(val: string, update) {
-  if (val === '') {
-    groupsSelection.value = JSON.parse(JSON.stringify(adminStore.groups));
-    return;
-  }
-  update(() => {
-    const needle = val.toLowerCase();
-    groupsSelection.value = JSON.parse(JSON.stringify(adminStore.groups));
-    groupsSelection.value = groupsSelection.value.filter(
-      (v) => v?.name.toLowerCase().indexOf(needle) > -1
-    );
-    return;
+function updateInput(
+  inputValue: string,
+  doneFn: (callbackFn: () => void) => void
+) {
+  doneFn(() => {
+    if (inputValue === '') {
+      groupOptions.value = JSON.parse(JSON.stringify(adminStore.groups));
+    } else {
+      groupOptions.value = JSON.parse(
+        JSON.stringify(
+          adminStore.groups.filter((g) =>
+            g.name.toLowerCase().includes(inputValue.toLowerCase())
+          )
+        )
+      );
+    }
   });
 }
 </script>
