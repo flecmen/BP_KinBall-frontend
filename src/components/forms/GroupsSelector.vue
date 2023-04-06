@@ -21,12 +21,14 @@
       </q-item>
     </template>
   </q-select>
+  {{ groupSelection }}
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { Group } from 'src/types/dbTypes';
 import { useUserStore } from 'src/stores/user-store';
+import { useAdminStore } from 'src/stores/admin-store';
 
 export interface Props {
   groups: Group[];
@@ -38,22 +40,25 @@ const emit = defineEmits<{
 }>();
 
 const userStore = useUserStore();
+const adminStore = useAdminStore();
 
-onMounted(() => {
-  groupsSelection.value = JSON.parse(JSON.stringify(userStore.user.groups));
+onMounted(async () => {
+  await adminStore.loadGroups();
 });
 
-const groupsSelection = ref<Group[]>([]);
+const groupsSelection = ref<Group[]>(
+  JSON.parse(JSON.stringify(adminStore.groups))
+);
 const selectedGroups = ref<Group[]>(props.groups);
 
 function filterGroups(val: string, update) {
   if (val === '') {
-    groupsSelection.value = JSON.parse(JSON.stringify(userStore.user.groups));
+    groupsSelection.value = JSON.parse(JSON.stringify(adminStore.groups));
     return;
   }
   update(() => {
     const needle = val.toLowerCase();
-    groupsSelection.value = JSON.parse(JSON.stringify(userStore.user.groups));
+    groupsSelection.value = JSON.parse(JSON.stringify(adminStore.groups));
     groupsSelection.value = groupsSelection.value.filter(
       (v) => v?.name.toLowerCase().indexOf(needle) > -1
     );

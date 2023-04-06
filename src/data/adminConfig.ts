@@ -7,17 +7,23 @@ export interface Tile {
 
 export const AdminTiles = [
   {
-    icon: 'delete',
     title: 'events',
+    icon: 'delete',
     description: 'Manage your events',
     link: 'admin-events',
   },
   {
-    icon: 'person',
     title: 'users',
+    icon: 'person',
     description: 'Manage users',
     link: 'users-crud',
   },
+  {
+    title: 'groups',
+    icon: 'groups',
+    description: 'Manage groups',
+    link: 'groups-crud',
+  }
 ]
 
 export const EventsTiles = [
