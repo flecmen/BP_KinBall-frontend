@@ -11,7 +11,10 @@
       v-model="isPostDialogVisible"
       :postId_to_edit="postId_to_edit"
     />
-    <NewEventModal v-model="isNewEventDialogVisible" />
+    <NewEventModal
+      :eventId="eventId_to_edit"
+      v-model="isNewEventDialogVisible"
+    />
 
     <EventListDrawer v-model="rightDrawerOpen" />
 
@@ -34,6 +37,7 @@ const isPostDialogVisible = ref(false);
 const isNewEventDialogVisible = ref(false);
 
 let postId_to_edit = ref(-1);
+let eventId_to_edit = ref(-1);
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;

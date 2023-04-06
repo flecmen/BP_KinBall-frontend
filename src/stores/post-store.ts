@@ -199,8 +199,7 @@ export const usePostStore = defineStore('postStore', () => {
       return;
     }
     // update frontend
-    const index = posts.value?.indexOf(posts.value.find(p => p.id === post.id) as Post_extended)
-    posts.value?.splice(index, 1, response.data)
+    pushPost(response.data)
     Notify.create({
       type: 'positive',
       message: i18n.t('success')

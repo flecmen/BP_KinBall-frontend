@@ -23,6 +23,10 @@ export const useEventStore = defineStore('eventStore', () => {
     return events.value.filter(e => new Date(e.time).getTime() > new Date().getTime())
       .sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
   });
+
+  const myEvents = computed(() => {
+    return events.value.filter(e => e.organiser.id === userStore.user.id)
+  })
   const areWeOnEventsFeedBedrock = ref(false);
 
   function initNewEvent() {
@@ -112,6 +116,8 @@ export const useEventStore = defineStore('eventStore', () => {
     */
     if (newEvent.value.isPeriodic && newEvent.value.period > 1) {
       for (let i = 0; i < newEvent.value.period; i++) {
+        console.log('Posílám na backend: ')
+        console.log(newEvent.value)
         const response = await api.post('/event', newEvent.value.event)
         if (!response.data) {
           Notify.create({
@@ -190,14 +196,43 @@ export const useEventStore = defineStore('eventStore', () => {
     return;
   }
 
+  async function loadMyEvents() {
+    const response = await api.get('/event/organiser/' + userStore.user.id)
+    if (!response.data) {
+      Notify.create({
+        type: 'negative',
+        message: i18n.t('failed to load events')
+      })
+      return;
+    }
+    response.data.forEach((event: Event_extended) => {
+      pushEvent(event)
+    })
+  }
+
+  async function updateEvent(event: Event_extended) {
+    const response = await api.put(`/event/${event.id}`, event)
+    if (!response.data) {
+      Notify.create({
+        type: 'negative',
+        message: i18n.t('failed to update event')
+      })
+      return;
+    }
+    pushEvent(response.data)
+  }
+
   return {
     events,
     chronologicEvents,
+    myEvents,
     newEvent,
     loadEvents,
     loadEvent,
+    loadMyEvents,
     reactOnEvent,
     getEvent,
+    updateEvent,
     initNewEvent,
     createEvent,
     deleteEvent,

@@ -11,10 +11,17 @@
       v-model="isPostDialogVisible"
       :postId_to_edit="postId_to_edit"
     />
-    <NewEventModal v-model="isNewEventDialogVisible" />
+    <NewEventModal
+      v-if="isEventDialogVisible"
+      :eventId="eventId_to_edit"
+      v-model="isEventDialogVisible"
+    />
 
     <q-page-container>
-      <router-view @edit-post="openPostDialog" />
+      <router-view
+        @edit-post="openPostDialog"
+        @showEventModal="openEventDialog"
+      />
     </q-page-container>
   </q-layout>
 </template>
@@ -28,9 +35,10 @@ import NewEventModal from 'src/components/modals/NewEventModal.vue';
 
 const leftDrawerOpen = ref(false);
 const isPostDialogVisible = ref(false);
-const isNewEventDialogVisible = ref(false);
+const isEventDialogVisible = ref(false);
 
 let postId_to_edit = ref(-1);
+let eventId_to_edit = ref(-1);
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
@@ -42,7 +50,9 @@ function openPostDialog(postId?: number) {
   isPostDialogVisible.value = !isPostDialogVisible.value;
 }
 
-function openEventDialog() {
-  isNewEventDialogVisible.value = !isNewEventDialogVisible.value;
+function openEventDialog(eventId?: number) {
+  if (eventId) eventId_to_edit.value = eventId;
+  else eventId_to_edit.value = -1;
+  isEventDialogVisible.value = !isEventDialogVisible.value;
 }
 </script>

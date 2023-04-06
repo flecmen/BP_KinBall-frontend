@@ -6,10 +6,12 @@
       :loading="table.isLoading"
       :rows="table.rows"
       :columns="table.columns"
+      v-model:pagination="pagination"
       row-key="id"
       :visible-columns="[
         'edit',
         'time',
+        'signed_up',
         'type',
         'address',
         'people_limit',
@@ -23,6 +25,7 @@
           <q-input
             borderless
             dense
+            dev
             debounce="300"
             v-model="table.searchfilter"
             placeholder="Search"
@@ -64,8 +67,19 @@
             round
             color="grey"
             icon="edit"
-            @click="showEventModal(props.row.id)"
+            @click="emit('showEventModal', props.row.id)"
           ></q-btn>
+        </q-td>
+      </template>
+
+      <!-- GROUPS -->
+      <template v-slot:body-cell-groups="props">
+        <q-td :props="props">
+          <GroupChip
+            v-for="group in props.row.groups"
+            v-bind:key="group.id"
+            :group="group"
+          />
         </q-td>
       </template>
     </q-table>
@@ -73,14 +87,22 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, onMounted, computed } from 'vue';
+import { reactive, onMounted, computed, ref } from 'vue';
 import { useEventStore } from 'src/stores/event-store';
+import GroupChip from 'src/components/GroupChip.vue';
+import NewEventModal from 'src/components/modals/NewEventModal.vue';
 import dateTimeFormat from 'src/helpers/dateTimeFormat';
+import { UserOnEvent_extended } from 'src/types/dbTypes';
+
+const emit = defineEmits<{
+  (event: 'showEventModal', id?: number): void;
+}>();
 
 const eventStore = useEventStore();
 
 onMounted(async () => {
   table.isLoading = true;
+  await eventStore.loadMyEvents();
   table.isLoading = false;
 });
 
@@ -89,9 +111,12 @@ const isLoading = reactive({
   editBtn: false,
 });
 
-function showEventModal(id: number) {
-  //eventStore.showEventModal(id);
-}
+const pagination = ref({
+  rowsPerPage: 15,
+  page: 1,
+  sortBy: 'name',
+  descending: true,
+});
 
 const table = reactive({
   columns: [
@@ -111,6 +136,14 @@ const table = reactive({
       field: 'time',
       align: 'left',
       format: (val: Date) => dateTimeFormat.dateTime(val),
+    },
+    {
+      name: 'signed_up',
+      label: 'Signed up',
+      field: 'players',
+      align: 'left',
+      format: (UoE: UserOnEvent_extended[]) =>
+        UoE.filter((u) => u.status === 'going').length,
     },
     {
       name: 'type',
@@ -144,7 +177,7 @@ const table = reactive({
     },
   ],
   rows: computed(() => {
-    return eventStore.events.filter((event) => {
+    return eventStore.myEvents.filter((event) => {
       if (!table.searchfilter || table.searchfilter === '')
         return eventStore.events;
       return (
