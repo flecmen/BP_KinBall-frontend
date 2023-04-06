@@ -38,6 +38,7 @@
               clickable
               emit-label
               map-options
+              option-label="label"
               dense
               @click="react(option.value)"
             >

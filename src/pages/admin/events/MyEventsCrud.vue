@@ -90,7 +90,6 @@
 import { reactive, onMounted, computed, ref } from 'vue';
 import { useEventStore } from 'src/stores/event-store';
 import GroupChip from 'src/components/GroupChip.vue';
-import NewEventModal from 'src/components/modals/NewEventModal.vue';
 import dateTimeFormat from 'src/helpers/dateTimeFormat';
 import { UserOnEvent_extended } from 'src/types/dbTypes';
 
