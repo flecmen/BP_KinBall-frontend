@@ -61,7 +61,7 @@
 import dateFormat from 'src/helpers/dateFormat';
 import { defineProps } from 'vue';
 import { Post_extended } from 'src/types/dbTypes';
-import userAvatar from 'src/components/userAvatar.vue';
+import userAvatar from 'src/components/images/userAvatar.vue';
 import RoleChip from 'src/components/RoleChip.vue';
 import UserName from './components/UserName.vue';
 import { usePostStore } from 'src/stores/post-store';

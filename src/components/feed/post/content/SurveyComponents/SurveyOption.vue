@@ -5,10 +5,10 @@
       <div class="text-weight-bold">
         {{ props.option.text }}
       </div>
-      <div class="bg-grey-2">
-        <div :style="{ width: percentage + '%' }" :class="color"></div>
+      <q-linear-progress :color="color" :value="percentage" rounded />
+      <div>
+        votes: {{ option.votes.length }} | {{ Math.round(percentage * 100) }}%
       </div>
-      <div>votes: {{ option.votes.length }}</div>
     </q-item-section>
   </q-item>
 </template>
@@ -43,7 +43,7 @@ async function checking() {
 }
 
 const percentage = computed(() => {
-  const percentage = (props.option.votes.length / props.total_votes) * 100;
+  const percentage = props.option.votes.length / props.total_votes;
   if (isNaN(percentage)) {
     return 0;
   } else {
@@ -52,32 +52,16 @@ const percentage = computed(() => {
 });
 
 const color = computed(() => {
-  if (percentage.value > 75) {
-    return 'bg-green';
-  } else if (percentage.value > 50) {
-    return 'bg-yellow';
-  } else if (percentage.value > 25) {
-    return 'bg-orange';
+  if (percentage.value > 0.75) {
+    return 'green';
+  } else if (percentage.value > 0.5) {
+    return 'yellow';
+  } else if (percentage.value > 0.25) {
+    return 'orange';
   } else {
-    return 'bg-red';
+    return 'red';
   }
 });
 </script>
 
-<style scoped>
-.bg-grey-2 div {
-  height: 10px;
-}
-.bg-green {
-  background-color: green;
-}
-.bg-yellow {
-  background-color: yellow;
-}
-.bg-orange {
-  background-color: orange;
-}
-.bg-red {
-  background-color: red;
-}
-</style>
+<style scoped></style>

@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import { User_extended } from 'src/types/dbTypes';
-import UserAvatar from 'src/components/userAvatar.vue';
+import UserAvatar from 'src/components/images/userAvatar.vue';
 
 export interface Props {
   users: User_extended[] | undefined;
