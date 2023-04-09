@@ -5,9 +5,10 @@
       @click="react('going' as keyof UserOnEventStatus)"
       @mouseover="showGoing"
       @mouseleave="hideGoing"
-      color="green-5"
       :loading="isLoading.going"
       :disable="blocked"
+      class="text-green-5"
+      flat
     >
       <UserPopupList
         :isMobile="true"
@@ -42,8 +43,9 @@
       @click="react('dont_know' as keyof UserOnEventStatus)"
       @mouseover="showDont_knowList"
       @mouseleave="hideDont_knowList"
-      color="orange"
       :disable="blocked"
+      class="text-orange"
+      flat
     >
       <UserPopupList
         :isMobile="true"
@@ -68,9 +70,10 @@
       :loading="isLoading.not_going"
       :disable="blocked"
       @click="react('not_going' as keyof UserOnEventStatus)"
-      color="red"
       @mouseover="showNot_goingList"
       @mouseleave="hideNot_goingList"
+      class="text-red"
+      flat
     >
       <UserPopupList
         :isMobile="true"

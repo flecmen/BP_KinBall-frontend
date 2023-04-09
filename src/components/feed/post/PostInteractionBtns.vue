@@ -11,11 +11,13 @@
       <template v-slot:loading>
         <q-spinner-facebook />
       </template>
+      <q-tooltip>like</q-tooltip>
     </q-btn>
     <q-btn flat icon="comment" @click="emit('showComments')">
       <q-badge color="orange" floating>{{
         props.post.comments.length
       }}</q-badge>
+      <q-tooltip>comment</q-tooltip>
     </q-btn>
     <q-toggle v-model="isFollowing" flat label="Follow" />
   </q-card-section>
