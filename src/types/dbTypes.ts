@@ -115,6 +115,7 @@ export type UserOnEvent = {
   status: UserOnEventStatus
   userId: number
   eventId: number
+  present: boolean
 }
 
 export type UserOnEvent_extended = (UserOnEvent & {

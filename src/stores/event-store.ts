@@ -196,8 +196,9 @@ export const useEventStore = defineStore('eventStore', () => {
     return;
   }
 
-  async function loadMyEvents() {
-    const response = await api.get('/event/organiser/' + userStore.user.id)
+  async function loadMyEvents(filter?: string) {
+
+    const response = await api.get('/event/organiser/' + userStore.user.id + (filter ? '/' + filter : ''))
     if (!response.data) {
       Notify.create({
         type: 'negative',
@@ -222,6 +223,19 @@ export const useEventStore = defineStore('eventStore', () => {
     pushEvent(response.data)
   }
 
+  async function sendAttendance(eventId: Event_extended['id']) {
+    const event = getEvent(eventId)
+    const response = await api.post(`/event/${eventId}/attendance`, { data: event?.players.map(p => { return { userId: p.userId, present: p.present } }) })
+    if (response.status === 400) {
+      Notify.create({
+        type: 'negative',
+        message: i18n.t(response.data.error)
+      })
+      return;
+    }
+    pushEvent(response.data)
+  }
+
   return {
     events,
     chronologicEvents,
@@ -237,7 +251,8 @@ export const useEventStore = defineStore('eventStore', () => {
     createEvent,
     deleteEvent,
     loadMultipleEventsByPostId,
-    areWeOnEventsFeedBedrock
+    areWeOnEventsFeedBedrock,
+    sendAttendance,
   }
 },
   // {

@@ -35,7 +35,7 @@ export const EventsTiles = [
   },
   {
     title: 'today\'s agenda',
-    icon: '',
+    icon: 'today',
     description: 'See what is happening today',
     link: 'today-agenda',
   },
