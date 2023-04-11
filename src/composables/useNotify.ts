@@ -45,6 +45,10 @@ export default function useNotify() {
 
   const resolve_wait = (notif: (props?: QNotifyUpdateOptions | undefined) => void) => {
     notif();
+    $q.notify({
+      type: 'positive',
+      message: 'Success'
+    })
   }
 
   return {

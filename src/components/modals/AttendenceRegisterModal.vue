@@ -28,6 +28,10 @@
           </q-td>
         </template>
       </q-table>
+      <q-card-setion>
+        <q-space />
+        <q-btn label="Save" color="positive" v-close-popup />
+      </q-card-setion>
     </q-card>
   </q-dialog>
 </template>
@@ -40,16 +44,20 @@ import {
   User_extended,
 } from 'src/types/dbTypes';
 import { onBeforeUnmount, reactive, ref } from 'vue';
+import useNotify from 'src/composables/useNotify';
 
 const props = defineProps<{
   event: Event_extended;
 }>();
 
 const eventStore = useEventStore();
+const notify = useNotify();
 
 onBeforeUnmount(async () => {
   // save present status
+  const notif = notify.wait('Saving attendance...');
   await eventStore.sendAttendance(props.event.id);
+  notify.resolve_wait(notif);
 });
 
 const table = reactive({
