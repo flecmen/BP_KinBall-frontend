@@ -41,8 +41,8 @@ import { Post_extended, User_extended } from 'src/types/dbTypes';
 import RoleChip from 'src/components/RoleChip.vue';
 import PostsFeed from 'src/components/feed/PostsFeed.vue';
 import RewardsOnProfile from 'src/components/rewards/RewardsOnProfile.vue';
-import InstaIcon from 'src/assets/soc_media/instaIcon.vue';
-import FbIcon from 'src/assets/soc_media/FbIcon.vue';
+import InstaIcon from 'src/components/icons/soc_media/instaIcon.vue';
+import FbIcon from 'src/components/icons/soc_media/FbIcon.vue';
 
 const route = useRoute();
 const userStore = useUserStore();

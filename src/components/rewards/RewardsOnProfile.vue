@@ -6,31 +6,20 @@
     </div>
     <p>{{ xp }}</p>
     <div class="awards">
-      <div class="award" v-for="(award, index) in awards" :key="index">
-        <q-avatar
-          class="award-avatar"
-          size="30px"
-          :src="award.image"
-          alt="Award"
-        />
-      </div>
+      <TrophiesDisplay :level="props.level" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, defineProps } from 'vue';
+import TrophiesDisplay from './TrophiesDisplay.vue';
 
 const props = defineProps<{
   xp: number;
   maxXp: number;
   level: number;
-  awards: Award[];
 }>();
-
-interface Award {
-  image: string;
-}
 
 const progress = computed(() => {
   return props.xp / props.maxXp;
