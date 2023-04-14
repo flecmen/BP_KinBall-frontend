@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { RouteLocationNormalized } from 'vue-router/dist/vue-router';
 import { ref, computed } from 'vue';
 import { Notify } from 'quasar';
 import { Settings, User_extended } from 'src/types/dbTypes';
@@ -13,7 +14,7 @@ export const useUserStore = defineStore('userStore', () => {
   }
 
   const user = ref<User_extended>({} as User_extended)
-  const afterLoginRoute = ref<string | null>(null);
+  const afterLoginRoute = ref<RouteLocationNormalized | null>(null);
   const isProcessing = ref<boolean>(false);
 
   const isAuthenticated = computed(() => token.value !== null)
@@ -94,6 +95,9 @@ export const useUserStore = defineStore('userStore', () => {
     }
     return;
   }
+  function setAfterLoginRoute(route: RouteLocationNormalized) {
+    afterLoginRoute.value = route
+  }
 
   return {
     user,
@@ -105,6 +109,7 @@ export const useUserStore = defineStore('userStore', () => {
     getUser,
     updateSettings,
     changePassword,
+    setAfterLoginRoute,
   }
 },
   {

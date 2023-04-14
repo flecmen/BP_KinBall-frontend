@@ -1,5 +1,7 @@
 import { RouteRecordRaw } from 'vue-router';
 import { AdminTiles, EventsTiles } from 'src/data/adminConfig';
+import { checkAuthentication, allowRoles } from './auth';
+import { role } from 'src/types/dbTypes';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -16,6 +18,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
+    beforeEnter: checkAuthentication,
     children: [
       {
         path: '',
@@ -47,6 +50,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/admin',
     component: () => import('layouts/SimpleLayout.vue'),
+    beforeEnter: [checkAuthentication, (to, from, next) => allowRoles([role.admin, role.trener], to, from, next)],
     children: [
       {
         path: '',
