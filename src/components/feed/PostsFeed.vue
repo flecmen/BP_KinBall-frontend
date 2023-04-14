@@ -1,11 +1,12 @@
 <template>
   <div v-if="props.posts !== undefined">
     <q-infinite-scroll
+      ref="infiniteScroll"
       @load="fetchPosts"
       :disable="postStore.areWeOnFeedBedrock"
     >
       <PostComponent
-        v-for="post in filteredPosts"
+        v-for="post in displayedFilteredPosts"
         v-bind:key="post.id"
         :post="post"
         class="post-component"
@@ -30,7 +31,7 @@
 
 <script setup lang="ts">
 import PostComponent from './post/PostComponent.vue';
-import { onMounted, computed } from 'vue';
+import { onMounted, computed, ref, watch } from 'vue';
 import { usePostStore } from 'src/stores/post-store';
 import { Post_extended } from 'src/types/dbTypes';
 
@@ -44,7 +45,11 @@ const emit = defineEmits<{
 
 const postStore = usePostStore();
 
-const filteredPosts = computed(() => {
+onMounted(async () => {
+  postStore.initFeedFilter();
+});
+
+const displayedFilteredPosts = computed(() => {
   return props.posts?.filter((post) => {
     // Filter by Type
     if (postStore.postTypeFilter[post.type] === true) {
@@ -61,13 +66,20 @@ const filteredPosts = computed(() => {
   });
 });
 
+const infiniteScroll = ref();
+// Pokud kvůli filtrům zmizí všechny posty, infinite scroll se netriggerne
+// Tak tu sledujeme počet zobrazených postů a pokud je 0, tak triggerujeme ručně
+watch(
+  () => displayedFilteredPosts.value.length,
+  (newLength) => {
+    if (newLength === 0 && !postStore.areWeOnFeedBedrock) {
+      infiniteScroll.value.trigger();
+    }
+  }
+);
+
 async function fetchPosts(index: number, done: () => void) {
-  console.log('loadMore()');
   await postStore.loadPosts();
   done();
 }
-
-onMounted(async () => {
-  postStore.initFeedFilter();
-});
 </script>
