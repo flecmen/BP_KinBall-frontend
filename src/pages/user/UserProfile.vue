@@ -27,7 +27,7 @@
   </q-card>
   <h5>User posts:</h5>
   <div class="row justify-evenly">
-    <PostsFeed :posts="displayedPosts" class="col-10" />
+    <PostsFeed :posts="filteredByAuthor" class="col-10" />
   </div>
 </template>
 
@@ -58,7 +58,7 @@ onMounted(async () => {
   userInitialized.value = true;
 });
 
-const displayedPosts = computed(() => {
+const filteredByAuthor = computed(() => {
   return postStore.posts_sorted?.filter((post: Post_extended) => {
     // Filter by author (user)
     if (userId.value) {

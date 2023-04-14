@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { RouteLocationNormalized } from 'vue-router/dist/vue-router';
 import { ref, computed } from 'vue';
 import { Notify } from 'quasar';
-import { Settings, User_extended } from 'src/types/dbTypes';
+import { Group, Settings, User_extended, role } from 'src/types/dbTypes';
 import { i18n } from 'src/utils/i18n';
 import { router } from 'src/router/index'
 import { api } from 'src/boot/axios';
@@ -99,6 +99,15 @@ export const useUserStore = defineStore('userStore', () => {
     afterLoginRoute.value = route
   }
 
+  function isAuthorizedToEdit(authorId: User_extended['id']) {
+    // user si může upravovat svoje příspěvky
+    if (user.value.id === authorId) return true;
+    // admin a trenér mohou upravovat cokoliv
+    if (user.value.role === role.admin || user.value.role === role.trener) return true;
+    return false;
+
+  }
+
   return {
     user,
     afterLoginRoute,
@@ -110,6 +119,7 @@ export const useUserStore = defineStore('userStore', () => {
     updateSettings,
     changePassword,
     setAfterLoginRoute,
+    isAuthorizedToEdit,
   }
 },
   {

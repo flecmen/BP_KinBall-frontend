@@ -5,7 +5,7 @@
       :disable="postStore.areWeOnFeedBedrock"
     >
       <PostComponent
-        v-for="post in props.posts"
+        v-for="post in filteredPosts"
         v-bind:key="post.id"
         :post="post"
         class="post-component"
@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import PostComponent from './post/PostComponent.vue';
-import { onMounted } from 'vue';
+import { onMounted, computed } from 'vue';
 import { usePostStore } from 'src/stores/post-store';
 import { Post_extended } from 'src/types/dbTypes';
 
@@ -43,6 +43,23 @@ const emit = defineEmits<{
 }>();
 
 const postStore = usePostStore();
+
+const filteredPosts = computed(() => {
+  return props.posts?.filter((post) => {
+    // Filter by Type
+    if (postStore.postTypeFilter[post.type] === true) {
+      // Filter by Group
+      for (const group of post.groups) {
+        if (
+          postStore.groupsFilter.find((o) => o.group.id === group.id)
+            ?.visible === true
+        ) {
+          return true;
+        }
+      }
+    }
+  });
+});
 
 async function fetchPosts(index: number, done: () => void) {
   console.log('loadMore()');

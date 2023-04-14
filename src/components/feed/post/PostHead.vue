@@ -1,35 +1,11 @@
 <template>
-  <q-item class="justify-end q-gutter-sm" dense>
-    <q-icon
-      name="edit"
-      size="xs"
-      color="primary"
-      class="click-cursor"
-      @click="emit('edit-post', post.id)"
-    >
-      <q-tooltip>edit post</q-tooltip>
-    </q-icon>
-    <q-icon name="delete" size="xs" color="red" class="click-cursor">
-      <q-tooltip>delete post</q-tooltip>
-      <q-menu auto-close>
-        <q-card class="my-card">
-          <q-card-section class="bg-primary text-white">
-            <div class="text">Are you sure to remove post permanently?</div>
-          </q-card-section>
+  <EditPost
+    v-if="userStore.isAuthorizedToEdit(post.authorId)"
+    :post="post"
+    :isMobile="isMobile"
+    @edit-post="editPostEmit()"
+  />
 
-          <q-card-actions align="right">
-            <q-btn
-              flat
-              color="white"
-              class="bg-red"
-              @click="postStore.deletePost(props.post.id)"
-              >Delete</q-btn
-            >
-          </q-card-actions>
-        </q-card>
-      </q-menu>
-    </q-icon>
-  </q-item>
   <q-item>
     <q-item-section avatar>
       <user-avatar
@@ -64,8 +40,9 @@ import { Post_extended } from 'src/types/dbTypes';
 import userAvatar from 'src/components/images/userAvatar.vue';
 import RoleChip from 'src/components/RoleChip.vue';
 import UserName from './components/UserName.vue';
-import { usePostStore } from 'src/stores/post-store';
 import GroupChip from 'src/components/GroupChip.vue';
+import EditPost from './components/EditPost.vue';
+import { useUserStore } from 'src/stores/user-store';
 
 export interface Props {
   post: Post_extended;
@@ -77,11 +54,11 @@ const emit = defineEmits<{
   (event: 'edit-post', postIt: Post_extended['id']): void;
 }>();
 
-const postStore = usePostStore();
+const userStore = useUserStore();
+
+function editPostEmit() {
+  emit('edit-post', props.post.id);
+}
 </script>
 
-<style scoped>
-.click-cursor {
-  cursor: pointer;
-}
-</style>
+<style scoped></style>
