@@ -1,5 +1,5 @@
 <template>
-  <q-card class="post q-ma-sm">
+  <q-card class="q-mt-md">
     <q-card-section>
       <PostHead
         :post="props.post"

@@ -27,7 +27,7 @@
   </q-card>
   <h5>User posts:</h5>
   <div class="row justify-evenly">
-    <PostsFeed :posts="filteredByAuthor" class="col-10" />
+    <PostsFeed :posts="filteredByAuthor" :feed-filter="true" class="col-10" />
   </div>
 </template>
 

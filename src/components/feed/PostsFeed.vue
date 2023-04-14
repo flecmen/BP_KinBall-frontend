@@ -1,42 +1,48 @@
 <template>
-  <div v-if="props.posts !== undefined">
-    <q-infinite-scroll
-      ref="infiniteScroll"
-      @load="fetchPosts"
-      :disable="postStore.areWeOnFeedBedrock"
-    >
-      <PostComponent
-        v-for="post in displayedFilteredPosts"
-        v-bind:key="post.id"
-        :post="post"
-        class="post-component"
-        @edit-post="emit('edit-post', post.id)"
-      />
-      <template v-slot:loading>
-        <div class="row justify-center q-my-md">
-          <q-spinner-dots color="primary" size="40px" />
-        </div>
-      </template>
-    </q-infinite-scroll>
-    <!-- We are on bedrock message -->
-    <q-card v-if="postStore.areWeOnFeedBedrock" class="q-mt-md" flat>
-      <q-card-section>
-        <div class="text-h5 text-center">
-          No more posts to display. Try changing the filters.
-        </div>
-      </q-card-section>
-    </q-card>
+  <div>
+    <FeedFilter v-if="props.feedFilter" />
+    <div v-if="props.posts !== undefined">
+      <q-infinite-scroll
+        ref="infiniteScroll"
+        @load="fetchPosts"
+        :disable="postStore.areWeOnFeedBedrock"
+        class="q-pa-none"
+      >
+        <PostComponent
+          v-for="post in displayedFilteredPosts"
+          v-bind:key="post.id"
+          :post="post"
+          class="post-component"
+          @edit-post="emit('edit-post', post.id)"
+        />
+        <template v-slot:loading>
+          <div class="row justify-center q-my-md">
+            <q-spinner-dots color="primary" size="40px" />
+          </div>
+        </template>
+      </q-infinite-scroll>
+      <!-- We are on bedrock message -->
+      <q-card v-if="postStore.areWeOnFeedBedrock" class="q-mt-md" flat>
+        <q-card-section>
+          <div class="text-h5 text-center">
+            No more posts to display. Try changing the filters.
+          </div>
+        </q-card-section>
+      </q-card>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import PostComponent from './post/PostComponent.vue';
-import { onMounted, computed, ref, watch } from 'vue';
+import { onMounted, computed, ref, watch, reactive } from 'vue';
 import { usePostStore } from 'src/stores/post-store';
 import { Post_extended } from 'src/types/dbTypes';
+import FeedFilter from './FeedFilter.vue';
 
 const props = defineProps<{
   posts: Post_extended[];
+  feedFilter: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -47,6 +53,10 @@ const postStore = usePostStore();
 
 onMounted(async () => {
   postStore.initFeedFilter();
+});
+
+const isVisible = reactive({
+  feedFilter: props.feedFilter,
 });
 
 const displayedFilteredPosts = computed(() => {
