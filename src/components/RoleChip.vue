@@ -15,7 +15,7 @@ const color = computed(() => {
   switch (props.user.role) {
     case 'admin':
       return 'red';
-    case 'trener':
+    case 'coach':
       return 'orange';
     default:
       return 'primary';

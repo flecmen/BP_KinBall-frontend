@@ -136,7 +136,7 @@ export const useUserStore = defineStore('userStore', () => {
     // user si může upravovat svoje příspěvky
     if (user.value.id === authorId) return true;
     // admin a trenér mohou upravovat cokoliv
-    if (user.value.role === role.admin || user.value.role === role.trener) return true;
+    if (user.value.role === role.admin || user.value.role === role.coach) return true;
     return false;
 
   }

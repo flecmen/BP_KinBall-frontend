@@ -67,7 +67,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/admin',
     component: () => import('layouts/SimpleLayout.vue'),
-    beforeEnter: [checkAuthentication, (to, from, next) => allowRoles([role.admin, role.trener], to, from, next)],
+    beforeEnter: [checkAuthentication, (to, from, next) => allowRoles([role.admin, role.coach], to, from, next)],
     children: [
       {
         path: '',

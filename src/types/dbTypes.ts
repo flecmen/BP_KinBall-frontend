@@ -206,11 +206,8 @@ export type postType = (typeof postType)[keyof typeof postType]
 
 export const role = {
   admin: 'admin',
-  trener: 'trenér',
-  clen_spolku_hrac: 'hráč',
-  neclen_spolku_hrac: 'hráč nečlen',
-  hrac_z_jineho_klubu: 'hráč jiného klubu',
-  zajemce: 'zájemce'
+  coach: 'coach',
+  player: 'hráč',
 };
 
 export type role = (typeof role)[keyof typeof role]
