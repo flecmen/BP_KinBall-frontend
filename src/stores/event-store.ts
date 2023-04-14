@@ -81,9 +81,26 @@ export const useEventStore = defineStore('eventStore', () => {
   }
 
   async function reactOnEvent(eventId: Event_extended['id'], reaction: keyof UserOnEventStatus) {
-    const value = !getEvent(eventId)?.players.some(p => p.user.id === userStore.user.id && p.status === reaction)
+    // Check, if user took back his reaction (he takes back his reaction)
+    const boolvalue = !getEvent(eventId)?.players.some(p => p.user.id === userStore.user.id && p.status === reaction)
+
+    // Check if there is space left
+    if (boolvalue && reaction === UserOnEventStatus.going) {
+      const event = getEvent(eventId);
+      console.log('people limit: ', event?.people_limit)
+      console.log('going: ', event?.players.filter(p => p.status === 'going').length)
+      if (event?.people_limit && event.people_limit <= event.players.filter(p => p.status === 'going').length) {
+
+        Notify.create({
+          type: 'negative',
+          message: i18n.t('no space left')
+        })
+        return;
+      }
+    }
+
     // Change backend
-    const response = await api.post(`/event/${eventId}/user/${userStore.user.id}/status/${String(reaction)}/${value}`);
+    const response = await api.post(`/event/${eventId}/user/${userStore.user.id}/status/${String(reaction)}/${boolvalue}`);
     if (!response.data) {
       Notify.create({
         type: 'negative',
@@ -94,8 +111,10 @@ export const useEventStore = defineStore('eventStore', () => {
     // Change frontend
     const index = events.value.findIndex(e => e.id == eventId)
     if (index > -1) {
+      // remove the whole event
       events.value.splice(index, 1)
     }
+    // push new event
     events.value.push(response.data)
 
     if (response.status == 201) {
