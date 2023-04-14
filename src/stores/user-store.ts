@@ -57,6 +57,39 @@ export const useUserStore = defineStore('userStore', () => {
     router.push({ name: 'login' })
   }
 
+  async function register(email: string, password: string, full_name: string) {
+    if (!email || !password || !full_name) return;
+    isProcessing.value = true;
+    const response = await api.post('/auth/register', { email, password, full_name })
+    if (response.status !== 201) {
+      Notify.create({
+        type: 'negative',
+        message: i18n.t(response.data.error)
+      })
+      isProcessing.value = false;
+      return;
+    }
+    Notify.create({
+      type: 'positive',
+      message: i18n.t('success')
+    })
+    isProcessing.value = false;
+    router.push({ name: 'login' });
+    return
+  }
+
+  async function checkEmail(email: string) {
+    const response = await api.get(`/auth/checkEmail/${email}`)
+    if (response.status !== 200) {
+      Notify.create({
+        type: 'negative',
+        message: i18n.t('Faliled to check email')
+      })
+      return false;
+    }
+    return response.data.message;
+  }
+
   async function getUser(userId: User_extended['id']) {
     try {
       const response = await api.get(`/user/${userId}`)
@@ -115,6 +148,8 @@ export const useUserStore = defineStore('userStore', () => {
     isAuthenticated,
     login,
     logout,
+    register,
+    checkEmail,
     getUser,
     updateSettings,
     changePassword,

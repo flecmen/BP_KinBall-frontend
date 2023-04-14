@@ -11,7 +11,24 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         name: 'login',
-        component: () => import('src/pages/LoginPage.vue')
+        component: () => import('src/pages/auth/LoginPage.vue'),
+        props: {
+          form: 'login',
+        }
+      }
+    ]
+  },
+  {
+    path: '/register',
+    component: () => import('layouts/BlankLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: 'register',
+        component: () => import('src/pages/auth/LoginPage.vue'),
+        props: {
+          form: 'register',
+        },
       }
     ]
   },
