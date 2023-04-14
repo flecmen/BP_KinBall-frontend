@@ -101,7 +101,7 @@ const eventStore = useEventStore();
 
 onMounted(async () => {
   table.isLoading = true;
-  await eventStore.loadMyEvents();
+  await eventStore.loadMyEvents('future');
   table.isLoading = false;
 });
 

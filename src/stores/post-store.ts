@@ -247,7 +247,7 @@ export const usePostStore = defineStore('postStore', () => {
 
   // Load multiple posts by ID array
   async function loadMultiplePosts(postIds: Post_extended['id'][]) {
-    const response = await api.get('/post/multiple', { params: { postIdArray: postIds.join(',') } })
+    const response = await api.get('/post/multiple', { params: { idArray: postIds.join(',') } })
     if (response.status !== 200) {
       Notify.create({
         type: 'negative',

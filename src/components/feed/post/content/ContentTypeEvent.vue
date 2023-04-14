@@ -3,6 +3,9 @@
     <q-card-section class="row justify-between">
       <div class="col-6">
         <div class="text-h6">Čas: {{ dateFormat(event?.time) }}</div>
+        <q-chip clickable color="primary" text-color="white" icon="event">
+          Add to calendar
+        </q-chip>
         <div class="text-h6">
           <q-icon name="location_on" color="red" />{{ event?.address_short }}
         </div>
@@ -11,7 +14,7 @@
         </div>
       </div>
 
-      <EventPrice :price="event?.price" />
+      <EventPrice :price="event?.price" />,
     </q-card-section>
 
     <q-separator />
