@@ -1,5 +1,5 @@
 <template>
-  <q-chip :color="color">{{ props.user.role }}</q-chip>
+  <q-chip :color="color" text-color="white">{{ props.user.role }}</q-chip>
 </template>
 
 <script setup lang="ts">

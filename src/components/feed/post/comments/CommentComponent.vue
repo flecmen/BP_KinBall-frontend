@@ -1,42 +1,35 @@
 <template>
-  <q-card flat>
+  <q-card flat class="bg-grey-2">
     <q-card-section>
       <UserName :user="props.comment.author" />
       <div class="text-caption">
         {{ dateFormat(props.comment.time_of_creation) }}
       </div>
     </q-card-section>
-    <q-card-section>
+    <q-card-section class="q-pb-none">
       {{ text }}
-      <q-card-actions align="right" side>
-        <q-btn
-          label="like"
-          @click="postStore.likeComment(comment.postId, comment.id)"
-          :color="
-            comment.likes.some((u) => u.id === userStore.user.id)
-              ? 'positive'
-              : 'primary'
-          "
-        >
-          <q-badge
-            v-if="props.comment.likes.length > 0"
-            color="orange"
-            floating
-            >{{ props.comment.likes.length }}</q-badge
-          >
-        </q-btn>
-      </q-card-actions>
     </q-card-section>
+    <q-card-actions align="right" side>
+      <LikeButton
+        :isBeingLiked="isLoading.like"
+        :color="
+          comment.likes.some((u) => u.id === userStore.user.id) ? 'red' : ''
+        "
+        :likesCount="props.comment.likes.length"
+        @like="likeComment()"
+      />
+    </q-card-actions>
   </q-card>
 </template>
 
 <script setup lang="ts">
 import dateFormat from 'src/helpers/dateFormat';
-import { defineProps, onMounted, ref } from 'vue';
+import { defineProps, onMounted, reactive, ref } from 'vue';
 import { Post_comment_extended } from 'src/types/dbTypes';
 import { usePostStore } from 'src/stores/post-store';
 import { useUserStore } from 'src/stores/user-store';
 import UserName from '../components/UserName.vue';
+import LikeButton from 'src/components/buttons/LikeButton.vue';
 
 export interface Props {
   comment: Post_comment_extended;
@@ -44,14 +37,23 @@ export interface Props {
 }
 const props = defineProps<Props>();
 
+onMounted(() => {
+  text.value = props.comment.text;
+});
+
 const postStore = usePostStore();
 const userStore = useUserStore();
 
 const text = ref('');
-
-onMounted(() => {
-  text.value = props.comment.text;
+const isLoading = reactive({
+  like: false,
 });
+
+async function likeComment() {
+  isLoading.like = true;
+  await postStore.likeComment(props.comment.postId, props.comment.id);
+  isLoading.like = false;
+}
 </script>
 
 <style scoped></style>

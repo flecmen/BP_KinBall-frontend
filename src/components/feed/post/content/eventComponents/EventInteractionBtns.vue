@@ -1,5 +1,5 @@
 <template>
-  <div class="row justify-evenly q-mt-md">
+  <div class="row justify-evenly">
     <q-btn
       :label="goingBtnLabel"
       @click="react('going' as keyof UserOnEventStatus)"
@@ -22,19 +22,12 @@
         @mouseover="showGoing"
         @mouseleave="hideGoing"
       />
-      <q-badge floating v-if="eventStore.getEvent(props.eventId)?.people_limit"
-        >{{
+      <q-badge floating color="white" text-color="black"
+        >({{
           eventStore
             .getEvent(props.eventId)
             ?.players.filter((p) => p.status === 'going').length
-        }}/{{ eventStore.getEvent(props.eventId)?.people_limit }}
-      </q-badge>
-      <q-badge floating v-else
-        >{{
-          eventStore
-            .getEvent(props.eventId)
-            ?.players.filter((p) => p.status === 'going').length
-        }}
+        }})
       </q-badge>
     </q-btn>
     <q-btn
@@ -59,11 +52,13 @@
         @mouseover="showDont_knowList"
         @mouseleave="hideDont_knowList"
       />
-      <q-badge floating>{{
-        eventStore
-          .getEvent(props.eventId)
-          ?.players.filter((p) => p.status === 'dont_know').length
-      }}</q-badge>
+      <q-badge floating color="white" text-color="black"
+        >({{
+          eventStore
+            .getEvent(props.eventId)
+            ?.players.filter((p) => p.status === 'dont_know').length
+        }})</q-badge
+      >
     </q-btn>
     <q-btn
       :label="NotGoingBtnLabel"
@@ -87,19 +82,28 @@
         @mouseover="showNot_goingList"
         @mouseleave="hideNot_goingList"
       />
-      <q-badge floating>{{
-        eventStore
-          .getEvent(props.eventId)
-          ?.players.filter((p) => p.status === 'not_going').length
-      }}</q-badge>
+      <q-badge floating color="white" text-color="black"
+        >({{
+          eventStore
+            .getEvent(props.eventId)
+            ?.players.filter((p) => p.status === 'not_going').length
+        }})</q-badge
+      >
     </q-btn>
   </div>
+
+  <q-linear-progress
+    v-if="eventStore.getEvent(props.eventId)?.people_limit"
+    color="primary"
+    :value="percentage"
+    rounded
+  />
 </template>
 
 <script setup lang="ts">
 import { Event_extended, UserOnEventStatus } from 'src/types/dbTypes';
 import { useEventStore } from 'src/stores/event-store';
-import { computed, ref, reactive } from 'vue';
+import { ref, reactive, computed } from 'vue';
 import UserPopupList from 'src/components/lists/UserPopupList.vue';
 import { useUserStore } from 'src/stores/user-store';
 
@@ -117,6 +121,17 @@ const dont_knowListVisible = ref(false);
 const not_goingListVisible = ref(false);
 
 const blocked = ref(false);
+
+const percentage = computed(() => {
+  const event = eventStore.getEvent(props.eventId);
+  if (!event?.players.filter((p) => p.status === 'going')) return 0;
+  if (!event?.people_limit) return 0;
+  return (
+    event?.players.filter((p) => p.status === 'going').length /
+    event?.people_limit
+  );
+});
+
 const goingBtnLabel = computed(() => {
   if (
     eventStore

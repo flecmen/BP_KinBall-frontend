@@ -6,7 +6,7 @@
       :key="comment.id"
     >
       <CommentComponent
-        class="q-ml-lg q-mr-lg"
+        class="q-ml-lg q-mr-lg q-mt-md"
         :comment="comment"
         :isMobile="isMobile"
       />

@@ -1,0 +1,29 @@
+<template>
+  <q-btn
+    flat
+    icon="favorite"
+    @click="emit('like')"
+    :loading="isBeingLiked"
+    :color="props.color"
+  >
+    <q-badge color="orange" floating>{{ props.likesCount }}</q-badge>
+    <template v-slot:loading>
+      <q-spinner-facebook />
+    </template>
+    <q-tooltip>{{ $t('like') }}</q-tooltip>
+  </q-btn>
+</template>
+
+<script setup lang="ts">
+const props = defineProps<{
+  isBeingLiked: boolean;
+  color: string;
+  likesCount: number;
+}>();
+
+const emit = defineEmits<{
+  (event: 'like'): void;
+}>();
+</script>
+
+<style scoped></style>

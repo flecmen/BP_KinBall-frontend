@@ -1,25 +1,48 @@
 <template>
   <q-card flat v-if="event">
     <q-card-section class="row justify-between">
-      <div class="col-6">
-        <div class="text-h6">Čas: {{ dateFormat(event?.time) }}</div>
-        <q-chip clickable color="primary" text-color="white" icon="event">
-          Add to calendar
-        </q-chip>
-        <div class="text-h6">
-          <q-icon name="location_on" color="red" />{{ event?.address_short }}
+      <div class="col-10">
+        <!-- Date -->
+        <div class="row items-center">
+          <div id="Event_date" class="text-h6">
+            {{ $t('Date') }}: {{ dateTimeFormat.date(event.time) }}
+          </div>
         </div>
+        <!-- Time -->
         <div class="text-h6">
-          {{ event?.organiser.full_name }}
+          {{ $t('Time') }}: {{ dateTimeFormat.time(event.time) }}
+        </div>
+        <!-- Location -->
+        <div class="text-h6">
+          <div class="text-h6">{{ $t('Address') }}: {{ event?.address }}</div>
+          {{ $t('Location') }}: {{ event?.address_short }}
         </div>
       </div>
 
-      <EventPrice :price="event?.price" />,
+      <EventPrice :price="event?.price" />
+    </q-card-section>
+    <q-card-section>
+      <p>{{ eventStore.getEvent(props.eventId)?.description }}</p>
+    </q-card-section>
+    <q-card-section>
+      <q-chip
+        id="Event_add_to_calendar"
+        clickable
+        color="primary"
+        text-color="white"
+        icon="event"
+        :label="$t('Add.to.calendar')"
+      />
+      <ShowOnMapButton
+        :address="event.address"
+        :lat="event.address_lat"
+        :lng="event.address_lng"
+      />
     </q-card-section>
 
     <q-separator />
 
-    <q-card-section align="left">
+    <q-card-section q-pa-none>
       <EventInteractionBtns
         :eventId="props.eventId"
         :isMobile="props.isMobile"
@@ -37,9 +60,10 @@
 import { computed } from 'vue';
 import { Event_extended } from 'src/types/dbTypes';
 import { useEventStore } from 'src/stores/event-store';
-import dateFormat from 'src/helpers/dateFormat';
+import dateTimeFormat from 'src/helpers/dateTimeFormat';
 import EventPrice from './eventComponents/EventPrice.vue';
 import EventInteractionBtns from './eventComponents/EventInteractionBtns.vue';
+import ShowOnMapButton from 'src/components/buttons/ShowOnMapButton.vue';
 
 export interface Props {
   eventId: Event_extended['id'];

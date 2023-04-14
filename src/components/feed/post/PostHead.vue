@@ -16,7 +16,6 @@
     <q-item-section>
       <UserName :user="props.post.author" />
       <div class="text-caption">
-        <RoleChip :user="props.post.author" />
         {{ dateFormat(props.post.time_of_creation) }}
       </div>
     </q-item-section>
@@ -38,7 +37,6 @@ import dateFormat from 'src/helpers/dateFormat';
 import { defineProps } from 'vue';
 import { Post_extended } from 'src/types/dbTypes';
 import userAvatar from 'src/components/images/userAvatar.vue';
-import RoleChip from 'src/components/RoleChip.vue';
 import UserName from './components/UserName.vue';
 import GroupChip from 'src/components/GroupChip.vue';
 import EditPost from './components/EditPost.vue';

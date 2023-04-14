@@ -1,23 +1,17 @@
 <template>
   <q-card-section class="flex justify-between">
-    <q-btn
-      flat
-      icon="favorite"
-      @click="likePost"
-      :loading="isBeingLiked"
+    <LikeButton
+      :isBeingLiked="isBeingLiked"
+      :likesCount="props.post.likes.length"
       :color="post.likes.some((u) => u.id === userStore.user.id) ? 'red' : ''"
-    >
-      <q-badge color="orange" floating>{{ props.post.likes.length }}</q-badge>
-      <template v-slot:loading>
-        <q-spinner-facebook />
-      </template>
-      <q-tooltip>like</q-tooltip>
-    </q-btn>
+      @like="likePost"
+    />
+
     <q-btn flat icon="comment" @click="emit('showComments')">
       <q-badge color="orange" floating>{{
         props.post.comments.length
       }}</q-badge>
-      <q-tooltip>comment</q-tooltip>
+      <q-tooltip>{{ $t('show.comments') }}</q-tooltip>
     </q-btn>
     <q-toggle v-model="isFollowing" flat label="Follow" />
   </q-card-section>
@@ -28,6 +22,7 @@ import { defineProps, ref } from 'vue';
 import { Post_extended } from 'src/types/dbTypes';
 import { usePostStore } from 'src/stores/post-store';
 import { useUserStore } from 'src/stores/user-store';
+import LikeButton from 'src/components/buttons/LikeButton.vue';
 
 export interface Props {
   post: Post_extended;

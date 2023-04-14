@@ -1,6 +1,6 @@
 <template>
   <div
-    class="post-name text-bold userName"
+    class="text-bold cursor-pointer"
     @click="
       router.push({
         name: 'user-profile',
@@ -9,12 +9,14 @@
     "
   >
     {{ props.user.full_name }}
+    <sup class="superscript">{{ props.user.role }}</sup>
   </div>
 </template>
 
 <script setup lang="ts">
 import { User_extended } from 'src/types/dbTypes';
 import { useRouter } from 'vue-router';
+import { computed } from 'vue';
 
 const props = defineProps<{
   user: User_extended;
@@ -24,7 +26,8 @@ const router = useRouter();
 </script>
 
 <style scoped>
-.userName {
-  cursor: pointer;
+.superscript {
+  vertical-align: super;
+  font-size: smaller;
 }
 </style>
