@@ -5,8 +5,8 @@
       <q-linear-progress color="primary" height="10px" :value="progress" />
     </div>
     <p>{{ xp }}</p>
-    <div class="awards">
-      <TrophiesDisplay :level="props.level" />
+    <div>
+      <TrophiesDisplay :level="props.level" :height="50" />
     </div>
   </div>
 </template>

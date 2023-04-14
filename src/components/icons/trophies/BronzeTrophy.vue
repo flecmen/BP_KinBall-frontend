@@ -3,6 +3,7 @@
     src="src/assets/trophies/bronze.png"
     alt="Trophy icon"
     :height="`${height}px`"
+    :width="`${height}px`"
   >
   </q-img>
 </template>
@@ -14,7 +15,7 @@ const props = defineProps<{
   height?: number;
 }>();
 
-const height = ref(props.height ?? 12);
+const height = ref(props.height ?? 50);
 </script>
 
 <style scoped></style>

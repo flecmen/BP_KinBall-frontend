@@ -4,8 +4,8 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import BronzeTrophy from 'src/components/icons/trophies/bronzeTrophy.vue';
-import SilverTrophy from 'src/components/icons/trophies/silverTrophy.vue';
+import BronzeTrophy from 'src/components/icons/trophies/BronzeTrophy.vue';
+import SilverTrophy from 'src/components/icons/trophies/SilverTrophy.vue';
 import GoldTrophy from 'src/components/icons/trophies/GoldTrophy.vue';
 const props = defineProps<{
   level: number;
