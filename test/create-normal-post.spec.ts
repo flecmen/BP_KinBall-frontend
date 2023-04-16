@@ -19,6 +19,6 @@ test('test', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Text' }).fill('Playwright test Text');
   await page.getByRole('button', { name: 'Submit' }).click();
 
-  await expect(await page.locator('//div[contains(text(), \'Playwright test heading\')]/following-sibling::div[contains(text(), \'Playwright test Text\')]')).toBeTruthy();
+  expect(page.locator('//div[contains(text(), \'Playwright test heading\')]/following-sibling::div[contains(text(), \'Playwright test Text\')]')).toBeTruthy();
 
 });

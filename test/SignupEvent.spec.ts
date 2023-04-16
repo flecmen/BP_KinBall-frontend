@@ -1,12 +1,8 @@
 import { test, expect } from '@playwright/test';
+import { login } from './helpers';
 
 test('test', async ({ page }) => {
-  await page.goto('http://localhost:9000/#/login');
-  await page.getByLabel('Email address').click();
-  await page.getByLabel('Email address').fill('davidovkyflekovky@gmail.com');
-  await page.getByLabel('Email address').press('Tab');
-  await page.getByLabel('Password').fill('heslo');
-  await page.getByRole('button', { name: 'Log in' }).click();
+  await login(page, 'davidovkyflekovky@gmail.com', 'heslo')
 
   await page.getByText('Choose option').click();
   await page.getByText('going', { exact: true }).click();
