@@ -13,7 +13,6 @@
           v-bind:key="post.id"
           :post="post"
           class="post-component"
-          @edit-post="emit('edit-post', post.id)"
         />
         <template v-slot:loading>
           <div class="row justify-center q-my-md">
@@ -43,10 +42,6 @@ import FeedFilter from './FeedFilter.vue';
 const props = defineProps<{
   posts: Post_extended[];
   feedFilter: boolean;
-}>();
-
-const emit = defineEmits<{
-  (event: 'edit-post', postIt: Post_extended['id']): void;
 }>();
 
 const postStore = usePostStore();

@@ -34,6 +34,17 @@ export const usePostStore = defineStore('postStore', () => {
   const postPerPage = ref(10);
   const areWeOnFeedBedrock = ref(false); // true when there are no more posts to be loaded right now
 
+  // post dialog
+  const isPostDialogVisible = ref(false)
+  const postId_to_edit = ref(-1)
+
+  function openPostDialog(postId?: number) {
+    initNewPost();
+    if (postId) postId_to_edit.value = postId;
+    else postId_to_edit.value = -1;
+    isPostDialogVisible.value = !isPostDialogVisible.value;
+  }
+
   function initFeedFilter() {
     groupsFilter.value = [];
     const groups = userStore.user.groups
@@ -288,6 +299,9 @@ export const usePostStore = defineStore('postStore', () => {
     deletePost,
     getLocalPost,
     updatePost,
+    isPostDialogVisible,
+    postId_to_edit,
+    openPostDialog,
   }
 },
   // {

@@ -1,10 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <NavBar
-      @toggle-left-drawer="toggleLeftDrawer()"
-      @openCreatePostDialog="openPostDialog()"
-      @openCreateEventDialog="openEventDialog()"
-    />
+    <NavBar @toggle-left-drawer="toggleLeftDrawer()" />
     <LeftDrawer v-model="leftDrawerOpen" />
     <PostModal
       v-if="isPostDialogVisible"
@@ -29,7 +25,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import NavBar from 'src/components/navBar/NavBar.vue';
-import LeftDrawer from 'src/components/LeftDrawer.vue';
+import LeftDrawer from 'src/components/navBar/LeftDrawer.vue';
 import PostModal from 'src/components/modals/PostModal.vue';
 import NewEventModal from 'src/components/modals/NewEventModal.vue';
 

@@ -29,6 +29,24 @@ export const useEventStore = defineStore('eventStore', () => {
   })
   const areWeOnEventsFeedBedrock = ref(false);
 
+  // event dialog
+  const isEventDialogVisible = ref(false)
+  const eventId_to_edit = ref(-1)
+
+  // event right Drawer
+  const isRightDrawerVisible = ref(false)
+
+  function toggleRightDrawer() {
+    isRightDrawerVisible.value = !isRightDrawerVisible.value;
+  }
+
+  function openEventDialog(eventId?: number) {
+    if (!eventId) {
+      initNewEvent();
+      isEventDialogVisible.value = !isEventDialogVisible.value;
+    }
+  }
+
   function initNewEvent() {
     newEvent.value = { event: { time: new Date(), organiser: userStore.user } as Event_extended, period: 1, isPeriodic: false }
   }
@@ -37,7 +55,7 @@ export const useEventStore = defineStore('eventStore', () => {
     // Pokud je již event načtený v events, tak znovu načítat nebudeme
     if (getEvent(eventId) !== undefined) return;
     // Načtení ještě nenačteného eventu
-    const response = await api.get('/event/' + eventId);
+    const response = await api.get('/event/id/' + eventId);
     // Fail check
     if (!response.data) {
       Notify.create({
@@ -272,6 +290,11 @@ export const useEventStore = defineStore('eventStore', () => {
     loadMultipleEventsByPostId,
     areWeOnEventsFeedBedrock,
     sendAttendance,
+    isEventDialogVisible,
+    eventId_to_edit,
+    openEventDialog,
+    isRightDrawerVisible,
+    toggleRightDrawer,
   }
 },
   // {

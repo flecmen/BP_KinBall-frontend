@@ -3,7 +3,6 @@
     v-if="userStore.isAuthorizedToEdit(post.authorId)"
     :post="post"
     :isMobile="isMobile"
-    @edit-post="editPostEmit()"
   />
 
   <q-item>
@@ -48,15 +47,7 @@ export interface Props {
 }
 const props = defineProps<Props>();
 
-const emit = defineEmits<{
-  (event: 'edit-post', postIt: Post_extended['id']): void;
-}>();
-
 const userStore = useUserStore();
-
-function editPostEmit() {
-  emit('edit-post', props.post.id);
-}
 </script>
 
 <style scoped></style>

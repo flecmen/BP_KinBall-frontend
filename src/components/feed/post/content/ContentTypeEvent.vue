@@ -71,10 +71,6 @@ export interface Props {
 }
 const props = defineProps<Props>();
 
-// const emit = defineEmits<{
-//   (event: 'edit-post', postIt: Post_extended['id']): void;
-// }>();
-
 const eventStore = useEventStore();
 
 const event = computed(() => {

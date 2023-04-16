@@ -1,5 +1,5 @@
 <template>
-  <q-dialog ref="dialog">
+  <q-dialog ref="dialog" style="width: 700px">
     <q-card>
       <q-card-section>
         <div class="text-h6">Create a new post</div>

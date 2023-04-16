@@ -5,7 +5,7 @@
       size="xs"
       color="primary"
       class="click-cursor"
-      @click="emit('edit-post', post.id)"
+      @click="postStore.openPostDialog(props.post.id)"
     >
       <q-tooltip>edit post</q-tooltip>
     </q-icon>
@@ -41,10 +41,6 @@ export interface Props {
   isMobile: boolean;
 }
 const props = defineProps<Props>();
-
-const emit = defineEmits<{
-  (event: 'edit-post', postIt: Post_extended['id']): void;
-}>();
 
 const postStore = usePostStore();
 </script>
