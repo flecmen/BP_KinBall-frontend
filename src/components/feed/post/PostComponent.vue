@@ -13,7 +13,7 @@
     <WriteComment :post="props.post" :isMobile="isMobile" />
     <PostCommentSection
       v-if="isCommentSectionVisible && props.post.comments.length > 0"
-      class="q-mt-md"
+      class="q-mt-md q-pb-sm"
       :post="props.post"
       :isMobile="isMobile"
     />

@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="lHh Lpr lFf" style="background-color: #f0f2f5">
     <NavBar @toggle-left-drawer="toggleLeftDrawer()" />
     <LeftDrawer v-model="leftDrawerOpen" />
 
@@ -16,7 +16,7 @@
     <router-view name="rightDrawer" />
     <EventListDrawer v-model="isRightDrawerVisible" />
 
-    <q-page-container>
+    <q-page-container class="bg-gray">
       <router-view />
     </q-page-container>
   </q-layout>

@@ -2,6 +2,7 @@
   <div class="row justify-evenly">
     <q-btn
       :label="goingBtnLabel"
+      icon="mood"
       @click="react('going' as keyof UserOnEventStatus)"
       @mouseover="showGoing"
       @mouseleave="hideGoing"
@@ -32,6 +33,7 @@
     </q-btn>
     <q-btn
       :label="dunnoBtnLabel"
+      icon="sentiment_neutral"
       :loading="isLoading.dont_know"
       @click="react('dont_know' as keyof UserOnEventStatus)"
       @mouseover="showDont_knowList"
@@ -62,6 +64,7 @@
     </q-btn>
     <q-btn
       :label="NotGoingBtnLabel"
+      icon="mood_sad"
       :loading="isLoading.not_going"
       :disable="blocked"
       @click="react('not_going' as keyof UserOnEventStatus)"
@@ -91,7 +94,7 @@
       >
     </q-btn>
   </div>
-
+  <q-space />
   <q-linear-progress
     v-if="eventStore.getEvent(props.eventId)?.people_limit"
     color="primary"

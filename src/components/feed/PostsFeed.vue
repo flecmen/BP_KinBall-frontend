@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="q-mt-md">
     <FeedFilter v-if="props.feedFilter" />
     <div v-if="props.posts !== undefined">
       <q-infinite-scroll
