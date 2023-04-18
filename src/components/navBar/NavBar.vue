@@ -34,6 +34,7 @@
         <AccountCirleButton
           @logout="logout()"
           @settings="router.push({ name: 'user-settings' })"
+          @installApp="emit('installApp')"
         />
       </div>
       <q-btn
@@ -72,5 +73,6 @@ function logout() {
 
 const emit = defineEmits<{
   (event: 'toggleLeftDrawer'): void;
+  (event: 'installApp'): void;
 }>();
 </script>

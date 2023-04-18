@@ -12,8 +12,16 @@
             {{ userStore.user.full_name }}
           </q-item-section>
         </q-item>
+        <q-item
+          clickable
+          v-close-popup
+          tabindex="0"
+          @click="emit('installApp')"
+        >
+          <q-item-section> {{ $t('install.app') }} </q-item-section>
+        </q-item>
         <q-item clickable v-close-popup tabindex="0" @click="emit('settings')">
-          <q-item-section> Nastavení </q-item-section>
+          <q-item-section>{{ $t('settings') }} </q-item-section>
         </q-item>
         <q-item clickable v-close-popup tabindex="0" @click="emit('logout')">
           <q-item-section>
@@ -32,6 +40,7 @@ const userStore = useUserStore();
 const emit = defineEmits<{
   (event: 'logout'): void;
   (event: 'settings'): void;
+  (event: 'installApp'): void;
 }>();
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf" style="background-color: #f0f2f5">
-    <NavBar @toggle-left-drawer="toggleLeftDrawer()" />
+    <NavBar @toggle-left-drawer="toggleLeftDrawer()" @installApp="installApp" />
     <LeftDrawer v-model="leftDrawerOpen" />
 
     <PostModal
@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import NavBar from 'src/components/navBar/NavBar.vue';
 import LeftDrawer from 'src/components/navBar/LeftDrawer.vue';
 import PostModal from 'src/components/modals/PostModal.vue';
@@ -52,4 +52,35 @@ const isRightDrawerVisible = computed(() => {
     breakpoints.isMoreThan(useQuasar(), breakpoints.breakPoints.xs.upper)
   );
 });
+
+// PWA stuff
+const deferredPrompt = ref<Event>();
+
+onMounted(async () => {
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt.value = e;
+  });
+});
+
+const pwaIsInstalled = computed(() => {
+  if (window.matchMedia('(display-mode: standalone)').matches) {
+    console.log('this is standalone');
+    return true;
+  }
+  console.log('this is not standalone');
+  return false;
+});
+
+const installApp = async () => {
+  if (deferredPrompt.value) {
+    deferredPrompt.value.prompt();
+    const { outcome } = await deferredPrompt.value.userChoice;
+    if (outcome === 'accepted') {
+      console.log('User accepted the A2HS prompt');
+    } else {
+      console.log('User dismissed the A2HS prompt');
+    }
+  }
+};
 </script>
