@@ -92,18 +92,17 @@ export const usePostStore = defineStore('postStore', () => {
       return;
     }
 
-    // posts loaded
     // parse the response.data and for each event, check if it is already in the store
     // if it is, update it, if not, add it
     const eventsToBeLoadedByPostId: number[] = [];
     response.data.forEach((p: Post_extended) => {
+      // save post on frontend
       pushPost(p)
       if (p.type === 'event') {
         eventsToBeLoadedByPostId.push(p.id);
       }
     })
     useEventStore().loadMultipleEventsByPostId(eventsToBeLoadedByPostId);
-    // posts.value?.push(...response.data); TOHLE asi ne?
 
     return;
   }

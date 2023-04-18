@@ -13,8 +13,12 @@
       :eventId="eventStore.eventId_to_edit"
       v-model="eventStore.isEventDialogVisible"
     />
-    <router-view name="rightDrawer" />
-    <EventListDrawer v-model="isRightDrawerVisible" />
+
+    <router-view
+      class="view right-sidebar"
+      name="RightSidebar"
+      v-model="isRightDrawerVisible"
+    ></router-view>
 
     <q-page-container class="bg-gray">
       <router-view />
@@ -28,7 +32,6 @@ import NavBar from 'src/components/navBar/NavBar.vue';
 import LeftDrawer from 'src/components/navBar/LeftDrawer.vue';
 import PostModal from 'src/components/modals/PostModal.vue';
 import NewEventModal from 'src/components/modals/NewEventModal.vue';
-import EventListDrawer from 'src/components/feed/eventList/eventListDrawer.vue';
 import { usePostStore } from 'src/stores/post-store';
 import { useEventStore } from 'src/stores/event-store';
 import breakpoints from 'src/helpers/breakpoints';

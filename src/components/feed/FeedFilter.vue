@@ -4,6 +4,7 @@
       <q-card-section>
         <div class="text-h6">Feed filter</div>
       </q-card-section>
+      <!-- Filtr podle typu příspěvku -->
       <q-card-section>
         <q-toggle
           v-for="filter in Object.keys(postStore.postTypeFilter)"
@@ -12,6 +13,7 @@
           v-model="postStore.postTypeFilter[filter]"
         />
       </q-card-section>
+      <!-- Filtr podle skupin -->
       <q-card-section>
         <q-chip
           v-for="group in postStore.groupsFilter"

@@ -40,7 +40,10 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         name: 'home',
-        component: () => import('src/pages/HomePage.vue')
+        components: {
+          default: () => import('src/pages/HomePage.vue'),
+          RightSidebar: () => import('src/components/feed/eventList/eventListDrawer.vue')
+        },
       },
       {
         path: 'user',
@@ -48,7 +51,10 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'settings',
             name: 'user-settings',
-            component: () => import('src/pages/user/UserSettings.vue'),
+            components: {
+              default: () => import('src/pages/user/UserSettings.vue'),
+              RightSidebar: () => import('src/components/feed/eventList/eventListDrawer.vue')
+            }
           },
           {
             path: 'id/:userId',
@@ -56,7 +62,10 @@ const routes: RouteRecordRaw[] = [
               {
                 path: 'profile',
                 name: 'user-profile',
-                component: () => import('src/pages/user/UserProfile.vue'),
+                components: {
+                  default: () => import('src/pages/user/UserProfile.vue'),
+                  RightSidebar: () => import('src/components/feed/eventList/eventListDrawer.vue')
+                },
               },
             ]
           }
@@ -66,7 +75,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/admin',
-    component: () => import('layouts/SimpleLayout.vue'),
+    component: () => import('layouts/MainLayout.vue'),
     beforeEnter: [checkAuthentication, (to, from, next) => allowRoles([role.admin, role.coach], to, from, next)],
     children: [
       {
