@@ -58,7 +58,9 @@ const deferredPrompt = ref<Event>();
 
 onMounted(async () => {
   window.addEventListener('beforeinstallprompt', (e) => {
+    console.log(e);
     e.preventDefault();
+
     deferredPrompt.value = e;
   });
 });

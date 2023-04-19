@@ -25,14 +25,9 @@
       <p>{{ eventStore.getEvent(props.eventId)?.description }}</p>
     </q-card-section>
     <q-card-section>
-      <q-chip
-        id="Event_add_to_calendar"
-        clickable
-        color="primary"
-        text-color="white"
-        icon="event"
-        :label="$t('Add.to.calendar')"
-      />
+      <!-- add to calendar -->
+      <AddToCalendarButton v-if="event !== undefined" :event="event" />
+
       <ShowOnMapButton
         :address="event.address"
         :lat="event.address_lat"
@@ -64,6 +59,7 @@ import dateTimeFormat from 'src/helpers/dateTimeFormat';
 import EventPrice from './eventComponents/EventPrice.vue';
 import EventInteractionBtns from './eventComponents/EventInteractionBtns.vue';
 import ShowOnMapButton from 'src/components/buttons/ShowOnMapButton.vue';
+import AddToCalendarButton from 'src/components/buttons/AddToCalendarButton.vue';
 
 export interface Props {
   eventId: Event_extended['id'];
