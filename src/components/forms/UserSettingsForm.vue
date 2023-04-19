@@ -1,14 +1,16 @@
 <template>
-  <div v-for="(value, key) in userStore.user.settings" :key="key">
-    <q-toggle
-      v-if="key !== 'userId'"
-      :key="key"
-      v-model="settings[key]"
-      :label="$t('settings.' + key)"
-    />
-  </div>
-  <div align="right">
-    <q-btn @click="updateSettings()" label="Update" color="primary" />
+  <div>
+    <div v-for="(value, key) in userStore.user.settings" :key="key">
+      <q-toggle
+        v-if="key !== 'userId'"
+        :key="key"
+        v-model="settings[key]"
+        :label="$t('settings.' + key)"
+      />
+    </div>
+    <div align="right">
+      <q-btn @click="updateSettings()" label="Update" color="primary" />
+    </div>
   </div>
 </template>
 

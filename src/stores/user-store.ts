@@ -138,7 +138,26 @@ export const useUserStore = defineStore('userStore', () => {
     // admin a trenér mohou upravovat cokoliv
     if (user.value.role === role.admin || user.value.role === role.coach) return true;
     return false;
+  }
 
+  async function updateUserProfile(data: User_extended) {
+    // Update backend
+    const response = await api.put(`/user/${user.value.id}`, data);
+    if (response.status !== 200) {
+      Notify.create({
+        type: 'negative',
+        message: i18n.t('failed')
+      })
+      return;
+    }
+    Notify.create({
+      type: 'positive',
+      message: i18n.t('success')
+    })
+    // Update frontend
+    user.value = response.data;
+
+    return;
   }
 
   return {
@@ -155,6 +174,7 @@ export const useUserStore = defineStore('userStore', () => {
     changePassword,
     setAfterLoginRoute,
     isAuthorizedToEdit,
+    updateUserProfile,
   }
 },
   {
