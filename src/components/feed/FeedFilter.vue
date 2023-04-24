@@ -9,7 +9,7 @@
         <q-toggle
           v-for="filter in Object.keys(postStore.postTypeFilter)"
           v-bind:key="filter"
-          :label="$t('post.type.' + filter)"
+          :label="$t('post.type.' + filter + 's')"
           v-model="postStore.postTypeFilter[filter]"
         />
       </q-card-section>

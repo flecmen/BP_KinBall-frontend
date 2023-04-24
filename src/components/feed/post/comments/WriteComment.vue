@@ -9,7 +9,7 @@
     <q-item-section>
       <q-input
         v-model="commentText"
-        label="Write a comment"
+        :label="$t('post.comment.write')"
         filled
         autogrow
         dense
@@ -18,7 +18,7 @@
     </q-item-section>
     <div class="q-ml-md">
       <q-btn
-        label="send"
+        :label="$t('btn.send')"
         :loading="isCommentBeingSent"
         @click="sendComment()"
         color="primary"

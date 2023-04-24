@@ -1,21 +1,26 @@
 <template>
   <q-card-section class="flex justify-between q-pb-none">
-    <LikeButton
-      :isBeingLiked="isBeingLiked"
-      :likesCount="props.post.likes.length"
-      :color="post.likes.some((u) => u.id === userStore.user.id) ? 'red' : ''"
-      :showLikes="false"
-      @like="likePost"
-    />
+    <div class="text-center">
+      <LikeButton
+        :isBeingLiked="isBeingLiked"
+        :likesCount="props.post.likes.length"
+        :color="post.likes.some((u) => u.id === userStore.user.id) ? 'red' : ''"
+        :showLikes="false"
+        @like="likePost"
+      />
+      <div>{{ props.post.likes.length }} {{ $t('post.reaction.likes') }}</div>
+    </div>
 
-    <q-btn flat icon="comment" @click="emit('showComments')">
-      <q-tooltip>{{ $t('show.comments') }}</q-tooltip>
-    </q-btn>
-    <q-toggle v-model="isFollowing" flat label="Follow" />
-  </q-card-section>
-  <q-card-section class="row justify-between">
-    <div class="">{{ props.post.likes.length }} {{ $t('likes') }}</div>
-    <div class="">{{ props.post.comments.length }} {{ $t('comments') }}</div>
+    <div class="text-center">
+      <q-btn flat icon="comment" @click="emit('showComments')">
+        <q-tooltip>{{ $t('tooltip.comment.show') }}</q-tooltip>
+      </q-btn>
+      <div>
+        {{ props.post.comments.length }} {{ $t('post.reaction.comments') }}
+      </div>
+    </div>
+
+    <q-toggle v-model="isFollowing" flat :label="$t('post.reaction.follow')" />
   </q-card-section>
 </template>
 

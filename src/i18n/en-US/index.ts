@@ -8,7 +8,8 @@ export default {
     log: {
       in: 'Log in',
       out: 'Log out'
-    }
+    },
+    send: 'send',
   },
   email: {
     address: 'Email address'
@@ -32,9 +33,32 @@ export default {
   },
   post: {
     type: {
-      text: 'Text',
+      text: 'Post',
       event: 'Event',
-      survey: 'Survey',
+      survey: 'Poll',
+      // plural for feed filter
+      texts: 'Posts',
+      events: 'Events',
+      surveys: 'Polls',
+    },
+    reaction: {
+      likes: 'likes',
+      comments: 'comments',
+      follow: 'Follow',
+    },
+    comment: {
+      write: 'Write a comment',
+    },
+  },
+
+  tooltip: {
+    like: 'like',
+    comment: {
+      show: 'Show comments',
+    },
+    post: {
+      show: 'Show post',
+      delete: 'Delete post',
     }
   },
   event: {

@@ -11,6 +11,7 @@
       @showComments="revertCommentSectionVisibility()"
     />
     <WriteComment
+      class="q-mt-sm"
       :post="props.post"
       :isMobile="isMobile"
       @showCommentSection="openCommentSection()"

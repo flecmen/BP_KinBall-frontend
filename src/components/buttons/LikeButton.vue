@@ -12,7 +12,7 @@
     <template v-slot:loading>
       <q-spinner-facebook />
     </template>
-    <q-tooltip>{{ $t('like') }}</q-tooltip>
+    <q-tooltip>{{ $t('tooltip.like') }}</q-tooltip>
   </q-btn>
 </template>
 

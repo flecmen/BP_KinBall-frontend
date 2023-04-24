@@ -179,17 +179,17 @@ export type Group = {
 
 export const UserOnEventStatus = {
   going: 'going',
-  not_going: 'not going',
-  dont_know: 'dont know',
+  not_going: 'not_going',
+  dont_know: 'dont_know',
   substitute: 'substitute'
 };
 export type UserOnEventStatus = (typeof UserOnEventStatus)[keyof typeof UserOnEventStatus]
 
 export const eventType = {
-  trenink: 'trénink',
-  kurz_pro_mladez: 'kurz pro mládež',
+  trenink: 'trenink',
+  kurz_pro_mladez: 'kurz_pro_mladez',
   turnaj: 'turnaj',
-  jednorazova_akce: 'jednorázová akce',
+  jednorazova_akce: 'jednorazova_akce',
 };
 
 export type eventType = (typeof eventType)[keyof typeof eventType]
@@ -206,8 +206,8 @@ export type postType = (typeof postType)[keyof typeof postType]
 
 export const role = {
   admin: 'admin',
-  coach: 'trenér',
-  player: 'hráč',
+  coach: 'coach',
+  player: 'player',
 };
 
 export type role = (typeof role)[keyof typeof role]
