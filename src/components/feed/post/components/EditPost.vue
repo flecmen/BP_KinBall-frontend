@@ -5,7 +5,7 @@
       size="xs"
       color="primary"
       class="click-cursor"
-      @click="postStore.openPostDialog(props.post.id)"
+      @click="openEditDialog()"
     >
       <q-tooltip>edit post</q-tooltip>
     </q-icon>
@@ -34,7 +34,8 @@
 
 <script setup lang="ts">
 import { usePostStore } from 'src/stores/post-store';
-import { Post_extended } from 'src/types/dbTypes';
+import { useEventStore } from 'src/stores/event-store';
+import { Post_extended, postType } from 'src/types/dbTypes';
 
 export interface Props {
   post: Post_extended;
@@ -43,6 +44,21 @@ export interface Props {
 const props = defineProps<Props>();
 
 const postStore = usePostStore();
+const eventStore = useEventStore();
+
+function openEditDialog() {
+  switch (props.post.type) {
+    case postType.text:
+      postStore.openPostDialog(props.post.id);
+      break;
+    case postType.survey:
+      postStore.openPostDialog(props.post.id);
+      break;
+    case postType.event:
+      eventStore.openEventDialog(props.post.event?.id);
+      break;
+  }
+}
 </script>
 
 <style scoped>

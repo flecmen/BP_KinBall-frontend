@@ -67,7 +67,7 @@
             round
             color="grey"
             icon="edit"
-            @click="emit('showEventModal', props.row.id)"
+            @click="eventStore.openEventDialog(props.row.id)"
           ></q-btn>
         </q-td>
       </template>

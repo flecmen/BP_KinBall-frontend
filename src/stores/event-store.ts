@@ -32,19 +32,22 @@ export const useEventStore = defineStore('eventStore', () => {
   // event dialog
   const isEventDialogVisible = ref(false)
   const eventId_to_edit = ref(-1)
+  function openEventDialog(eventId?: number) {
+    if (!eventId) {
+      initNewEvent();
+      eventId_to_edit.value = -1
+    } else {
+
+      eventId_to_edit.value = eventId
+    }
+    isEventDialogVisible.value = !isEventDialogVisible.value;
+  }
 
   // event right Drawer
   const isRightDrawerVisible = ref(false)
 
   function toggleRightDrawer() {
     isRightDrawerVisible.value = !isRightDrawerVisible.value;
-  }
-
-  function openEventDialog(eventId?: number) {
-    if (!eventId) {
-      initNewEvent();
-      isEventDialogVisible.value = !isEventDialogVisible.value;
-    }
   }
 
   function initNewEvent() {
