@@ -10,7 +10,11 @@
       :isMobile="isMobile"
       @showComments="revertCommentSectionVisibility()"
     />
-    <WriteComment :post="props.post" :isMobile="isMobile" />
+    <WriteComment
+      :post="props.post"
+      :isMobile="isMobile"
+      @showCommentSection="openCommentSection()"
+    />
     <PostCommentSection
       v-if="isCommentSectionVisible && props.post.comments.length > 0"
       class="q-mt-md q-pb-sm"
@@ -39,6 +43,10 @@ const isCommentSectionVisible = ref(false);
 
 function revertCommentSectionVisibility() {
   isCommentSectionVisible.value = !isCommentSectionVisible.value;
+}
+
+function openCommentSection() {
+  isCommentSectionVisible.value = true;
 }
 
 const $q = useQuasar();

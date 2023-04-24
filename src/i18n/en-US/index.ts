@@ -37,6 +37,14 @@ export default {
       survey: 'Survey',
     }
   },
+  event: {
+    reaction: {
+      going: 'going',
+      not_going: 'not going',
+      dont_know: 'dont know',
+      substitute: 'substitute',
+    }
+  },
   settings: {
     email_notification: 'Email notification',
     push_notification: 'Push notification',
@@ -49,5 +57,10 @@ export default {
     Thursday: 'Thursday',
     Friday: 'Friday',
     Saturday: 'Saturday',
+  },
+  role: {
+    admin: 'admin',
+    coach: 'coach',
+    player: 'player',
   }
 };

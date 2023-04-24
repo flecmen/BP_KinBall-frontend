@@ -34,7 +34,6 @@ import LikeButton from 'src/components/buttons/LikeButton.vue';
 
 export interface Props {
   comment: Post_comment_extended;
-  isMobile: boolean;
 }
 const props = defineProps<Props>();
 

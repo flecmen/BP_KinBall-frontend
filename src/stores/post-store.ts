@@ -170,12 +170,17 @@ export const usePostStore = defineStore('postStore', () => {
     if (response.status !== 201) {
       Notify.create({
         type: 'negative',
-        message: i18n.t('failed')
+        message: i18n.t('Comment.sent.failed')
       })
-      return;
+      return false;
     }
+    Notify.create({
+      type: 'positive',
+      message: i18n.t('Comment.sent')
+    })
 
     getLocalPost(postId)?.comments.push(response.data)
+    return true;
   }
 
   function getLocalPost(postId: Post['id']) {

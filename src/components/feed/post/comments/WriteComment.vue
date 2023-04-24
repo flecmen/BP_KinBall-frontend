@@ -39,11 +39,15 @@ import { ref } from 'vue';
 import useNotify from 'src/composables/useNotify';
 import { i18n } from 'src/utils/i18n';
 import userAvatar from 'src/components/images/userAvatar.vue';
-export interface Props {
+
+const props = defineProps<{
   post: Post_extended;
   isMobile: boolean;
-}
-const props = defineProps<Props>();
+}>();
+
+const emit = defineEmits<{
+  (event: 'showCommentSection'): void;
+}>();
 
 const userStore = useUserStore();
 const postStore = usePostStore();
@@ -58,8 +62,8 @@ async function sendComment() {
     return;
   }
   isCommentBeingSent.value = true;
-  await postStore.sendComment(props.post.id, commentText.value);
-  notify.success(i18n.t('success'));
+  if (await postStore.sendComment(props.post.id, commentText.value))
+    emit('showCommentSection');
   isCommentBeingSent.value = false;
   commentText.value = '';
 }

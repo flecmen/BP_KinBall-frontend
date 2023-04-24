@@ -29,5 +29,10 @@ export default {
     wrong: {
       credentials: 'Wrong credentials'
     }
+  },
+  role: {
+    admin: 'admin',
+    coach: 'trenér',
+    player: 'hráč',
   }
 };
