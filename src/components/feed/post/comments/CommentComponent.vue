@@ -6,7 +6,7 @@
         {{ dateFormat(props.comment.time_of_creation) }}
       </div>
     </q-card-section>
-    <q-card-section class="q-pb-none">
+    <q-card-section class="q-pb-none q-pt-none">
       {{ text }}
     </q-card-section>
     <q-card-actions align="right" side>
@@ -16,6 +16,7 @@
           comment.likes.some((u) => u.id === userStore.user.id) ? 'red' : ''
         "
         :likesCount="props.comment.likes.length"
+        :showLikes="true"
         @like="likeComment()"
       />
     </q-card-actions>

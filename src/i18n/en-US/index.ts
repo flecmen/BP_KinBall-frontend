@@ -40,5 +40,14 @@ export default {
   settings: {
     email_notification: 'Email notification',
     push_notification: 'Push notification',
+  },
+  dayofweek: {
+    Sunday: 'Sunday',
+    Monday: 'Monday',
+    Tuesday: 'Tuesday',
+    Wednesday: 'Wednesday',
+    Thursday: 'Thursday',
+    Friday: 'Friday',
+    Saturday: 'Saturday',
   }
 };

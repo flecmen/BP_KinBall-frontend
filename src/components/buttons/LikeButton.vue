@@ -6,7 +6,9 @@
     :loading="isBeingLiked"
     :color="props.color"
   >
-    <q-badge color="orange" floating>{{ props.likesCount }}</q-badge>
+    <q-badge v-if="props.showLikes" transparent floating>{{
+      props.likesCount
+    }}</q-badge>
     <template v-slot:loading>
       <q-spinner-facebook />
     </template>
@@ -19,6 +21,7 @@ const props = defineProps<{
   isBeingLiked: boolean;
   color: string;
   likesCount: number;
+  showLikes: boolean;
 }>();
 
 const emit = defineEmits<{

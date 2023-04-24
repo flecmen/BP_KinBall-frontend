@@ -1,11 +1,12 @@
 <template>
-  <q-chip
+  <q-btn
     :label="$t('show.on.map')"
     icon="location_on"
     color="secondary"
-    text-color="white"
+    text-color="grey"
     clickable
     @click="openGoogleMaps()"
+    flat
   />
 </template>
 

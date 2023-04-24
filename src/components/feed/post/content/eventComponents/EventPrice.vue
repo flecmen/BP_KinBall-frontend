@@ -1,8 +1,10 @@
 <template>
-  <q-chip v-if="props?.price" color="red-2" class="col-auto"
+  <q-chip v-if="props?.price" color="red-5" outline class="col-auto"
     >{{ props.price }} Kč</q-chip
   >
-  <q-chip v-else class="col-auto" color="green">{{ $t('free') }}</q-chip>
+  <q-chip v-else class="col-auto" color="green" outline>{{
+    $t('free')
+  }}</q-chip>
 </template>
 
 <script setup lang="ts">

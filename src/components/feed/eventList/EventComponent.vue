@@ -9,7 +9,7 @@
             month: '2-digit',
           })
         }}
-        {{ $t(daysOfWeek[new Date(props.event.time).getDay()]) }}
+        {{ $t('dayofweek.' + dateTimeFormat.dayOfWeek(props.event.time)) }}
         {{ new Date(props.event.time).toTimeString().slice(0, 5) }}
       </div>
       {{ props.event.address_short }}
@@ -57,6 +57,7 @@ import { computed } from 'vue';
 import { useUserStore } from 'src/stores/user-store';
 import { useEventStore } from 'src/stores/event-store';
 import { UserOnEventStatus } from 'src/types/dbTypes';
+import dateTimeFormat from 'src/helpers/dateTimeFormat';
 
 const props = defineProps<{
   event: Event_extended;
@@ -75,16 +76,6 @@ const options = Object.entries(UserOnEventStatus).map(([key, value]) => ({
   label: value,
   value: key,
 }));
-
-const daysOfWeek = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
-];
 
 async function react(option: string) {
   await eventStore.reactOnEvent(props.event.id, option);

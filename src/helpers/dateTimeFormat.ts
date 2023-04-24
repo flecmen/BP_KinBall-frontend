@@ -1,3 +1,13 @@
+const daysOfWeek = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+];
+
 export function dateTime(date: Date | undefined) {
   if (!date) return 'CHYBA'
   return new Date(date).toLocaleString([], {
@@ -26,10 +36,16 @@ export function time(date: Date | undefined) {
   })
 }
 
+export function dayOfWeek(date: Date | undefined) {
+  if (!date) return 'CHYBA'
+  return daysOfWeek[new Date(date).getDay()]
+}
+
 export default {
   dateTime,
   date,
   time,
+  dayOfWeek,
 }
 
 

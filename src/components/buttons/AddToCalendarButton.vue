@@ -1,12 +1,13 @@
 <template>
-  <q-chip
+  <q-btn
     id="Event_add_to_calendar"
     clickable
-    color="primary"
-    text-color="white"
+    color="grey-5"
+    text-color="grey"
     icon="event"
     :label="$t('Add.to.calendar')"
     @click="openGoogle()"
+    flat
   />
 </template>
 

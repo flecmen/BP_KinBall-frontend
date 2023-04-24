@@ -24,10 +24,15 @@
     <q-card-section>
       <p>{{ eventStore.getEvent(props.eventId)?.description }}</p>
     </q-card-section>
+
     <q-card-section>
       <!-- add to calendar -->
-      <AddToCalendarButton v-if="event !== undefined" :event="event" />
-
+      <AddToCalendarButton
+        v-if="event !== undefined"
+        :event="event"
+        class="row"
+      />
+      <!-- show on map -->
       <ShowOnMapButton
         :address="event.address"
         :lat="event.address_lat"

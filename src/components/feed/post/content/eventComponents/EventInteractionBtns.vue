@@ -1,102 +1,69 @@
 <template>
   <div class="row justify-evenly">
-    <q-btn
-      :label="goingBtnLabel"
-      icon="mood"
-      @click="react('going' as keyof UserOnEventStatus)"
-      @mouseover="showGoing"
-      @mouseleave="hideGoing"
-      :loading="isLoading.going"
+    <!-- attend button -->
+    <EventInteractionButton
+      :reactionType="'going'"
+      :players="
+        event?.players.filter((p) => p.status === 'going').map((p) => p.user)
+      "
+      :label="$t('Attend')"
+      :icon="'mood'"
+      :isLoading="isLoading.going"
       :disable="blocked"
-      class="text-green-5"
-      flat
-    >
-      <UserPopupList
-        :isMobile="true"
-        :users="
-          eventStore
-            .getEvent(props.eventId)
-            ?.players.filter((p) => p.status === 'going')
-            .map((p) => p.user)
-        "
-        :visible="areGoingVisible"
-        @mouseover="showGoing"
-        @mouseleave="hideGoing"
-      />
-      <q-badge floating color="white" text-color="black"
-        >({{
-          eventStore
-            .getEvent(props.eventId)
-            ?.players.filter((p) => p.status === 'going').length
-        }})
-      </q-badge>
-    </q-btn>
-    <q-btn
-      :label="dunnoBtnLabel"
-      icon="sentiment_neutral"
-      :loading="isLoading.dont_know"
-      @click="react('dont_know' as keyof UserOnEventStatus)"
-      @mouseover="showDont_knowList"
-      @mouseleave="hideDont_knowList"
+      :color="
+        userPickedReaction === ''
+          ? 'green-5'
+          : userPickedReaction === UserOnEventStatus.going
+          ? 'green-5'
+          : 'grey'
+      "
+      @react="react"
+    />
+    <!-- dont know button -->
+    <EventInteractionButton
+      :reactionType="'dont_know'"
+      :players="
+        event?.players
+          .filter((p) => p.status === 'dont_know')
+          .map((p) => p.user)
+      "
+      :label="$t('Dont know')"
+      :icon="'sentiment_neutral'"
+      :isLoading="isLoading.dont_know"
       :disable="blocked"
-      class="text-orange"
-      flat
-    >
-      <UserPopupList
-        :isMobile="true"
-        :users="
-          eventStore
-            .getEvent(props.eventId)
-            ?.players.filter((p) => p.status === 'dont_know')
-            .map((p) => p.user)
-        "
-        :visible="dont_knowListVisible"
-        @mouseover="showDont_knowList"
-        @mouseleave="hideDont_knowList"
-      />
-      <q-badge floating color="white" text-color="black"
-        >({{
-          eventStore
-            .getEvent(props.eventId)
-            ?.players.filter((p) => p.status === 'dont_know').length
-        }})</q-badge
-      >
-    </q-btn>
-    <q-btn
-      :label="NotGoingBtnLabel"
-      icon="mood_sad"
-      :loading="isLoading.not_going"
+      :color="
+        userPickedReaction === ''
+          ? 'orange'
+          : userPickedReaction === UserOnEventStatus.dont_know
+          ? 'orange'
+          : 'grey'
+      "
+      @react="react"
+    />
+    <!-- not going button -->
+    <EventInteractionButton
+      :reactionType="'not_going'"
+      :players="
+        event?.players
+          .filter((p) => p.status === 'not_going')
+          .map((p) => p.user)
+      "
+      :label="$t('Can\'t go')"
+      :icon="'mood_bad'"
+      :isLoading="isLoading.not_going"
       :disable="blocked"
-      @click="react('not_going' as keyof UserOnEventStatus)"
-      @mouseover="showNot_goingList"
-      @mouseleave="hideNot_goingList"
-      class="text-red"
-      flat
-    >
-      <UserPopupList
-        :isMobile="true"
-        :users="
-          eventStore
-            .getEvent(props.eventId)
-            ?.players.filter((p) => p.status === 'not_going')
-            .map((p) => p.user)
-        "
-        :visible="not_goingListVisible"
-        @mouseover="showNot_goingList"
-        @mouseleave="hideNot_goingList"
-      />
-      <q-badge floating color="white" text-color="black"
-        >({{
-          eventStore
-            .getEvent(props.eventId)
-            ?.players.filter((p) => p.status === 'not_going').length
-        }})</q-badge
-      >
-    </q-btn>
+      :color="
+        userPickedReaction === ''
+          ? 'red'
+          : userPickedReaction === UserOnEventStatus.not_going
+          ? 'red'
+          : 'grey'
+      "
+      @react="react"
+    />
   </div>
-  <q-space />
   <q-linear-progress
-    v-if="eventStore.getEvent(props.eventId)?.people_limit"
+    v-if="event?.people_limit"
     color="primary"
     :value="percentage"
     rounded
@@ -107,8 +74,8 @@
 import { Event_extended, UserOnEventStatus } from 'src/types/dbTypes';
 import { useEventStore } from 'src/stores/event-store';
 import { ref, reactive, computed } from 'vue';
-import UserPopupList from 'src/components/lists/UserPopupList.vue';
 import { useUserStore } from 'src/stores/user-store';
+import EventInteractionButton from './EventInteractionButton.vue';
 
 export interface Props {
   eventId: Event_extended['id'];
@@ -119,84 +86,28 @@ const props = defineProps<Props>();
 const eventStore = useEventStore();
 const userStore = useUserStore();
 
-const areGoingVisible = ref(false);
-const dont_knowListVisible = ref(false);
-const not_goingListVisible = ref(false);
-
 const blocked = ref(false);
+const event = computed(() => {
+  return eventStore.getEvent(props.eventId);
+});
 
 const percentage = computed(() => {
-  const event = eventStore.getEvent(props.eventId);
-  if (!event?.players.filter((p) => p.status === 'going')) return 0;
-  if (!event?.people_limit) return 0;
+  if (!event.value?.players.filter((p) => p.status === 'going')) return 0;
+  if (!event.value?.people_limit) return 0;
   return (
-    event?.players.filter((p) => p.status === 'going').length /
-    event?.people_limit
+    event.value?.players.filter((p) => p.status === 'going').length /
+    event.value?.people_limit
   );
 });
 
-const goingBtnLabel = computed(() => {
-  if (
-    eventStore
-      .getEvent(props.eventId)
-      ?.players.some(
-        (ue) =>
-          ue.status === UserOnEventStatus.going &&
-          ue.user.id === userStore.user.id
-      )
-  ) {
-    return "I'm going";
-  }
-  return 'Going';
+const userPickedReaction = computed(() => {
+  if (!event.value) return '';
+  const player = event.value.players.find(
+    (p) => p.user.id === userStore.user?.id
+  );
+  if (!player) return '';
+  return player.status;
 });
-
-const dunnoBtnLabel = computed(() => {
-  if (
-    eventStore
-      .getEvent(props.eventId)
-      ?.players.some(
-        (ue) => ue.status === 'dont_know' && ue.user.id === userStore.user.id
-      )
-  ) {
-    return "I don't know";
-  } else return "Don't know";
-});
-
-const NotGoingBtnLabel = computed(() => {
-  if (
-    eventStore
-      .getEvent(props.eventId)
-      ?.players.some(
-        (ue) => ue.status === 'not_going' && ue.user.id === userStore.user.id
-      )
-  ) {
-    return "I'm not going";
-  } else return 'Not going';
-});
-
-function showGoing() {
-  areGoingVisible.value = true;
-}
-
-function hideGoing() {
-  areGoingVisible.value = false;
-}
-
-function showDont_knowList() {
-  dont_knowListVisible.value = true;
-}
-
-function hideDont_knowList() {
-  dont_knowListVisible.value = false;
-}
-
-function showNot_goingList() {
-  not_goingListVisible.value = true;
-}
-
-function hideNot_goingList() {
-  not_goingListVisible.value = false;
-}
 
 const isLoading = reactive({
   going: false,
@@ -204,11 +115,15 @@ const isLoading = reactive({
   not_going: false,
 });
 
-async function react(reaction: keyof UserOnEventStatus) {
-  isLoading[String(reaction)] = true;
+async function react(reaction: string) {
+  if (!(reaction in isLoading)) {
+    console.error(`Invalid reaction: ${reaction}`);
+    return;
+  }
+  isLoading[reaction] = true;
   blocked.value = true;
   await eventStore.reactOnEvent(props.eventId, reaction);
-  isLoading[String(reaction)] = false;
+  isLoading[reaction] = false;
   blocked.value = false;
 }
 </script>
