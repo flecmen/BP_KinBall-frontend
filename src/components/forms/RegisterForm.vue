@@ -1,6 +1,6 @@
 <template>
   <q-card class="q-pa-xl">
-    <q-form class="" ref="registerForm" @submit="login()">
+    <q-form class="" ref="form">
       <q-input
         v-model="full_name"
         :label="$t('user.full_name')"
@@ -15,23 +15,20 @@
         lazy-rules
         :rules="[formRules.required, formRules.isEmail]"
         :error-message="error.email.message"
-        :error="error.email.value"
+        :error="error.email.show"
         :hint="emailMessage"
+        :loading="emailLoading"
+        @update:model-value="() => (emailLoading = true)"
+      >
+      </q-input>
+      <PasswordInput @update:password="(psw: string) => (password = psw)" />
+      <PasswordInput
+        :showError="error.password.show"
+        :errorMessage="error.password.message"
+        :label="$t('form.input.password.confirm')"
+        @update:password="(psw: string) => (password2 = psw)"
       />
-      <q-input
-        v-model="password"
-        :label="$t('password')"
-        type="password"
-        :rules="[formRules.required]"
-      />
-      <q-input
-        v-model="password2"
-        :label="$t('second.password')"
-        type="password"
-        :rules="[formRules.required]"
-        :error="error.password.value"
-        :error-message="error.password.message"
-      />
+
       <q-btn
         class="float-right"
         color="primary"
@@ -45,25 +42,30 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, watch } from 'vue';
+import { reactive, ref, watch, computed } from 'vue';
 import formRules from 'src/helpers/formRules';
 import useNotify from 'src/composables/useNotify';
 import { useUserStore } from 'src/stores/user-store';
-import { useI18n } from 'vue-i18n';
+import { i18n } from 'src/utils/i18n';
 import { debounce } from 'lodash';
+import PasswordInput from './inputs/passwordInput.vue';
 
 const userStore = useUserStore();
-const { t } = useI18n();
 const notify = useNotify();
 
 const error = reactive({
   email: {
-    value: false,
+    show: false,
     message: '',
   },
   password: {
-    value: false,
-    message: '',
+    show: computed(() => password.value !== password2.value),
+    message: computed(() => {
+      if (password.value !== password2.value) {
+        return 'Passwords do not match';
+      }
+      return '';
+    }),
   },
 });
 
@@ -71,17 +73,19 @@ const email = ref('');
 const password = ref('');
 const password2 = ref('');
 const full_name = ref('');
+const emailLoading = ref(false);
 
 const emailMessage = ref('');
 
-const registerForm = ref();
+const form = ref();
 
 async function register() {
   // Validace formuláře
-  if (!registerForm.value.validate()) {
-    notify.fail(t('failed'));
+  if (!(await form.value.validate()) || error.password.show) {
+    notify.fail(i18n.t('failed'));
     return;
   }
+
   await userStore.register(email.value, password.value, full_name.value);
 }
 
@@ -90,12 +94,13 @@ const debouncedFunction = debounce(async (newVal: string) => {
   const isEmailFree = await userStore.checkEmail(newVal);
   console.log(isEmailFree);
   if (isEmailFree) {
-    error.email.value = false;
-    emailMessage.value = t('email.available');
+    error.email.show = false;
+    emailMessage.value = i18n.t('form.rules.email.avaiable');
   } else {
-    error.email.value = true;
-    error.email.message = t('email.is.taken');
+    error.email.show = true;
+    error.email.message = i18n.t('form.rules.email.taken');
   }
+  emailLoading.value = false;
 }, 2000);
 
 // Watch for changes in the email value and call the debounced function

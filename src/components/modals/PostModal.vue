@@ -2,7 +2,7 @@
   <q-dialog ref="dialog" style="width: 700px">
     <q-card>
       <q-card-section>
-        <div class="text-h6">Create a new post</div>
+        <div class="text-h6">Create or update new post</div>
       </q-card-section>
       <!-- POST TYPE RADIO -->
       <q-card-section class="q-pt-none">
@@ -22,17 +22,31 @@
 
       <!-- GROUPS SELECTOR -->
       <q-card-section class="q-pt-none">
-        <GroupsSelector :groups="post.groups" @GroupsUpdate="updateGroups" />
+        <GroupsSelector
+          :groups="post.groups"
+          @GroupsUpdate="(groups) => (post.groups = groups)"
+          :error="error.groups.show"
+          :errorMessage="error.groups.text"
+        />
       </q-card-section>
 
       <q-card-section class="q-pt-none">
-        <q-form>
+        <q-form ref="form">
           <!-- HEADING -->
-          <q-input v-model="post.heading" label="Heading" />
+          <q-input
+            v-model="post.heading"
+            label="Heading"
+            :rules="[formRules.required]"
+          />
           <!-- TEXT -->
           <q-input v-model="post.text" label="Text" type="textarea" />
+
+          <!-- SURVEY -->
           <div v-if="post.type === postType.survey">
-            <AddSurveyOption />
+            <AddSurveyOption
+              :error="error.surveyOptions.show"
+              :errorMessage="error.surveyOptions.text"
+            />
             <CurrentSurveyQuestions />
           </div>
         </q-form>
@@ -52,11 +66,13 @@
 
 <script setup lang="ts">
 import { usePostStore } from 'src/stores/post-store';
-import { ref, computed } from 'vue';
-import { postType, Group } from 'src/types/dbTypes';
+import { ref, computed, reactive } from 'vue';
+import { postType } from 'src/types/dbTypes';
 import GroupsSelector from '../forms/GroupsSelector.vue';
 import AddSurveyOption from '../forms/surveyComponents/AddSurveyOption.vue';
 import CurrentSurveyQuestions from '../forms/surveyComponents/CurrentSurveyQuestions.vue';
+import formRules from 'src/helpers/formRules';
+import { i18n } from 'src/utils/i18n';
 
 const props = defineProps<{
   postId_to_edit: number;
@@ -78,12 +94,45 @@ const post = ref(
 
 const isLoading = ref(false);
 const dialog = ref();
+const form = ref();
 
-function updateGroups(groups: Group[]) {
-  post.value.groups = groups;
-}
+const error = reactive({
+  groups: {
+    text: '',
+    show: false,
+  },
+  surveyOptions: {
+    text: '',
+    show: false,
+  },
+});
 
 async function createOrUpdatePost() {
+  // validate
+  if (!(await form.value.validate())) {
+    dialog.value.shake();
+    return;
+  }
+  if (!post.value.groups || post.value.groups.length === 0) {
+    error.groups.show = true;
+    error.groups.text = i18n.t('form.rules.groups');
+    dialog.value.shake();
+    return;
+  }
+
+  if (post.value.type === postType.survey) {
+    if (!post.value.survey_options || post.value.survey_options.length < 2) {
+      console.log(post.value.survey_options.length);
+      error.surveyOptions.show = true;
+      error.surveyOptions.text = i18n.t('form.rules.surveyOptions');
+      setTimeout(() => {
+        error.surveyOptions.show = false;
+      }, 2000);
+      dialog.value.shake();
+      return;
+    }
+  }
+
   isLoading.value = true;
   if (isThisNewPost.value) {
     await postStore.postNewPost();

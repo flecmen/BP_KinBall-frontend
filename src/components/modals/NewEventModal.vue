@@ -1,6 +1,10 @@
 <template>
   <q-dialog ref="dialog">
-    <EventForm :eventId="props.eventId" @close="dialog.close()" />
+    <EventForm
+      :eventId="props.eventId"
+      @close="dialog.hide()"
+      @shake="dialog.shake()"
+    />
   </q-dialog>
 </template>
 

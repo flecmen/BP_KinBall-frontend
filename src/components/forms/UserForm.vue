@@ -1,5 +1,5 @@
 <template>
-  <q-form>
+  <q-form ref="form">
     <!-- Full Name -->
     <q-input
       v-model="user.full_name"
@@ -35,6 +35,8 @@
       v-if="props.include.groupSelector"
       :groups="user.groups"
       @groups-update="updateGroups"
+      :error="error.groups.show"
+      :errorMessage="error.groups.errorMessage"
     />
   </q-form>
   <q-btn
@@ -49,9 +51,12 @@
 import { User_extended } from 'src/types/dbTypes';
 import { useUserStore } from 'src/stores/user-store';
 import { useAdminStore } from 'src/stores/admin-store';
+import useNotify from 'src/composables/useNotify';
 import formRules from 'src/helpers/formRules';
 import { role, Group } from 'src/types/dbTypes';
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, reactive } from 'vue';
+import { i18n } from 'src/utils/i18n';
+import GroupsSelector from './GroupsSelector.vue';
 
 const props = defineProps<{
   user?: User_extended;
@@ -67,9 +72,17 @@ const emit = defineEmits<{
 
 const userStore = useUserStore();
 const adminStore = useAdminStore();
+const notify = useNotify();
 
 const isLoading = ref(false);
 const isThisNewUser = ref(false);
+const form = ref();
+const error = reactive({
+  groups: {
+    show: false,
+    errorMessage: '',
+  },
+});
 
 onMounted(() => {
   isThisNewUser.value = !props.user;
@@ -93,6 +106,15 @@ function updateGroups(groups: Group[]) {
 }
 
 async function createOrUpdateUser() {
+  //validate
+  if (!(await form.value.validate())) return;
+  if (!user.value.groups || user.value.groups.length === 0) {
+    error.groups.show = true;
+    error.groups.errorMessage = i18n.t('form.rules.groups');
+    notify.fail(i18n.t('notify.missing.groups'));
+    return;
+  }
+
   isLoading.value = true;
   if (isUserEdittingHimself.value) {
     // user edits his profile

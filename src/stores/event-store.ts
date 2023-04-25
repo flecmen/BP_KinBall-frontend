@@ -51,7 +51,7 @@ export const useEventStore = defineStore('eventStore', () => {
   }
 
   function initNewEvent() {
-    newEvent.value = { event: { time: new Date(), organiser: userStore.user } as Event_extended, period: 1, isPeriodic: false }
+    newEvent.value = { event: { time: new Date().toLocaleDateString(), organiser: userStore.user } as Event_extended, period: 1, isPeriodic: false }
   }
 
   async function loadEvent(eventId: Event_extended['id']) {
@@ -108,8 +108,6 @@ export const useEventStore = defineStore('eventStore', () => {
     // Check if there is space left
     if (boolvalue && reaction === UserOnEventStatus.going) {
       const event = getEvent(eventId);
-      console.log('people limit: ', event?.people_limit)
-      console.log('going: ', event?.players.filter(p => p.status === 'going').length)
       if (event?.people_limit && event.people_limit <= event.players.filter(p => p.status === 'going').length) {
 
         Notify.create({

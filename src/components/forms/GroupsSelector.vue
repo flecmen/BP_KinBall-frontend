@@ -12,6 +12,8 @@
     emit-value
     hide-dropdown-icon
     @filter="updateInput"
+    :error="props.error"
+    :error-message="props.errorMessage"
   >
     <template v-slot:option="scope">
       <q-item v-bind="scope.itemProps">
@@ -31,6 +33,8 @@ import { useAdminStore } from 'src/stores/admin-store';
 
 export interface Props {
   groups: Group[];
+  error: boolean;
+  errorMessage: string;
 }
 const props = defineProps<Props>();
 

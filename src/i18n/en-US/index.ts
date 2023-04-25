@@ -10,11 +10,11 @@ export default {
       out: 'Log out'
     },
     send: 'send',
+    register: 'Register',
   },
   email: {
     address: 'Email address'
   },
-  password: 'Password',
   forgot: {
     your: {
       password: 'Forgot your password?'
@@ -24,11 +24,49 @@ export default {
     rules: {
       required: 'Required',
       isEmail: 'Enter a valid email',
+      time: 'Enter a valid time',
+      groups: 'Pick atleast one group',
+      surveyOptions: 'Pick atleast two options',
+      email: {
+        taken: 'Email is already taken',
+        avaiable: 'Email is avaiable',
+      }
+    },
+    input: {
+      password: {
+        confirm: 'Confirm password',
+        text: 'Password',
+      },
+      type: 'Type',
+      price: 'Price',
+      max: {
+        people: 'Max people',
+        substitutes: 'Max substitutes',
+      },
+      address: {
+        long: 'Address',
+        short: 'Short address',
+      },
+    },
+  },
+  is: {
+    periodic: 'Is periodic',
+  },
+  find: {
+    on: {
+      maps: 'Find on maps',
     }
   },
   notify: {
     wrong: {
       credentials: 'Wrong credentials'
+    },
+    missing: {
+      time: 'Missing time',
+      groups: 'Missing groups',
+    },
+    invalid: {
+      input: 'Invalid input',
     }
   },
   post: {
@@ -50,6 +88,9 @@ export default {
       write: 'Write a comment',
     },
   },
+  user: {
+    full_name: 'Full name',
+  },
 
   tooltip: {
     like: 'like',
@@ -59,7 +100,11 @@ export default {
     post: {
       show: 'Show post',
       delete: 'Delete post',
-    }
+    },
+    set: {
+      date: 'Set a date',
+      time: 'Set a time',
+    },
   },
   event: {
     reaction: {
@@ -67,7 +112,8 @@ export default {
       not_going: 'not going',
       dont_know: 'dont know',
       substitute: 'substitute',
-    }
+    },
+    description: 'Description',
   },
   settings: {
     email_notification: 'Email notification',
@@ -82,6 +128,7 @@ export default {
     Friday: 'Friday',
     Saturday: 'Saturday',
   },
+  weeks: 'weeks',
   role: {
     admin: 'admin',
     coach: 'coach',

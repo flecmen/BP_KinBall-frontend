@@ -3,8 +3,8 @@
     <q-input
       v-model="survey_option"
       label="New survey question"
-      :error-message="error"
-      :error="error !== ''"
+      :error-message="props.errorMessage"
+      :error="props.error"
       @vnode-updated="checkNewOptionValidity()"
     ></q-input>
     <q-btn @click="addSurveyOption()" label="Add" color="primary" flat></q-btn>
@@ -14,18 +14,23 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { usePostStore } from 'src/stores/post-store';
+import useNotify from 'src/composables/useNotify';
+import { i18n } from 'src/utils/i18n';
+
+const props = defineProps<{
+  error: boolean;
+  errorMessage: string;
+}>();
 
 const postStore = usePostStore();
+const notify = useNotify();
 
 const survey_option = ref('');
 const error = ref('');
 
 function addSurveyOption() {
   if (survey_option.value === '') {
-    error.value = 'Please enter a question';
-    setTimeout(() => {
-      error.value = '';
-    }, 3000);
+    notify.fail(i18n.t('notify.invalid.input'));
     return;
   }
   postStore.addSurvey_option(survey_option.value);

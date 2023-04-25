@@ -6,14 +6,21 @@
     <q-card-section class="q-pt-none">
       <GroupsSelector
         :groups="event.event.groups"
-        @GroupsUpdate="updateGroups"
+        @GroupsUpdate="
+          (groups) => {
+            eventStore.newEvent.event.groups = groups;
+            error.groups.show = false;
+          }
+        "
+        :error="error.groups.show"
+        :errorMessage="error.groups.text"
       />
     </q-card-section>
     <q-card-section>
-      <q-form>
+      <q-form ref="form">
         <q-select
           v-model="event.event.type"
-          label="Type"
+          :label="$t('form.input.type')"
           :options="eventTypeOptions"
           filled
           emit-value
@@ -23,38 +30,47 @@
         >
         </q-select>
         <q-input
-          label="Price"
+          :label="$t('form.input.price')"
           suffix=",-Kč"
           v-model="event.event.price"
           type="number"
         />
         <div class="row q-gutter-md">
           <q-input
-            label="Max people"
+            :label="$t('form.input.max.people')"
             v-model="event.event.people_limit"
             type="number"
           />
           <q-input
-            label="Max substitutes"
+            :label="$t('form.input.max.substitutes')"
             v-model="event.event.substitues_limit"
             type="number"
           />
         </div>
 
         <q-input
-          label="Address"
+          :label="$t('form.input.address.long')"
           v-model="event.event.address"
           :rules="[formRules.required]"
         >
           <template v-slot:append>
             <q-btn flat icon="place">
-              <q-tooltip> Find on maps </q-tooltip>
+              <q-tooltip> {{ $t('find.on.maps') }} </q-tooltip>
             </q-btn>
           </template>
         </q-input>
 
-        <q-input label="Address alias" v-model="event.event.address_short" />
-        <q-input v-model="event.event.time" readonly>
+        <q-input
+          :label="$t('form.input.address.short')"
+          v-model="event.event.address_short"
+        />
+
+        <q-input
+          v-model="event.event.time"
+          readonly
+          :error="error.time.show"
+          :error-message="error.time.text"
+        >
           <template v-slot:prepend>
             <q-icon name="event" class="cursor-pointer">
               <q-popup-proxy
@@ -72,7 +88,7 @@
                   </div>
                 </q-date>
               </q-popup-proxy>
-              <q-tooltip> Set a date </q-tooltip>
+              <q-tooltip> {{ $t('tooltip.set.date') }} </q-tooltip>
             </q-icon>
           </template>
 
@@ -87,23 +103,28 @@
                   v-model="event.event.time"
                   mask="DD.MM.YYYY HH:mm"
                   format24h
+                  @update:model-value="() => (error.time.show = false)"
                 >
                   <div class="row items-center justify-end">
                     <q-btn v-close-popup label="Close" color="primary" flat />
                   </div>
                 </q-time>
               </q-popup-proxy>
-              <q-tooltip> Set a time </q-tooltip>
+              <q-tooltip> {{ $t('tooltip.set.time') }} </q-tooltip>
             </q-icon>
           </template>
         </q-input>
+
         <div v-if="isThisNewEvent" class="row justify-between">
-          <q-toggle v-model="event.isPeriodic" label="is periodic"></q-toggle>
+          <q-toggle
+            v-model="event.isPeriodic"
+            :label="$t('is.periodic')"
+          ></q-toggle>
 
           <q-input
             v-if="event.isPeriodic"
             v-model="event.period"
-            label="weeks"
+            :label="$t('weeks')"
             type="number"
             class="col-4"
           ></q-input>
@@ -111,30 +132,26 @@
 
         <q-input
           v-model="event.event.description"
-          label="Description"
+          :label="$t('event.description')"
           type="textarea"
         />
       </q-form>
     </q-card-section>
 
     <q-card-actions align="right">
-      <q-btn
-        label="Submit"
-        color="primary"
-        @click="createOrUpdateEvent()"
-        v-close-popup
-      />
+      <q-btn label="Submit" color="primary" @click="createOrUpdateEvent()" />
     </q-card-actions>
   </q-card>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, reactive } from 'vue';
 import GroupsSelector from '../forms/GroupsSelector.vue';
 import { useEventStore } from 'src/stores/event-store';
+import useNotify from 'src/composables/useNotify';
 import { eventType } from 'src/types/dbTypes';
 import formRules from 'src/helpers/formRules';
-import { Event_extended } from 'src/types/dbTypes';
+import { i18n } from 'src/utils/i18n';
 
 const props = defineProps<{
   eventId: number;
@@ -142,9 +159,11 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (event: 'close'): void;
+  (event: 'shake'): void;
 }>();
 
 const eventStore = useEventStore();
+const notify = useNotify();
 
 const isThisNewEvent = computed(() => {
   return props.eventId === -1;
@@ -157,12 +176,32 @@ const event = ref(
 );
 
 const isLoading = ref(false);
-
-function updateGroups(groups: Event_extended['groups']) {
-  eventStore.newEvent.event.groups = groups;
-}
+const form = ref();
+const error = reactive({
+  time: {
+    text: '',
+    show: false,
+  },
+  groups: {
+    text: '',
+    show: false,
+  },
+});
 
 async function createOrUpdateEvent() {
+  //validate form
+  if (!(await form.value.validate())) {
+    notify.fail('form.not.valid');
+    emit('shake');
+    return;
+  }
+  if (!event.value.event.groups || event.value.event.groups.length === 0) {
+    error.groups.show = true;
+    error.groups.text = i18n.t('form.rules.groups');
+    notify.fail(i18n.t('notify.missing.groups'));
+    emit('shake');
+    return;
+  }
   isLoading.value = true;
   if (isThisNewEvent.value) {
     await eventStore.createEvent();
