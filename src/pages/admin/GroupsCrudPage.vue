@@ -18,6 +18,7 @@
       :columns="table.columns"
       row-key="id"
       :visible-columns="['edit', 'name', 'color']"
+      :pagination="table.pagination"
     >
       <!-- SEARCH BAR -->
       <template v-slot:top-right>
@@ -174,6 +175,12 @@ const table = reactive({
   isLoading: true,
   searchCol: '',
   searchfilter: '',
+  pagination: {
+    sortBy: 'name',
+    descending: false,
+    page: 1,
+    rowsPerPage: 10,
+  },
 });
 </script>
 

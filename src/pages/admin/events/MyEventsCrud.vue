@@ -6,8 +6,8 @@
       :loading="table.isLoading"
       :rows="table.rows"
       :columns="table.columns"
-      v-model:pagination="pagination"
       row-key="id"
+      :pagination="table.pagination"
       :visible-columns="[
         'edit',
         'time',
@@ -93,10 +93,6 @@ import GroupChip from 'src/components/GroupChip.vue';
 import dateTimeFormat from 'src/helpers/dateTimeFormat';
 import { UserOnEvent_extended } from 'src/types/dbTypes';
 
-const emit = defineEmits<{
-  (event: 'showEventModal', id?: number): void;
-}>();
-
 const eventStore = useEventStore();
 
 onMounted(async () => {
@@ -108,13 +104,6 @@ onMounted(async () => {
 const isLoading = reactive({
   deleteBtn: false,
   editBtn: false,
-});
-
-const pagination = ref({
-  rowsPerPage: 15,
-  page: 1,
-  sortBy: 'name',
-  descending: true,
 });
 
 const table = reactive({
@@ -199,6 +188,11 @@ const table = reactive({
   isLoading: true,
   searchCol: '',
   searchfilter: '',
+  pagination: {
+    sortBy: 'time', // sort by date column
+    descending: false, // sort in ascending order
+    rowsPerPage: 10, // show 10 rows per page
+  },
 });
 </script>
 

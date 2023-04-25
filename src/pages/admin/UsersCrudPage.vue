@@ -5,12 +5,14 @@
     :userId="editedUserId"
   />
   <div class="q-pa-md">
+    <!-- New User Button -->
     <q-btn
       label="New"
       icon="add"
       color="positive"
       @click="showUserModal()"
     ></q-btn>
+    <!-- Table -->
     <q-table
       :title="$t('users')"
       :loading="table.isLoading"
@@ -18,6 +20,7 @@
       :columns="table.columns"
       row-key="id"
       :visible-columns="['edit', 'name', 'email', 'role', 'groups']"
+      :pagination="table.pagination"
     >
       <!-- SEARCH BAR -->
       <template v-slot:top-right>
@@ -209,6 +212,12 @@ const table = reactive({
   isLoading: true,
   searchCol: '',
   searchfilter: '',
+  pagination: {
+    sortBy: 'full_name',
+    descending: false,
+    page: 1,
+    rowsPerPage: 10,
+  },
 });
 </script>
 

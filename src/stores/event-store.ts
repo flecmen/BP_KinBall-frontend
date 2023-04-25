@@ -298,7 +298,7 @@ export const useEventStore = defineStore('eventStore', () => {
     toggleRightDrawer,
   }
 },
-  // {
-  //   persist: true
-  // }
+  {
+    persist: true
+  }
 )
