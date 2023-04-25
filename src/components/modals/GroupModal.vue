@@ -6,12 +6,16 @@
       </q-card-section>
 
       <q-card-section class="q-pt-none">
-        <q-form>
-          <q-input v-model="group.name" label="Name" />
+        <q-form ref="form">
+          <q-input
+            v-model="group.name"
+            label="Name"
+            :rules="[formRules.required]"
+          />
           <q-input
             filled
             v-model="group.color"
-            :rules="['anyColor']"
+            :rules="['anyColor', formRules.required]"
             hint="With validation"
             class="my-input"
           >
@@ -46,6 +50,7 @@
 import { useAdminStore } from 'src/stores/admin-store';
 import { Group } from 'src/types/dbTypes';
 import { ref, computed } from 'vue';
+import formRules from 'src/helpers/formRules';
 
 const props = defineProps<{
   groupId: number;
@@ -65,8 +70,13 @@ const group = ref(
 
 const isLoading = ref(false);
 const dialog = ref();
+const form = ref();
 
 async function createOrUpdateGroup() {
+  // validate
+  if (!(await form.value.validate())) {
+    return;
+  }
   isLoading.value = true;
   if (isThisNewPost.value) {
     await adminStore.createGroup(group.value);
