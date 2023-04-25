@@ -152,7 +152,7 @@ export const useUserStore = defineStore('userStore', () => {
     }
     Notify.create({
       type: 'positive',
-      message: i18n.t('success')
+      message: i18n.t('notify.reLoginToSeeChanges')
     })
     // Update frontend
     user.value = response.data;

@@ -67,7 +67,7 @@ export const useAdminStore = defineStore('adminStore', () => {
     }
     Notify.create({
       type: 'positive',
-      message: i18n.t('success')
+      message: i18n.t('notify.reLoginToSeeChanges')
     })
     // Update frontend
     const index = users.value.findIndex(u => u.id === user.id);

@@ -67,7 +67,8 @@ export default {
     },
     invalid: {
       input: 'Invalid input',
-    }
+    },
+    reLoginToSeeChanges: 'User may need to re-login to see all changes',
   },
   post: {
     type: {

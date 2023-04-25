@@ -2,7 +2,7 @@
   <q-dialog ref="dialog">
     <q-card>
       <q-card-section>
-        <userForm
+        <UserForm
           :user="user"
           :include="{ groupSelector: true, roleSelector: true }"
           @close-dialog="dialog.hide()"
