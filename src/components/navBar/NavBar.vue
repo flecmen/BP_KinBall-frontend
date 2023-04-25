@@ -27,7 +27,7 @@
         />
       </div>
       <q-toolbar-title> </q-toolbar-title>
-
+      <UserLevelIndicator />
       <div>
         <LanguageButton />
         <NotificationButton />
@@ -55,14 +55,13 @@ import AccountCirleButton from 'src/components/navBar/buttons/AccoutCircleButton
 import LanguageButton from './buttons/LanguageButton.vue';
 import NotificationButton from './buttons/NotificationButton.vue';
 import { useUserStore } from 'src/stores/user-store';
-import { usePostStore } from 'src/stores/post-store';
 import { useEventStore } from 'src/stores/event-store';
 import { useRouter } from 'vue-router';
 import breakpoints from 'src/helpers/breakpoints';
 import navigationButtons from 'src/data/navigationButtons';
+import UserLevelIndicator from './UserLevelIndicator.vue';
 
 const userStore = useUserStore();
-const postStore = usePostStore();
 const eventStore = useEventStore();
 const router = useRouter();
 
