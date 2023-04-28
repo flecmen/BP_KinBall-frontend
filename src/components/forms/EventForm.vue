@@ -151,7 +151,7 @@ import { useEventStore } from 'src/stores/event-store';
 import useNotify from 'src/composables/useNotify';
 import { eventType } from 'src/types/dbTypes';
 import formRules from 'src/helpers/formRules';
-import { i18n } from 'src/composables/i18n';
+import { i18n } from 'src/utils/i18n';
 
 const props = defineProps<{
   eventId: number;

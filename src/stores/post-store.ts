@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 import { ref, reactive, computed } from 'vue';
 import { Post } from 'src/types/dbTypes';
 import { Notify } from 'quasar';
-import { i18n } from 'src/composables/i18n';
+import { i18n } from 'src/utils/i18n';
 import { useUserStore } from './user-store';
 import { useEventStore } from './event-store';
 import { api } from 'src/boot/axios';

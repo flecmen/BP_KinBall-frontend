@@ -46,7 +46,7 @@ import { reactive, ref, watch, computed } from 'vue';
 import formRules from 'src/helpers/formRules';
 import useNotify from 'src/composables/useNotify';
 import { useUserStore } from 'src/stores/user-store';
-import { i18n } from 'src/composables/i18n';
+import { i18n } from 'src/utils/i18n';
 import { debounce } from 'lodash';
 import PasswordInput from './inputs/passwordInput.vue';
 

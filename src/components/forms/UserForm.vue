@@ -55,7 +55,7 @@ import useNotify from 'src/composables/useNotify';
 import formRules from 'src/helpers/formRules';
 import { role, Group } from 'src/types/dbTypes';
 import { ref, onMounted, computed, reactive } from 'vue';
-import { i18n } from 'src/composables/i18n';
+import { i18n } from 'src/utils/i18n';
 import GroupsSelector from './GroupsSelector.vue';
 
 const props = defineProps<{

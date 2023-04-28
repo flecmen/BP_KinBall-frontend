@@ -3,7 +3,7 @@ import { RouteLocationNormalized } from 'vue-router/dist/vue-router';
 import { ref, computed } from 'vue';
 import { Notify } from 'quasar';
 import { Settings, User_extended, role } from 'src/types/dbTypes';
-import { i18n } from 'src/composables/i18n';
+import { i18n } from 'src/utils/i18n';
 import { router } from 'src/router/index'
 import { api } from 'src/boot/axios';
 
