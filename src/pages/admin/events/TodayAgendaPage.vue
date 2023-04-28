@@ -14,7 +14,7 @@
         v-for="event in todayEvents"
         v-bind:key="event.id"
         :title="event.address_short ? event.address_short : event.address"
-        :subtitle="dateFormat(event.time)"
+        :subtitle="dateTimeFormat.dateTime(event.time)"
       >
         <q-btn label="Zadat docházku" @click="showAttendenceModal(event.id)" />
         <q-btn label="Rozdat odměny" />
@@ -25,15 +25,13 @@
 </template>
 
 <script setup lang="ts">
-import { useAdminStore } from 'src/stores/admin-store';
 import { useEventStore } from 'src/stores/event-store';
 import { onMounted, reactive, ref, computed } from 'vue';
 import useNotify from 'src/composables/useNotify';
-import dateFormat from 'src/helpers/dateFormat';
+import dateTimeFormat from 'src/composables/dateTimeFormat';
 import AttendenceRegisterModal from 'src/components/modals/AttendenceRegisterModal.vue';
 import { Event_extended } from 'src/types/dbTypes';
 
-const adminStore = useAdminStore();
 const eventStore = useEventStore();
 const notify = useNotify();
 

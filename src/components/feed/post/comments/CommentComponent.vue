@@ -3,7 +3,7 @@
     <q-card-section>
       <UserName :user="props.comment.author" />
       <div class="text-caption">
-        {{ dateFormat(props.comment.time_of_creation) }}
+        {{ dateTimeFormat.dateTime(props.comment.time_of_creation) }}
       </div>
     </q-card-section>
     <q-card-section class="q-pb-none q-pt-none">
@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import dateFormat from 'src/helpers/dateFormat';
+import dateTimeFormat from 'src/composables/dateTimeFormat';
 import { defineProps, onMounted, reactive, ref } from 'vue';
 import { Post_comment_extended } from 'src/types/dbTypes';
 import { usePostStore } from 'src/stores/post-store';

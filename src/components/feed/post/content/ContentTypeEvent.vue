@@ -60,7 +60,7 @@
 import { computed } from 'vue';
 import { Event_extended } from 'src/types/dbTypes';
 import { useEventStore } from 'src/stores/event-store';
-import dateTimeFormat from 'src/helpers/dateTimeFormat';
+import dateTimeFormat from 'src/composables/dateTimeFormat';
 import EventPrice from './eventComponents/EventPrice.vue';
 import EventInteractionBtns from './eventComponents/EventInteractionBtns.vue';
 import ShowOnMapButton from 'src/components/buttons/ShowOnMapButton.vue';

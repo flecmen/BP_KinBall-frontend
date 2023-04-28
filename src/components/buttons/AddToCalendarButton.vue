@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { Event_extended } from 'src/types/dbTypes';
-import openGoogleCalendar from 'src/helpers/googleCalendar';
+import openGoogleCalendar from 'src/composables/addToGoogleCalendar';
 
 const props = defineProps<{
   event: Event_extended;
