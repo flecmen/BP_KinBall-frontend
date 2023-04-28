@@ -12,14 +12,14 @@
             {{ userStore.user.full_name }}
           </q-item-section>
         </q-item>
-        <q-item
+        <!-- <q-item
           clickable
           v-close-popup
           tabindex="0"
           @click="emit('installApp')"
         >
           <q-item-section> {{ $t('install.app') }} </q-item-section>
-        </q-item>
+        </q-item> -->
         <q-item clickable v-close-popup tabindex="0" @click="emit('settings')">
           <q-item-section>{{ $t('settings') }} </q-item-section>
         </q-item>

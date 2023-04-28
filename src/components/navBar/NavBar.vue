@@ -30,7 +30,7 @@
       <UserLevelIndicator />
       <div>
         <LanguageButton />
-        <NotificationButton />
+        <!-- <NotificationButton /> -->
         <AccountCirleButton
           @logout="logout()"
           @settings="router.push({ name: 'user-settings' })"
