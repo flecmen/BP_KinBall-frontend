@@ -72,7 +72,7 @@ import GroupsSelector from '../forms/GroupsSelector.vue';
 import AddSurveyOption from '../forms/surveyComponents/AddSurveyOption.vue';
 import CurrentSurveyQuestions from '../forms/surveyComponents/CurrentSurveyQuestions.vue';
 import formRules from 'src/helpers/formRules';
-import { i18n } from 'src/utils/i18n';
+import { i18n } from 'src/composables/i18n';
 
 const props = defineProps<{
   postId_to_edit: number;

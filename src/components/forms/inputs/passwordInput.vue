@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import formRules from 'src/helpers/formRules';
-import { i18n } from 'src/utils/i18n';
+import { i18n } from 'src/composables/i18n';
 
 const props = defineProps({
   label: {

@@ -2,7 +2,7 @@ import { Event_extended, UserOnEventStatus } from './../types/dbTypes';
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import { Notify } from 'quasar';
-import { i18n } from 'src/utils/i18n';
+import { i18n } from 'src/composables/i18n';
 import { useUserStore } from './user-store';
 import { usePostStore } from './post-store';
 import { api } from 'src/boot/axios';

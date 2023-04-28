@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { Notify } from 'quasar';
 import { User_extended, Group } from 'src/types/dbTypes';
-import { i18n } from 'src/utils/i18n';
+import { i18n } from 'src/composables/i18n';
 
 import { api } from 'src/boot/axios';
 

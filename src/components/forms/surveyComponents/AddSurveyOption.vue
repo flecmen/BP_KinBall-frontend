@@ -15,7 +15,7 @@
 import { ref } from 'vue';
 import { usePostStore } from 'src/stores/post-store';
 import useNotify from 'src/composables/useNotify';
-import { i18n } from 'src/utils/i18n';
+import { i18n } from 'src/composables/i18n';
 
 const props = defineProps<{
   error: boolean;

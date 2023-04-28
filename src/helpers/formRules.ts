@@ -1,5 +1,5 @@
 import emailRegex from './emailRegex';
-import { i18n } from 'src/utils/i18n';
+import { i18n } from 'src/composables/i18n';
 
 export default {
   required: (value: string) => !!value || i18n.t('form.rules.required'),
