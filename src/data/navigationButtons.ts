@@ -3,14 +3,21 @@ import { useEventStore } from './../stores/event-store';
 import { router } from 'src/router/index'
 import { role } from 'src/types/dbTypes';
 
+export interface NavigationButton {
+  title: string;
+  icon: string;
+  handler: () => void;
+  roles: role[];
+}
 
-export default [
+export const buttons = [
   {
     title: 'Write a post',
     icon: 'edit',
     handler: () => {
       usePostStore().openPostDialog();
     },
+    roles: [role.admin, role.coach, role.player],
   },
   {
     title: 'Create an event',

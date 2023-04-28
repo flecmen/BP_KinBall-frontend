@@ -3,7 +3,7 @@
     <q-list>
       <q-item-label header> Menu </q-item-label>
       <EssentialLink
-        v-for="link in navigationButtons"
+        v-for="link in navButtons"
         :key="link.title"
         :label="link.title"
         v-bind="link"
@@ -15,7 +15,17 @@
 
 <script setup lang="ts">
 import EssentialLink from 'src/components/navBar/buttons/leftDrawerButton.vue';
-import navigationButtons from 'src/data/navigationButtons';
+import { buttons, NavigationButton } from 'src/data/navigationButtons';
+import { computed } from 'vue';
+import { useUserStore } from 'src/stores/user-store';
+
+const userStore = useUserStore();
+
+const navButtons = computed(() => {
+  return buttons.filter((button: NavigationButton) =>
+    button.roles.includes(userStore.user.role)
+  );
+});
 </script>
 
 <style scoped></style>

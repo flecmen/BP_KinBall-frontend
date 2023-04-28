@@ -17,7 +17,7 @@
       </q-item>
       <div v-if="breakpoints.isMoreThan($q, breakpoints.breakPoints.xs.upper)">
         <q-btn
-          v-for="button in navigationButtons"
+          v-for="button in navButtons"
           :key="button.title"
           :label="button.title"
           :icon="button.icon"
@@ -58,8 +58,9 @@ import { useUserStore } from 'src/stores/user-store';
 import { useEventStore } from 'src/stores/event-store';
 import { useRouter } from 'vue-router';
 import breakpoints from 'src/helpers/breakpoints';
-import navigationButtons from 'src/data/navigationButtons';
+import { buttons, NavigationButton } from 'src/data/navigationButtons';
 import UserLevelIndicator from './UserLevelIndicator.vue';
+import { computed } from 'vue';
 
 const userStore = useUserStore();
 const eventStore = useEventStore();
@@ -69,6 +70,12 @@ function logout() {
   userStore.logout();
   router.push({ name: 'login' });
 }
+
+const navButtons = computed(() => {
+  return buttons.filter((button: NavigationButton) =>
+    button.roles.includes(userStore.user.role)
+  );
+});
 
 const emit = defineEmits<{
   (event: 'toggleLeftDrawer'): void;
