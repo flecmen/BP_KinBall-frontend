@@ -28,7 +28,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { Group } from 'src/types/dbTypes';
-import { useUserStore } from 'src/stores/user-store';
 import { useAdminStore } from 'src/stores/admin-store';
 
 export interface Props {
@@ -42,7 +41,6 @@ const emit = defineEmits<{
   (event: 'groupsUpdate', groups: Group[]): void;
 }>();
 
-const userStore = useUserStore();
 const adminStore = useAdminStore();
 
 onMounted(async () => {

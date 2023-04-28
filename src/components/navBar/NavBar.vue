@@ -30,7 +30,6 @@
       <UserLevelIndicator />
       <div>
         <LanguageButton />
-        <!-- <NotificationButton /> -->
         <AccountCirleButton
           @logout="logout()"
           @settings="router.push({ name: 'user-settings' })"
@@ -53,7 +52,6 @@
 <script setup lang="ts">
 import AccountCirleButton from 'src/components/navBar/buttons/AccoutCircleButton.vue';
 import LanguageButton from './buttons/LanguageButton.vue';
-import NotificationButton from './buttons/NotificationButton.vue';
 import { useUserStore } from 'src/stores/user-store';
 import { useEventStore } from 'src/stores/event-store';
 import { useRouter } from 'vue-router';

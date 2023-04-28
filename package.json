@@ -8,6 +8,7 @@
   "scripts": {
     "lint": "eslint --ext .js,.ts,.vue ./",
     "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
+    "dev": "npx quasar dev -m pwa",
     "test": "cross-env PWDEBUG=1 npx playwright test --headed",
     "test:new": "npx playwright codegen",
     "test:run": "npx playwright test"

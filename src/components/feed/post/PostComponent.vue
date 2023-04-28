@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, computed, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useQuasar } from 'quasar';
 import { Post_extended } from 'src/types/dbTypes';
 import PostHead from './PostHead.vue';

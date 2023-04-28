@@ -33,7 +33,6 @@
 
 <script setup lang="ts">
 import dateFormat from 'src/helpers/dateFormat';
-import { defineProps } from 'vue';
 import { Post_extended } from 'src/types/dbTypes';
 import userAvatar from 'src/components/images/userAvatar.vue';
 import UserName from './components/UserName.vue';

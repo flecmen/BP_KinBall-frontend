@@ -16,7 +16,6 @@
 <script setup lang="ts">
 import { User_extended } from 'src/types/dbTypes';
 import { useRouter } from 'vue-router';
-import { computed } from 'vue';
 
 const props = defineProps<{
   user: User_extended;

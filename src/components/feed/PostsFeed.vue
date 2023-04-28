@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
 import PostComponent from './post/PostComponent.vue';
-import { onMounted, computed, ref, watch, reactive } from 'vue';
+import { onMounted, computed, ref, watch } from 'vue';
 import { usePostStore } from 'src/stores/post-store';
 import { Post_extended } from 'src/types/dbTypes';
 import FeedFilter from './FeedFilter.vue';
@@ -48,10 +48,6 @@ const postStore = usePostStore();
 
 onMounted(async () => {
   postStore.initFeedFilter();
-});
-
-const isVisible = reactive({
-  feedFilter: props.feedFilter,
 });
 
 const displayedFilteredPosts = computed(() => {

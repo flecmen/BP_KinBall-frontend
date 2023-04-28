@@ -12,7 +12,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue';
 import { Post_extended } from 'src/types/dbTypes';
 import CommentComponent from './CommentComponent.vue';
 

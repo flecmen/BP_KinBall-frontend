@@ -20,12 +20,18 @@
       </div>
     </div>
 
-    <q-toggle v-model="isFollowing" flat :label="$t('post.reaction.follow')" />
+    <div class="invisible">
+      <q-toggle
+        v-model="isFollowing"
+        flat
+        :label="$t('post.reaction.follow')"
+      />
+    </div>
   </q-card-section>
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref } from 'vue';
+import { ref } from 'vue';
 import { Post_extended } from 'src/types/dbTypes';
 import { usePostStore } from 'src/stores/post-store';
 import { useUserStore } from 'src/stores/user-store';

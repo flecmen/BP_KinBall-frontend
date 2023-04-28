@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import dateFormat from 'src/helpers/dateFormat';
-import { defineProps, onMounted, reactive, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import { Post_comment_extended } from 'src/types/dbTypes';
 import { usePostStore } from 'src/stores/post-store';
 import { useUserStore } from 'src/stores/user-store';

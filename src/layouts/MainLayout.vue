@@ -65,14 +65,14 @@ onMounted(async () => {
   });
 });
 
-const pwaIsInstalled = computed(() => {
-  if (window.matchMedia('(display-mode: standalone)').matches) {
-    console.log('this is standalone');
-    return true;
-  }
-  console.log('this is not standalone');
-  return false;
-});
+// const pwaIsInstalled = computed(() => {
+//   if (window.matchMedia('(display-mode: standalone)').matches) {
+//     console.log('this is standalone');
+//     return true;
+//   }
+//   console.log('this is not standalone');
+//   return false;
+// });
 
 const installApp = async () => {
   if (deferredPrompt.value) {

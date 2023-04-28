@@ -13,7 +13,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue';
 import { Post_extended, postType } from 'src/types/dbTypes';
 import ContentTypeEvent from './content/ContentTypeEvent.vue';
 import ContentTypeText from './content/ContentTypeText.vue';
