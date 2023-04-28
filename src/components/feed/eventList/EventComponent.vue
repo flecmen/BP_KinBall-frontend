@@ -57,7 +57,7 @@ import { computed } from 'vue';
 import { useUserStore } from 'src/stores/user-store';
 import { useEventStore } from 'src/stores/event-store';
 import { UserOnEventStatus } from 'src/types/dbTypes';
-import dateTimeFormat from 'src/composables/dateTimeFormat';
+import dateTimeFormat from 'src/helpers/dateTimeFormat';
 
 const props = defineProps<{
   event: Event_extended;

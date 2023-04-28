@@ -15,7 +15,7 @@
     <q-item-section>
       <UserName :user="props.post.author" />
       <div class="text-caption">
-        {{ dateTimeFormat.dateTime(props.post.time_of_creation) }}
+        {{ dateFormat(props.post.time_of_creation) }}
       </div>
     </q-item-section>
     <q-item-section side>
@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import dateTimeFormat from 'src/composables/dateTimeFormat';
+import dateFormat from 'src/helpers/dateFormat';
 import { defineProps } from 'vue';
 import { Post_extended } from 'src/types/dbTypes';
 import userAvatar from 'src/components/images/userAvatar.vue';
