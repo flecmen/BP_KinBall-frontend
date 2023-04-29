@@ -75,8 +75,11 @@ const adminStore = useAdminStore();
 const notify = useNotify();
 
 const isLoading = ref(false);
-const isThisNewUser = ref(false);
+const user = ref<User_extended>(
+  props.user ? props.user : ({} as User_extended)
+);
 const form = ref();
+
 const error = reactive({
   groups: {
     show: false,
@@ -84,17 +87,14 @@ const error = reactive({
   },
 });
 
-onMounted(() => {
-  isThisNewUser.value = !props.user;
-});
-
 const isUserEdittingHimself = computed(() => {
   return userStore.user.id === props.user?.id;
 });
 
-const user = ref<User_extended>(
-  props.user ? props.user : ({} as User_extended)
-);
+const isThisNewUser = computed(() => {
+  if (props.user) return false;
+  else return true;
+});
 
 const userRoleOptions = Object.entries(role).map(([key, value]) => ({
   label: value,
@@ -121,6 +121,7 @@ async function createOrUpdateUser() {
     await userStore.updateUserProfile(user.value);
   } else {
     if (isThisNewUser.value) {
+      console.log(props.user);
       // admin creates new user
       await adminStore.createNewUser();
     } else {

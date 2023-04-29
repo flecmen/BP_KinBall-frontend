@@ -116,9 +116,46 @@ export default {
     },
     description: 'Description',
   },
+  profile: {
+    change: {
+      details: 'Change details',
+    },
+    settings: 'User settings',
+  },
+  tiles: {
+    events: {
+      title: 'events',
+      description: 'Manage your events',
+    },
+    users: {
+      title: 'users',
+      description: 'Manage users',
+    },
+    groups: {
+      title: 'groups',
+      description: 'Manage groups',
+    },
+    create: {
+      event: {
+        title: 'create event',
+        description: 'Create an event',
+      },
+    },
+    today: {
+      title: 'today\'s agenda',
+      description: 'See what is happening today',
+    },
+    my: {
+      events: {
+        title: 'my events',
+        description: 'See what events you are planning',
+      },
+    }
+  },
   settings: {
     email_notification: 'Email notification',
     push_notification: 'Push notification',
+    notification: 'Notification settings',
   },
   dayofweek: {
     Sunday: 'Sunday',

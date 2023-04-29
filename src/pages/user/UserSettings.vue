@@ -1,7 +1,7 @@
 <template>
   <q-card>
     <q-card-section class="row q-pa-lg bg-blue">
-      <h2 class="text-white">{{ $t('User settings') }}</h2>
+      <h2 class="text-white">{{ $t('profile.settings') }}</h2>
     </q-card-section>
 
     <q-card-section class="row">
@@ -16,7 +16,7 @@
 
     <q-card-section class="row">
       <div class="col-auto">
-        <h5 class="text-h5">{{ $t('profile.setting.notification') }}</h5>
+        <h5 class="text-h5">{{ $t('settings.notification') }}</h5>
         <UserSettingsForm />
       </div>
     </q-card-section>

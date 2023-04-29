@@ -3,7 +3,7 @@
     <q-card class="text-grey q-hoverable">
       <span class="q-focus-helper"></span>
       <q-card-section>
-        <q-icon :name="props.icon" />
+        <q-icon :name="props.icon" size="xl" />
         <h2 class="text-primary">{{ props.title }}</h2>
         <p class="font-light">{{ props.description }}</p>
       </q-card-section>
