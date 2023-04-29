@@ -1,4 +1,3 @@
-import { i18n } from 'src/utils/i18n'
 export interface Tile {
   icon: string,
   title: string,
@@ -8,42 +7,42 @@ export interface Tile {
 
 export const AdminTiles = [
   {
-    title: i18n.t('tiles.events.title'),
+    title: 'tiles.events.title',
     icon: 'event',
-    description: i18n.t('tiles.events.description'),
+    description: 'tiles.events.description',
     link: 'admin-events',
   },
   {
-    title: i18n.t('tiles.users.title'),
+    title: 'tiles.users.title',
     icon: 'person',
-    description: i18n.t('tiles.users.description'),
+    description: 'tiles.users.description',
     link: 'users-crud',
   },
   {
-    title: i18n.t('tiles.groups.title'),
+    title: 'tiles.groups.title',
     icon: 'groups',
-    description: i18n.t('tiles.groups.description'),
+    description: 'tiles.groups.description',
     link: 'groups-crud',
   }
 ]
 
 export const EventsTiles = [
   {
-    title: i18n.t('tiles.create.event.title'),
+    title: 'tiles.create.event.title',
     icon: 'edit',
-    description: i18n.t('tiles.create.event.description'),
+    description: 'tiles.create.event.description',
     link: 'create-event',
   },
   {
-    title: i18n.t('tiles.today.title'),
+    title: 'tiles.today.title',
     icon: 'today',
-    description: i18n.t('tiles.today.description'),
+    description: 'tiles.today.description',
     link: 'today-agenda',
   },
   {
-    title: i18n.t('tiles.my.events.title'),
+    title: 'tiles.my.events.title',
     icon: 'date_range',
-    description: i18n.t('tiles.my.events.description'),
+    description: 'tiles.my.events.description',
     link: 'events-crud',
   }
 ]

@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { Notify } from 'quasar';
 import { User_extended, Group } from 'src/types/dbTypes';
-import { i18n } from 'src/utils/i18n';
+import { useI18n } from 'vue-i18n';
 
 import { api } from 'src/boot/axios';
 
@@ -17,7 +17,7 @@ export const useAdminStore = defineStore('adminStore', () => {
     if (response.status !== 200) {
       Notify.create({
         type: 'negative',
-        message: i18n.t('notify.error')
+        message: useI18n().t('notify.error')
       })
     }
   }
@@ -29,7 +29,7 @@ export const useAdminStore = defineStore('adminStore', () => {
     if (response.status !== 204 || index === -1) {
       Notify.create({
         type: 'negative',
-        message: i18n.t('failed')
+        message: useI18n().t('failed')
       })
       return;
     }
@@ -43,14 +43,14 @@ export const useAdminStore = defineStore('adminStore', () => {
     if (response.status !== 201) {
       Notify.create({
         type: 'negative',
-        message: i18n.t('failed')
+        message: useI18n().t('failed')
       })
       return;
     }
     users.value.push(response.data);
     Notify.create({
       type: 'positive',
-      message: i18n.t('success')
+      message: useI18n().t('success')
     })
     return;
   }
@@ -61,13 +61,13 @@ export const useAdminStore = defineStore('adminStore', () => {
     if (response.status !== 200) {
       Notify.create({
         type: 'negative',
-        message: i18n.t('failed')
+        message: useI18n().t('failed')
       })
       return;
     }
     Notify.create({
       type: 'positive',
-      message: i18n.t('notify.reLoginToSeeChanges')
+      message: useI18n().t('notify.reLoginToSeeChanges')
     })
     // Update frontend
     const index = users.value.findIndex(u => u.id === user.id);
@@ -92,7 +92,7 @@ export const useAdminStore = defineStore('adminStore', () => {
     if (response.status !== 204 || index === -1) {
       Notify.create({
         type: 'negative',
-        message: i18n.t('failed')
+        message: useI18n().t('failed')
       })
       return;
     }
@@ -106,7 +106,7 @@ export const useAdminStore = defineStore('adminStore', () => {
     if (response.status !== 200) {
       Notify.create({
         type: 'negative',
-        message: i18n.t('notify.error')
+        message: useI18n().t('notify.error')
       })
       return;
     }
@@ -122,14 +122,14 @@ export const useAdminStore = defineStore('adminStore', () => {
     if (response.status !== 201) {
       Notify.create({
         type: 'negative',
-        message: i18n.t('failed')
+        message: useI18n().t('failed')
       })
       return;
     }
     pushGroup(response.data)
     Notify.create({
       type: 'positive',
-      message: i18n.t('success')
+      message: useI18n().t('success')
     })
     return;
   }
@@ -140,13 +140,13 @@ export const useAdminStore = defineStore('adminStore', () => {
     if (response.status !== 200) {
       Notify.create({
         type: 'negative',
-        message: i18n.t('failed')
+        message: useI18n().t('failed')
       })
       return;
     }
     Notify.create({
       type: 'positive',
-      message: i18n.t('success')
+      message: useI18n().t('success')
     })
     // Update frontend
     pushGroup(response.data)

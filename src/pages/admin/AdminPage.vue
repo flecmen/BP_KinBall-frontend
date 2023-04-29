@@ -6,10 +6,10 @@
     <AdminTile
       v-for="tile in props.tiles"
       v-bind:key="tile.title"
-      :title="tile.title"
+      :title="$t(tile.title)"
       :link="tile.link"
       :iconClass="tile.icon"
-      :description="tile.description"
+      :description="$t(tile.description)"
       :icon="tile.icon"
       class="tile"
     />

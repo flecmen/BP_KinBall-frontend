@@ -15,7 +15,7 @@
 import { ref } from 'vue';
 import { usePostStore } from 'src/stores/post-store';
 import useNotify from 'src/composables/useNotify';
-import { i18n } from 'src/utils/i18n';
+import { useI18n } from 'vue-i18n';
 
 const props = defineProps<{
   error: boolean;
@@ -24,6 +24,7 @@ const props = defineProps<{
 
 const postStore = usePostStore();
 const notify = useNotify();
+const i18n = useI18n();
 
 const survey_option = ref('');
 const error = ref('');

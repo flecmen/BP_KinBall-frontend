@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 import { ref, reactive, computed } from 'vue';
 import { Post } from 'src/types/dbTypes';
 import { Notify } from 'quasar';
-import { i18n } from 'src/utils/i18n';
+import { useI18n } from 'vue-i18n';
 import { useUserStore } from './user-store';
 import { useEventStore } from './event-store';
 import { api } from 'src/boot/axios';
@@ -51,7 +51,7 @@ export const usePostStore = defineStore('postStore', () => {
     if (!groups) {
       Notify.create({
         type: 'negative',
-        message: i18n.t('Groups cannot be loaded')
+        message: useI18n().t('Groups cannot be loaded')
       })
       return;
     }
@@ -77,7 +77,7 @@ export const usePostStore = defineStore('postStore', () => {
     if (response.status === 204) {
       Notify.create({
         type: 'info',
-        message: i18n.t('No more posts')
+        message: useI18n().t('No more posts')
       })
       areWeOnFeedBedrock.value = true;
       return;
@@ -87,7 +87,7 @@ export const usePostStore = defineStore('postStore', () => {
     if (!response.data) {
       Notify.create({
         type: 'negative',
-        message: i18n.t('failed')
+        message: useI18n().t('failed')
       })
       return;
     }
@@ -115,7 +115,7 @@ export const usePostStore = defineStore('postStore', () => {
       if (response.status !== 204) {
         Notify.create({
           type: 'negative',
-          message: i18n.t('failed')
+          message: useI18n().t('failed')
         })
         return;
       }
@@ -127,7 +127,7 @@ export const usePostStore = defineStore('postStore', () => {
       if (response.status !== 201) {
         Notify.create({
           type: 'negative',
-          message: i18n.t('failed')
+          message: useI18n().t('failed')
         })
         return;
       }
@@ -144,7 +144,7 @@ export const usePostStore = defineStore('postStore', () => {
       if (response.status !== 204) {
         Notify.create({
           type: 'negative',
-          message: i18n.t('failed')
+          message: useI18n().t('failed')
         })
         return
       }
@@ -156,7 +156,7 @@ export const usePostStore = defineStore('postStore', () => {
       if (response.status !== 201) {
         Notify.create({
           type: 'negative',
-          message: i18n.t('failed')
+          message: useI18n().t('failed')
         })
         return;
       }
@@ -170,13 +170,13 @@ export const usePostStore = defineStore('postStore', () => {
     if (response.status !== 201) {
       Notify.create({
         type: 'negative',
-        message: i18n.t('Comment.sent.failed')
+        message: useI18n().t('Comment.sent.failed')
       })
       return false;
     }
     Notify.create({
       type: 'positive',
-      message: i18n.t('Comment.sent')
+      message: useI18n().t('Comment.sent')
     })
 
     getLocalPost(postId)?.comments.push(response.data)
@@ -196,7 +196,7 @@ export const usePostStore = defineStore('postStore', () => {
     if (response.status !== 201) {
       Notify.create({
         type: 'negative',
-        message: i18n.t('failed')
+        message: useI18n().t('failed')
       })
       return;
     }
@@ -209,7 +209,7 @@ export const usePostStore = defineStore('postStore', () => {
     if (response.status !== 202) {
       Notify.create({
         type: 'negative',
-        message: i18n.t('failed')
+        message: useI18n().t('failed')
       })
       return;
     }
@@ -217,7 +217,7 @@ export const usePostStore = defineStore('postStore', () => {
     pushPost(response.data)
     Notify.create({
       type: 'positive',
-      message: i18n.t('success')
+      message: useI18n().t('success')
     })
   }
 
@@ -233,7 +233,7 @@ export const usePostStore = defineStore('postStore', () => {
     if (response.status !== 200) {
       Notify.create({
         type: 'negative',
-        message: i18n.t('failed')
+        message: useI18n().t('failed')
       })
       return;
     }
@@ -250,7 +250,7 @@ export const usePostStore = defineStore('postStore', () => {
     if (response.status !== 204) {
       Notify.create({
         type: 'negative',
-        message: i18n.t('failed')
+        message: useI18n().t('failed')
       })
       return;
     }
@@ -266,7 +266,7 @@ export const usePostStore = defineStore('postStore', () => {
     if (response.status !== 200) {
       Notify.create({
         type: 'negative',
-        message: i18n.t('failed')
+        message: useI18n().t('failed')
       })
       return;
     }

@@ -23,12 +23,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import formRules from 'src/helpers/formRules';
-import { i18n } from 'src/utils/i18n';
+import { useI18n } from 'vue-i18n';
 
 const props = defineProps({
   label: {
     type: String,
-    default: i18n.t('form.input.password.text'),
+    default: useI18n().t('form.input.password.text'),
   },
   minCharacters: {
     type: Number,
