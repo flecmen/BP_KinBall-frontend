@@ -9,14 +9,9 @@ yarn
 npm install
 ```
 
-### Start the app in development SPA mode (hot-code reloading, error reporting, etc.)
+### Start the app in development (hot-code reloading, error reporting, etc.)
 ```bash
-quasar dev
-```
-
-### Start the app in development PWA mode (hot-code reloading, error reporting, etc.)
-```bash
-quasar dev -m pwa
+npm run dev
 ```
 
 
@@ -34,7 +29,6 @@ yarn format
 # or
 npm run format
 ```
-
 
 
 ### Build the app for production
