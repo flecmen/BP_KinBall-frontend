@@ -33,6 +33,7 @@ export const useEventStore = defineStore('eventStore', () => {
   const isEventDialogVisible = ref(false)
   const eventId_to_edit = ref(-1)
   function openEventDialog(eventId?: number) {
+
     if (!eventId) {
       initNewEvent();
       eventId_to_edit.value = -1
@@ -298,7 +299,7 @@ export const useEventStore = defineStore('eventStore', () => {
     toggleRightDrawer,
   }
 },
-  {
-    persist: true
-  }
+  // {
+  //   persist: true
+  // }
 )

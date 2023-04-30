@@ -8,13 +8,14 @@
         </q-btn>
       </q-bar>
       <q-table
-        :title="$t('Attendance')"
+        :title="$t('admin.attendence')"
         :loading="table.isLoading"
         :rows="table.rows"
         :columns="table.columns"
         row-key="id"
         :visible-columns="['present', 'full_name']"
         hide-pagination
+        :rows-per-page-options="[0]"
       >
         <!-- PRESENT CHECKBOX -->
         <template v-slot:body-cell-present="props">
@@ -28,10 +29,10 @@
           </q-td>
         </template>
       </q-table>
-      <q-card-setion>
+      <q-card-actions align="right">
         <q-space />
-        <q-btn label="Save" color="positive" v-close-popup />
-      </q-card-setion>
+        <q-btn :label="$t('btn.save')" color="positive" v-close-popup />
+      </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
@@ -45,6 +46,7 @@ import {
 } from 'src/types/dbTypes';
 import { onBeforeUnmount, reactive, ref } from 'vue';
 import useNotify from 'src/composables/useNotify';
+import { i18n } from 'src/utils/i18n';
 
 const props = defineProps<{
   event: Event_extended;
@@ -66,7 +68,7 @@ const table = reactive({
     // column Object definition
     {
       name: 'present',
-      label: 'present',
+      label: i18n.t('present'),
       field: 'present',
       align: 'left',
     },
@@ -78,7 +80,7 @@ const table = reactive({
     },
     {
       name: 'full_name',
-      label: 'Name',
+      label: i18n.t('user.full_name'),
       field: 'user',
       align: 'left',
       sortOrder: 'ad', // or 'da'

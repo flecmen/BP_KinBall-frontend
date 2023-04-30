@@ -5,27 +5,37 @@
     :event="clickedEvent"
   />
   <div class="row q-pa-lg bg-blue">
-    <div class="text-h3 text-white">Today's agenda</div>
+    <div class="text-h3 text-white">{{ $t('admin.today') }}</div>
   </div>
   <div class="q-px-lg q-py-md">
     <q-timeline color="secondary">
-      <q-timeline-entry heading body="Your events today:" />
       <q-timeline-entry
         v-for="event in todayEvents"
         v-bind:key="event.id"
         :title="event.address_short ? event.address_short : event.address"
         :subtitle="dateFormat(event.time)"
       >
-        <q-btn label="Zadat docházku" @click="showAttendenceModal(event.id)" />
-        <q-btn label="Rozdat odměny" />
-        <q-btn label="Přidat poznámku" />
+        <div
+          class="q-gutter-sm"
+          style="
+            display: flex;
+            justify-content: space-between;
+            max-width: 500px;
+          "
+        >
+          <q-btn
+            :label="$t('btn.set.attendence')"
+            @click="showAttendenceModal(event.id)"
+          />
+          <q-btn :label="$t('btn.set.rewards')" />
+          <q-btn :label="$t('btn.set.note')" />
+        </div>
       </q-timeline-entry>
     </q-timeline>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useAdminStore } from 'src/stores/admin-store';
 import { useEventStore } from 'src/stores/event-store';
 import { onMounted, reactive, ref, computed } from 'vue';
 import useNotify from 'src/composables/useNotify';
@@ -33,7 +43,6 @@ import dateFormat from 'src/helpers/dateFormat';
 import AttendenceRegisterModal from 'src/components/modals/AttendenceRegisterModal.vue';
 import { Event_extended } from 'src/types/dbTypes';
 
-const adminStore = useAdminStore();
 const eventStore = useEventStore();
 const notify = useNotify();
 

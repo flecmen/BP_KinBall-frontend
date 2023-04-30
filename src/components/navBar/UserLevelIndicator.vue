@@ -1,12 +1,18 @@
 <template>
   <div class="text-h6">lvl {{ userLevel }}</div>
-  <div class="q-pl-sm q-pr-sm">{{ levelMessage }}</div>
+  <div
+    class="q-pl-sm q-pr-sm"
+    v-if="breakpoints.isMoreThan($q, breakpoints.breakPoints.md.lower)"
+  >
+    {{ levelMessage }}
+  </div>
 </template>
 
 <script setup lang="ts">
 import { inRange } from 'lodash';
 import { useUserStore } from 'src/stores/user-store';
 import { computed, ref } from 'vue';
+import breakpoints from 'src/helpers/breakpoints';
 
 const userStore = useUserStore();
 

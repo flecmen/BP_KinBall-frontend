@@ -4,13 +4,20 @@
 export default {
   failed: 'Akce selhala',
   success: 'Akce byla úspěšná',
+  present: 'přítomen',
   btn: {
     log: {
       in: 'Přihlásit se',
       out: 'Odhlásit se'
     },
     send: 'odeslat',
+    save: 'uložit',
     register: 'Registrovat se',
+    set: {
+      attendence: 'Zadat docházku',
+      rewards: 'Rozdat odměny',
+      note: 'Přidat poznámku',
+    }
   },
   email: {
     address: 'Emailová adresa'
@@ -155,6 +162,10 @@ export default {
     email_notification: 'Upozornění e-mailem',
     push_notification: 'Upozornění push',
     notification: 'Nastavení upozornění',
+  },
+  admin: {
+    today: 'Dnešní program',
+    attendence: 'Docházka',
   },
   dayofweek: {
     Sunday: 'Neděle',

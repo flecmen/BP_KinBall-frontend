@@ -4,13 +4,20 @@
 export default {
   failed: 'Action failed',
   success: 'Action was successful',
+  present: 'present',
   btn: {
     log: {
       in: 'Log in',
       out: 'Log out'
     },
     send: 'send',
+    save: 'save',
     register: 'Register',
+    set: {
+      attendence: 'Set attendence',
+      rewards: 'Give rewards',
+      note: 'Add a note',
+    }
   },
   email: {
     address: 'Email address'
@@ -156,6 +163,10 @@ export default {
     email_notification: 'Email notification',
     push_notification: 'Push notification',
     notification: 'Notification settings',
+  },
+  admin: {
+    today: 'Today\'s agenda',
+    attendence: 'Attendence',
   },
   dayofweek: {
     Sunday: 'Sunday',

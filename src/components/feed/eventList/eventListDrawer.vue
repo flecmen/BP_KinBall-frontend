@@ -2,7 +2,7 @@
   <q-drawer
     side="right"
     :width="200"
-    :breakpoint="500"
+    :breakpoint="1"
     style="background-color: #f0f2f5"
   >
     <q-scroll-area class="fit" visible>
