@@ -55,7 +55,7 @@ import useNotify from 'src/composables/useNotify';
 import formRules from 'src/helpers/formRules';
 import { role, Group } from 'src/types/dbTypes';
 import { ref, computed, reactive } from 'vue';
-import { useI18n } from 'vue-i18n';
+import { i18n } from 'src/utils/i18n';
 import GroupsSelector from './GroupsSelector.vue';
 
 const props = defineProps<{
@@ -73,7 +73,6 @@ const emit = defineEmits<{
 const userStore = useUserStore();
 const adminStore = useAdminStore();
 const notify = useNotify();
-const i18n = useI18n();
 
 const isLoading = ref(false);
 const user = ref<User_extended>(

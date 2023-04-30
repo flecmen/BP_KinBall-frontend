@@ -30,10 +30,9 @@ import { ref } from 'vue';
 import formRules from 'src/helpers/formRules';
 import useNotify from 'src/composables/useNotify';
 import { useUserStore } from 'src/stores/user-store';
-import { useI18n } from 'vue-i18n';
+import { i18n } from 'src/utils/i18n';
 
 const userStore = useUserStore();
-const { t } = useI18n();
 const notify = useNotify();
 
 const email = ref('');
@@ -43,7 +42,7 @@ const loginForm = ref();
 async function login() {
   // Validace formuláře
   if (!loginForm.value.validate()) {
-    notify.fail(t('failed'));
+    notify.fail('failed');
     return;
   }
   await userStore.login(email.value, password.value);

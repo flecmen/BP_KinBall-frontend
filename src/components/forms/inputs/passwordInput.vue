@@ -3,11 +3,11 @@
     <q-input
       v-model="password"
       :type="showPassword ? 'text' : 'password'"
-      :label="label"
+      :label="$t('label')"
       :rules="[formRules.required]"
       @update:model-value="emit('update:password', password)"
       :error="showError"
-      :error-message="errorMessage"
+      :error-message="$t('errorMessage')"
     >
       <template v-slot:append>
         <q-icon
@@ -23,12 +23,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import formRules from 'src/helpers/formRules';
-import { useI18n } from 'vue-i18n';
 
 const props = defineProps({
   label: {
     type: String,
-    default: useI18n().t('form.input.password.text'),
+    default: 'form.input.password.text',
   },
   minCharacters: {
     type: Number,

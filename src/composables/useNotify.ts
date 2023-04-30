@@ -1,5 +1,6 @@
 import { useQuasar } from 'quasar';
 import { QNotifyUpdateOptions } from 'quasar';
+import { i18n } from 'src/utils/i18n';
 
 
 export default function useNotify() {
@@ -7,28 +8,28 @@ export default function useNotify() {
   const success = (message: string) => {
     $q.notify({
       type: 'positive',
-      message: message
+      message: i18n.t(message)
     })
   }
 
   const fail = (message: string) => {
     $q.notify({
       type: 'negative',
-      message: message
+      message: i18n.t(message)
     })
   }
 
   const warning = (message: string) => {
     $q.notify({
       type: 'warning',
-      message: message
+      message: i18n.t(message)
     })
   }
 
   const info = (message: string) => {
     $q.notify({
       type: 'info',
-      message: message
+      message: i18n.t(message)
     })
   }
 
@@ -37,7 +38,7 @@ export default function useNotify() {
     // otherwise it will never get dismissed ('ongoing' type has timeout 0)
     const notif = $q.notify({
       type: 'ongoing',
-      message: message
+      message: i18n.t(message)
     })
 
     return notif;
@@ -47,7 +48,7 @@ export default function useNotify() {
     notif();
     $q.notify({
       type: 'positive',
-      message: 'Success'
+      message: i18n.t('success')
     })
   }
 

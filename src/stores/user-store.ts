@@ -3,7 +3,7 @@ import { RouteLocationNormalized } from 'vue-router/dist/vue-router';
 import { ref, computed } from 'vue';
 import { Notify } from 'quasar';
 import { Settings, User_extended, role } from 'src/types/dbTypes';
-import { useI18n } from 'vue-i18n';
+import { i18n } from 'src/utils/i18n';
 import { router } from 'src/router/index'
 import { api } from 'src/boot/axios';
 
@@ -33,7 +33,7 @@ export const useUserStore = defineStore('userStore', () => {
 
       Notify.create({
         type: 'positive',
-        message: useI18n().t('success')
+        message: i18n.t('success')
       })
       isProcessing.value = false;
       router.push(afterLoginRoute.value ?? { name: 'home' });
@@ -44,7 +44,7 @@ export const useUserStore = defineStore('userStore', () => {
       //TODO doladit errorové zprávy podle kódu
       Notify.create({
         type: 'negative',
-        message: useI18n().t('notify.wrong.credentials')
+        message: i18n.t('notify.wrong.credentials')
       })
     }
     isProcessing.value = false;
@@ -64,14 +64,14 @@ export const useUserStore = defineStore('userStore', () => {
     if (response.status !== 201) {
       Notify.create({
         type: 'negative',
-        message: useI18n().t(response.data.error)
+        message: i18n.t(response.data.error)
       })
       isProcessing.value = false;
       return;
     }
     Notify.create({
       type: 'positive',
-      message: useI18n().t('success')
+      message: i18n.t('success')
     })
     isProcessing.value = false;
     router.push({ name: 'login' });
@@ -83,7 +83,7 @@ export const useUserStore = defineStore('userStore', () => {
     if (response.status !== 200) {
       Notify.create({
         type: 'negative',
-        message: useI18n().t('Faliled to check email')
+        message: i18n.t('Faliled to check email')
       })
       return false;
     }
@@ -106,7 +106,7 @@ export const useUserStore = defineStore('userStore', () => {
     user.value = response.data;
     Notify.create({
       type: 'positive',
-      message: useI18n().t('success')
+      message: i18n.t('success')
     })
     return;
   }
@@ -116,14 +116,14 @@ export const useUserStore = defineStore('userStore', () => {
     if (response.status === 400) {
       Notify.create({
         type: 'negative',
-        message: useI18n().t(response.data.error)
+        message: i18n.t(response.data.error)
       })
       return;
     }
     if (response.status === 200) {
       Notify.create({
         type: 'positive',
-        message: useI18n().t('success')
+        message: i18n.t('success')
       })
     }
     return;
@@ -146,13 +146,13 @@ export const useUserStore = defineStore('userStore', () => {
     if (response.status !== 200) {
       Notify.create({
         type: 'negative',
-        message: useI18n().t('failed')
+        message: i18n.t('failed')
       })
       return;
     }
     Notify.create({
       type: 'positive',
-      message: useI18n().t('notify.reLoginToSeeChanges')
+      message: i18n.t('notify.reLoginToSeeChanges')
     })
     // Update frontend
     user.value = response.data;

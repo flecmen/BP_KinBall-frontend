@@ -72,14 +72,13 @@ import GroupsSelector from '../forms/GroupsSelector.vue';
 import AddSurveyOption from '../forms/surveyComponents/AddSurveyOption.vue';
 import CurrentSurveyQuestions from '../forms/surveyComponents/CurrentSurveyQuestions.vue';
 import formRules from 'src/helpers/formRules';
-import { useI18n } from 'vue-i18n';
+import { i18n } from 'src/utils/i18n';
 
 const props = defineProps<{
   postId_to_edit: number;
 }>();
 
 const postStore = usePostStore();
-const i18n = useI18n();
 
 const isThisNewPost = computed(() => {
   return props.postId_to_edit === -1;

@@ -38,7 +38,7 @@ import { usePostStore } from 'src/stores/post-store';
 import { ref } from 'vue';
 import useNotify from 'src/composables/useNotify';
 import userAvatar from 'src/components/images/userAvatar.vue';
-import { useI18n } from 'vue-i18n';
+import i18n from 'src/utils/i18n';
 
 const props = defineProps<{
   post: Post_extended;
@@ -52,7 +52,6 @@ const emit = defineEmits<{
 const userStore = useUserStore();
 const postStore = usePostStore();
 const notify = useNotify();
-const i18n = useI18n();
 
 const commentText = ref('');
 const isCommentBeingSent = ref(false);

@@ -151,7 +151,7 @@ import { useEventStore } from 'src/stores/event-store';
 import useNotify from 'src/composables/useNotify';
 import { eventType } from 'src/types/dbTypes';
 import formRules from 'src/helpers/formRules';
-import { useI18n } from 'vue-i18n';
+import { i18n } from 'src/utils/i18n';
 
 const props = defineProps<{
   eventId: number;
@@ -164,7 +164,6 @@ const emit = defineEmits<{
 
 const eventStore = useEventStore();
 const notify = useNotify();
-const i18n = useI18n();
 
 const isThisNewEvent = computed(() => {
   return props.eventId === -1;

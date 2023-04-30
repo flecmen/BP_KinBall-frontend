@@ -2,7 +2,7 @@ import { Event_extended, UserOnEventStatus } from './../types/dbTypes';
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import { Notify } from 'quasar';
-import { useI18n } from 'vue-i18n';
+import { i18n } from 'src/utils/i18n';
 import { useUserStore } from './user-store';
 import { usePostStore } from './post-store';
 import { api } from 'src/boot/axios';
@@ -63,7 +63,7 @@ export const useEventStore = defineStore('eventStore', () => {
     if (!response.data) {
       Notify.create({
         type: 'negative',
-        message: useI18n().t('failed to load event id:' + eventId)
+        message: i18n.t('failed to load event id:' + eventId)
       })
       return;
     }
@@ -87,7 +87,7 @@ export const useEventStore = defineStore('eventStore', () => {
     if (!response.data) {
       Notify.create({
         type: 'negative',
-        message: useI18n().t('failed to load events')
+        message: i18n.t('failed to load events')
       })
       return;
     }
@@ -112,7 +112,7 @@ export const useEventStore = defineStore('eventStore', () => {
 
         Notify.create({
           type: 'negative',
-          message: useI18n().t('no space left')
+          message: i18n.t('no space left')
         })
         return;
       }
@@ -123,7 +123,7 @@ export const useEventStore = defineStore('eventStore', () => {
     if (!response.data) {
       Notify.create({
         type: 'negative',
-        message: useI18n().t('failed to load event id:' + eventId)
+        message: i18n.t('failed to load event id:' + eventId)
       })
       return;
     }
@@ -139,7 +139,7 @@ export const useEventStore = defineStore('eventStore', () => {
     if (response.status == 201) {
       Notify.create({
         type: 'positive',
-        message: useI18n().t('success')
+        message: i18n.t('success')
       })
     }
   }
@@ -160,7 +160,7 @@ export const useEventStore = defineStore('eventStore', () => {
         if (!response.data) {
           Notify.create({
             type: 'negative',
-            message: useI18n().t('failed to create event')
+            message: i18n.t('failed to create event')
           })
           return;
         }
@@ -179,7 +179,7 @@ export const useEventStore = defineStore('eventStore', () => {
       if (!response.data) {
         Notify.create({
           type: 'negative',
-          message: useI18n().t('failed to create event')
+          message: i18n.t('failed to create event')
         })
         return;
       }
@@ -198,7 +198,7 @@ export const useEventStore = defineStore('eventStore', () => {
     if (response.status !== 204) {
       Notify.create({
         type: 'negative',
-        message: useI18n().t('failed to delete event')
+        message: i18n.t('failed to delete event')
       })
       return;
     }
@@ -215,7 +215,7 @@ export const useEventStore = defineStore('eventStore', () => {
     if (!response.data) {
       Notify.create({
         type: 'negative',
-        message: useI18n().t('failed to load events')
+        message: i18n.t('failed to load events')
       })
       return;
     }
@@ -240,7 +240,7 @@ export const useEventStore = defineStore('eventStore', () => {
     if (!response.data) {
       Notify.create({
         type: 'negative',
-        message: useI18n().t('failed to load events')
+        message: i18n.t('failed to load events')
       })
       return;
     }
@@ -254,7 +254,7 @@ export const useEventStore = defineStore('eventStore', () => {
     if (!response.data) {
       Notify.create({
         type: 'negative',
-        message: useI18n().t('failed to update event')
+        message: i18n.t('failed to update event')
       })
       return;
     }
@@ -267,7 +267,7 @@ export const useEventStore = defineStore('eventStore', () => {
     if (response.status === 400) {
       Notify.create({
         type: 'negative',
-        message: useI18n().t(response.data.error)
+        message: i18n.t(response.data.error)
       })
       return;
     }

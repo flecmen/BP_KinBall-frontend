@@ -46,13 +46,12 @@ import { reactive, ref, watch, computed } from 'vue';
 import formRules from 'src/helpers/formRules';
 import useNotify from 'src/composables/useNotify';
 import { useUserStore } from 'src/stores/user-store';
-import { useI18n } from 'vue-i18n';
+import { i18n } from 'src/utils/i18n';
 import { debounce } from 'lodash';
 import PasswordInput from './inputs/passwordInput.vue';
 
 const userStore = useUserStore();
 const notify = useNotify();
-const i18n = useI18n();
 
 const error = reactive({
   email: {
