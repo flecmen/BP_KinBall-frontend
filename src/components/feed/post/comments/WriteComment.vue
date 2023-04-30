@@ -38,7 +38,7 @@ import { usePostStore } from 'src/stores/post-store';
 import { ref } from 'vue';
 import useNotify from 'src/composables/useNotify';
 import userAvatar from 'src/components/images/userAvatar.vue';
-import i18n from 'src/utils/i18n';
+import { i18n } from 'src/utils/i18n';
 
 const props = defineProps<{
   post: Post_extended;
