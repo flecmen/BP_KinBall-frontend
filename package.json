@@ -11,7 +11,8 @@
     "dev": "npx quasar dev -m pwa",
     "test": "cross-env PWDEBUG=1 npx playwright test --headed",
     "test:new": "npx playwright codegen",
-    "test:run": "npx playwright test"
+    "test:run": "npx playwright test",
+    "build": "quasar build -m pwa"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
