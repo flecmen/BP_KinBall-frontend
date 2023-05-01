@@ -13,7 +13,7 @@ export interface NavigationButton {
 export const buttons = [
   {
     title: 'Write a post',
-    icon: 'edit',
+    icon: 'edit_square',
     handler: () => {
       usePostStore().openPostDialog();
     },

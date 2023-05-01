@@ -45,14 +45,14 @@ export const useAdminStore = defineStore('adminStore', () => {
         type: 'negative',
         message: i18n.t('failed')
       })
-      return;
+      return false;
     }
     users.value.push(response.data);
     Notify.create({
       type: 'positive',
       message: i18n.t('success')
     })
-    return;
+    return true;
   }
 
   async function updateUser(user: User_extended) {
