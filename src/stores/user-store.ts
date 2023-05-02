@@ -9,6 +9,8 @@ import { api } from 'src/boot/axios';
 
 export const useUserStore = defineStore('userStore', () => {
   const token = ref(localStorage.getItem('token'));
+
+  // Toto pravděpodobně občas způsobuje problémy s autentifikací:
   if (token.value) {
     api.defaults.headers.common['Authorization'] = 'Bearer ' + token.value;
   }

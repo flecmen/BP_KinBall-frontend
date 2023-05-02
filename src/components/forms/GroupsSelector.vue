@@ -27,8 +27,9 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { Group } from 'src/types/dbTypes';
+import { Group, role } from 'src/types/dbTypes';
 import { useAdminStore } from 'src/stores/admin-store';
+import { useUserStore } from 'src/stores/user-store';
 
 export interface Props {
   groups: Group[];
@@ -42,15 +43,20 @@ const emit = defineEmits<{
 }>();
 
 const adminStore = useAdminStore();
+const userStore = useUserStore();
 
 onMounted(async () => {
   await adminStore.loadGroups();
 });
 
 const selectedGroups = ref(props.groups);
-const groupOptions = ref<Group[]>(
-  JSON.parse(JSON.stringify(adminStore.groups))
+const groupOptions = ref(
+  userStore.user.role === role.admin || userStore.user.role === role.coach
+    ? JSON.parse(JSON.stringify(adminStore.groups))
+    : JSON.parse(JSON.stringify(userStore.user.groups))
 );
+
+ref<Group[]>(JSON.parse(JSON.stringify(adminStore.groups)));
 
 function updateInput(
   inputValue: string,
