@@ -121,12 +121,11 @@ export const useEventStore = defineStore('eventStore', () => {
 
     // Change backend
     const response = await api.post(`/event/${eventId}/user/${userStore.user.id}/status/${String(reaction)}/${boolvalue}`);
-    if (!response.data) {
+    if (response.status === 400) {
       Notify.create({
         type: 'negative',
-        message: i18n.t('failed to load event id:' + eventId)
+        message: response.data.error
       })
-      return;
     }
     // Change frontend
     const index = events.value.findIndex(e => e.id == eventId)

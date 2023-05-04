@@ -15,6 +15,7 @@ export const useUserStore = defineStore('userStore', () => {
     api.defaults.headers.common['Authorization'] = 'Bearer ' + token.value;
   }
 
+
   const user = ref<User_extended>({} as User_extended)
   const afterLoginRoute = ref<RouteLocationNormalized | null>(null);
   const isProcessing = ref<boolean>(false);
@@ -181,4 +182,5 @@ export const useUserStore = defineStore('userStore', () => {
 },
   {
     persist: true
-  })
+  }
+)

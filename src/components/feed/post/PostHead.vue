@@ -18,7 +18,7 @@
         {{ dateFormat(props.post.time_of_creation) }}
       </div>
     </q-item-section>
-    <q-item-section side>
+    <q-item-section class="q-gutter-xs" side>
       <GroupChip
         v-for="group in props.post.groups"
         v-bind:key="group.id"

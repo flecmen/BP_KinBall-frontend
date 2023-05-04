@@ -157,7 +157,7 @@ export default {
     date: 'Datum',
     time: 'Čas',
     location: 'Lokalita',
-    address: 'Address',
+    address: 'Adresa',
     type: {
       trenink: 'Trénink',
       kurz_pro_mladez: 'Kurz pro mládež',
