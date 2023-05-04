@@ -10,14 +10,27 @@ export default {
       in: 'Log in',
       out: 'Log out'
     },
-    send: 'send',
-    save: 'save',
-    register: 'Register',
     set: {
       attendence: 'Set attendence',
       rewards: 'Give rewards',
       note: 'Add a note',
-    }
+    },
+    add: {
+      default: 'Add',
+      to: {
+        calendar: 'Add to calendar',
+      }
+    },
+    show: {
+      onmap: 'Show on map',
+    },
+    choose: {
+      option: 'Choose an option',
+    },
+    send: 'send',
+    save: 'save',
+    register: 'Register',
+    delete: 'Delete',
   },
   email: {
     address: 'Email address'
@@ -54,6 +67,7 @@ export default {
         long: 'Address',
         short: 'Short address',
       },
+      survey_option: 'New poll opton',
     },
   },
   is: {
@@ -95,33 +109,62 @@ export default {
     comment: {
       write: 'Write a comment',
     },
+    survey: {
+      vote: 'Vote',
+      votes: 'votes',
+    }
   },
   user: {
     full_name: 'Full name',
+    role: {
+      admin: 'admin',
+      coach: 'coach',
+      player: 'player',
+    },
+  },
+  feed: {
+    filter: 'Feed filter',
+    noMorePosts: 'No more posts to display. Try changing the filters.',
   },
 
   tooltip: {
-    like: 'like',
     comment: {
       show: 'Show comments',
     },
     post: {
       show: 'Show post',
       delete: 'Delete post',
+      edit: 'Edit post',
     },
     set: {
       date: 'Set a date',
       time: 'Set a time',
     },
+    like: 'like',
+    close: 'close',
   },
   event: {
     reaction: {
+      attend: 'attend',
       going: 'going',
       not_going: 'not going',
       dont_know: 'dont know',
       substitute: 'substitute',
     },
     description: 'Description',
+    price: {
+      free: 'Free',
+    },
+    date: 'Date',
+    time: 'Time',
+    location: 'Location',
+    address: 'Address',
+    type: {
+      trenink: 'Training',
+      kurz_pro_mladez: 'Youth course',
+      turnaj: 'Tournament',
+      jednorazova_akce: 'One-time event',
+    }
   },
   profile: {
     change: {
@@ -159,6 +202,14 @@ export default {
       },
     }
   },
+  EventListDrawer: {
+    events: 'Events',
+    noMoreEvents: 'No more events to see,'
+  },
+  formRules: {
+    isEmail: 'Must be valid email',
+    required: 'Required',
+  },
   settings: {
     email_notification: 'Email notification',
     push_notification: 'Push notification',
@@ -167,6 +218,13 @@ export default {
   admin: {
     today: 'Today\'s agenda',
     attendence: 'Attendence',
+  },
+  prompt: {
+    AreYouSure: {
+      remove: {
+        post: 'Are you sure you want to remove this post?',
+      }
+    }
   },
   dayofweek: {
     Sunday: 'Sunday',
@@ -178,9 +236,18 @@ export default {
     Saturday: 'Saturday',
   },
   weeks: 'weeks',
-  role: {
-    admin: 'admin',
-    coach: 'coach',
-    player: 'player',
-  }
+  loading: 'Loading',
+  heading: {
+    createOrUpdate: {
+      group: 'Create or update group',
+      event: 'Create or update event',
+      post: 'Create or update post',
+    }
+  },
+  navBar: {
+    btn: {
+      createPost: 'Write a post',
+      createEvent: 'Create an event',
+    }
+  },
 };

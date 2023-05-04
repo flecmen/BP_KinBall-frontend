@@ -7,7 +7,8 @@
       </div>
       <q-linear-progress :color="color" :value="percentage" rounded />
       <div>
-        votes: {{ option.votes.length }} | {{ Math.round(percentage * 100) }}%
+        {{ $t('post.survey.votes') }}: {{ option.votes.length }} |
+        {{ Math.round(percentage * 100) }}%
       </div>
     </q-item-section>
   </q-item>

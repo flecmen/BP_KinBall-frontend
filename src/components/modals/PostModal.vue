@@ -2,7 +2,7 @@
   <q-dialog ref="dialog" style="width: 700px">
     <q-card>
       <q-card-section>
-        <div class="text-h6">Create or update new post</div>
+        <div class="text-h6">{{ $t('heading.createOrUpdate.post') }}</div>
       </q-card-section>
       <!-- POST TYPE RADIO -->
       <q-card-section class="q-pt-none">

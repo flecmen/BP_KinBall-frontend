@@ -1,7 +1,10 @@
 <template>
   <q-layout view="lHh LpR lFf" style="background-color: #f0f2f5">
     <NavBar @toggle-left-drawer="toggleLeftDrawer()" @installApp="installApp" />
-    <LeftDrawer v-model="leftDrawerOpen" />
+    <LeftDrawer
+      v-if="breakpoints.isLessThan($q, breakpoints.breakPoints.xs.upper)"
+      v-model="leftDrawerOpen"
+    />
 
     <PostModal
       v-if="postStore.isPostDialogVisible"

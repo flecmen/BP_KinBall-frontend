@@ -1,6 +1,6 @@
 <template>
   <q-btn
-    :label="$t('show.on.map')"
+    :label="$t('btn.show.onmap')"
     icon="location_on"
     color="secondary"
     text-color="grey"

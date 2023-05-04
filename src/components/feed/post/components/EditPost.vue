@@ -7,24 +7,24 @@
       class="click-cursor"
       @click="openEditDialog()"
     >
-      <q-tooltip>edit post</q-tooltip>
+      <q-tooltip>{{ $t('tooltip.post.edit') }}</q-tooltip>
     </q-icon>
     <q-icon name="delete" size="xs" color="red" class="click-cursor">
-      <q-tooltip>delete post</q-tooltip>
+      <q-tooltip>{{ $t('tooltip.post.delete') }}</q-tooltip>
       <q-menu auto-close>
         <q-card class="my-card">
           <q-card-section class="bg-primary text-white">
-            <div class="text">Are you sure to remove post permanently?</div>
+            <div class="text">{{ $t('prompt.AreYouSure.remove.post') }}</div>
           </q-card-section>
 
           <q-card-actions align="right">
             <q-btn
+              :label="$t('btn.delete')"
               flat
               color="white"
               class="bg-red"
               @click="postStore.deletePost(props.post.id)"
-              >Delete</q-btn
-            >
+            />
           </q-card-actions>
         </q-card>
       </q-menu>

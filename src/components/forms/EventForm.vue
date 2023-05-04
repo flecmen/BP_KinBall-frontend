@@ -1,7 +1,7 @@
 <template>
   <q-card>
     <q-card-section>
-      <div class="text-h6">Create or update event</div>
+      <div class="text-h6">{{ $t('heading.createOrUpdate.event') }}</div>
     </q-card-section>
     <q-card-section class="q-pt-none">
       <GroupsSelector

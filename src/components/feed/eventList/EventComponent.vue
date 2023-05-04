@@ -1,7 +1,7 @@
 <template>
   <q-card>
     <q-card-section>
-      <div>{{ props.event.type }}</div>
+      <div>{{ $t('event.type.' + props.event.type) }}</div>
       <div class="text-subtitle2">
         {{
           new Date(props.event.time).toLocaleDateString([], {
@@ -18,18 +18,18 @@
       <q-chip
         clickable
         :color="
-          selectedOption === 'going'
+          selectedOption === $t('event.reaction.going')
             ? 'positive'
-            : selectedOption === 'not_going'
+            : selectedOption === $t('event.reaction.not_going')
             ? 'negative'
-            : selectedOption === 'dont_know'
+            : selectedOption === $t('event.reaction.dont_know')
             ? 'orange'
             : 'primary'
         "
         text-color="white"
         icon="expand_more"
       >
-        {{ selectedOption || 'Select option' }}
+        {{ selectedOption }}
         <q-menu auto-close>
           <q-list>
             <q-item
@@ -38,7 +38,7 @@
               clickable
               emit-label
               map-options
-              option-label="label"
+              :option-label="$t('event.reaction.' + option.label)"
               dense
               @click="react(option.value)"
             >
@@ -58,6 +58,7 @@ import { useUserStore } from 'src/stores/user-store';
 import { useEventStore } from 'src/stores/event-store';
 import { UserOnEventStatus } from 'src/types/dbTypes';
 import dateTimeFormat from 'src/helpers/dateTimeFormat';
+import { i18n } from 'src/utils/i18n';
 
 const props = defineProps<{
   event: Event_extended;
@@ -67,15 +68,24 @@ const userStore = useUserStore();
 const eventStore = useEventStore();
 
 const selectedOption = computed(() => {
-  return (
-    props.event.players.find((p) => p.userId === userStore.user.id)?.status ??
-    'Choose option'
-  );
+  return props.event.players.find((p) => p.userId === userStore.user.id)?.status
+    ? i18n.t(
+        'event.reaction.' +
+          props.event.players.find((p) => p.userId === userStore.user.id)
+            ?.status
+      )
+    : i18n.t('btn.choose.option');
 });
-const options = Object.entries(UserOnEventStatus).map(([key, value]) => ({
-  label: value,
-  value: key,
-}));
+const options = Object.entries(UserOnEventStatus)
+  .map(([key, value]) => ({
+    label: i18n.t('event.reaction.' + value),
+    value: key,
+  }))
+  // nezobrazovat možnost "náhradník"
+  .filter(
+    (option) =>
+      option.label !== i18n.t('event.reaction.' + UserOnEventStatus.substitute)
+  );
 
 async function react(option: string) {
   await eventStore.reactOnEvent(props.event.id, option);

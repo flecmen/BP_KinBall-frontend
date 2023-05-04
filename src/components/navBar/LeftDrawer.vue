@@ -1,13 +1,13 @@
 <template>
-  <q-drawer bordered :width="200" :breakpoint="500">
+  <q-drawer bordered :width="200" :breakpoint="1">
     <q-list>
       <q-item-label header> Menu </q-item-label>
       <EssentialLink
-        v-for="link in navButtons"
-        :key="link.title"
-        :label="link.title"
-        v-bind="link"
-        :handler="link.handler"
+        v-for="button in navButtons"
+        :key="button.title"
+        :label="$t(button.title)"
+        v-bind="button"
+        :handler="button.handler"
       />
     </q-list>
   </q-drawer>

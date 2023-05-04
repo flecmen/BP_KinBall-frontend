@@ -2,7 +2,7 @@
   <div>
     <q-card>
       <q-card-section>
-        <div class="text-h6">Feed filter</div>
+        <div class="text-h6">{{ $t('feed.filter') }}</div>
       </q-card-section>
       <!-- Filtr podle typu příspěvku -->
       <q-card-section>
