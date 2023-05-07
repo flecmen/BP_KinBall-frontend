@@ -67,7 +67,7 @@ export default {
         long: 'Address',
         short: 'Short address',
       },
-      survey_option: 'New poll opton',
+      survey_option: 'New poll option',
     },
   },
   is: {

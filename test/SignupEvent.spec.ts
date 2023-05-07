@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
-import { login } from './helpers';
+import { loginAdmin } from './helpers';
 
 test('test', async ({ page }) => {
-  await login(page, 'davidovkyflekovky@gmail.com', 'heslo')
+  await loginAdmin(page)
 
   await page.getByRole('button', { name: 'Create an event' }).click();
   await page.getByLabel('Groups').click();
@@ -24,7 +24,7 @@ test('test', async ({ page }) => {
   await page.getByRole('button', { name: 'Close' }).click();
   await page.getByRole('button', { name: 'Submit' }).click();
 
-  await page.getByText('Choose option').click();
+  await page.getByText('Choose an option').click();
   await page.getByText('going', { exact: true }).nth(0).click();
 
   // notify working

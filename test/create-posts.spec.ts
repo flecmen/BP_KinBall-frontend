@@ -28,11 +28,11 @@ test('test', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Text' }).fill('Test ');
   await page.getByRole('textbox', { name: 'Text' }).press('Shift+Enter');
   await page.getByRole('textbox', { name: 'Text' }).fill('Test Survey Text 1');
-  await page.getByLabel('New survey question').click();
-  await page.getByLabel('New survey question').fill('Choice 1');
+  await page.getByLabel('New poll option').click();
+  await page.getByLabel('New poll option').fill('Choice 1');
   await page.getByRole('button', { name: 'Add', exact: true }).click();
-  await page.getByLabel('New survey question').click();
-  await page.getByLabel('New survey question').fill('Choice 2');
+  await page.getByLabel('New poll option').click();
+  await page.getByLabel('New poll option').fill('Choice 2');
   await page.getByRole('button', { name: 'Add', exact: true }).click();
   await page.getByRole('button', { name: 'Submit' }).click();
 

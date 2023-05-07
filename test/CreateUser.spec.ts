@@ -16,7 +16,6 @@ test('test', async ({ page }) => {
   await page.getByRole('option', { name: 'player' }).getByText('player').click();
   await page.getByLabel('Groups').click();
   await page.getByRole('option', { name: 'all' }).getByText('all').click();
-  await page.getByText('newcommers').click();
   await page.getByRole('combobox', { name: 'Groups' }).press('Escape');
   await page.getByRole('button', { name: 'Submit' }).click();
   await page.getByPlaceholder('Search').click()

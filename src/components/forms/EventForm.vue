@@ -34,17 +34,20 @@
           suffix=",-Kč"
           v-model="event.event.price"
           type="number"
+          min="0"
         />
         <div class="row q-gutter-md">
           <q-input
             :label="$t('form.input.max.people')"
             v-model="event.event.people_limit"
             type="number"
+            min="1"
           />
           <q-input
             :label="$t('form.input.max.substitutes')"
             v-model="event.event.substitues_limit"
             type="number"
+            min="0"
           />
         </div>
 
