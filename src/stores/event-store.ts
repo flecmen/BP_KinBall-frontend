@@ -59,7 +59,7 @@ export const useEventStore = defineStore('eventStore', () => {
     // Pokud je již event načtený v events, tak znovu načítat nebudeme
     if (getEvent(eventId) !== undefined) return;
     // Načtení ještě nenačteného eventu
-    const response = await api.get('/event/id/' + eventId);
+    const response = await api.get('/event/' + eventId);
     // Fail check
     if (!response.data) {
       Notify.create({

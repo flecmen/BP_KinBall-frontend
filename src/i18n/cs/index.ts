@@ -5,6 +5,8 @@ export default {
   failed: 'Akce selhala',
   success: 'Akce byla úspěšná',
   present: 'přítomen',
+  no_account: 'Nemáte účet?',
+  have_account: 'Už máte účet??',
   btn: {
     log: {
       in: 'Přihlásit se',

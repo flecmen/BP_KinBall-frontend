@@ -5,6 +5,8 @@ export default {
   failed: 'Action failed',
   success: 'Action was successful',
   present: 'present',
+  no_account: 'Don\'t have an account?',
+  have_account: 'Already have an account?',
   btn: {
     log: {
       in: 'Log in',

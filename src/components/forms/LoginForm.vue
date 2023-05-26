@@ -22,6 +22,12 @@
         :loading="userStore.isProcessing"
       ></q-btn>
     </q-form>
+    {{ $t('no_account') }}
+    <router-link
+      :to="{ name: 'register' }"
+      style="text-decoration: none; color: inherit"
+      >{{ $t('btn.register') }}</router-link
+    >
   </q-card>
 </template>
 
@@ -30,7 +36,6 @@ import { ref } from 'vue';
 import formRules from 'src/helpers/formRules';
 import useNotify from 'src/composables/useNotify';
 import { useUserStore } from 'src/stores/user-store';
-import { i18n } from 'src/utils/i18n';
 
 const userStore = useUserStore();
 const notify = useNotify();
