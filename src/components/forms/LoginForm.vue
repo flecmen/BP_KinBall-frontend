@@ -10,7 +10,7 @@
       />
       <q-input
         v-model="password"
-        :label="$t('password')"
+        :label="$t('form.input.password.text')"
         type="password"
         :rules="[formRules.required]"
       />

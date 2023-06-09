@@ -63,6 +63,7 @@ export type Post_extended = (Post & {
   comments: Post_comment_extended[];
   survey_options: Survey_option_extended[];
   user_notification: User[];
+  reaction_deadline: Date | null;
 })
 
 
