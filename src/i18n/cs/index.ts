@@ -5,19 +5,34 @@ export default {
   failed: 'Akce selhala',
   success: 'Akce byla úspěšná',
   present: 'přítomen',
+  no_account: 'Nemáte účet?',
+  have_account: 'Už máte účet??',
   btn: {
     log: {
       in: 'Přihlásit se',
       out: 'Odhlásit se'
     },
-    send: 'odeslat',
-    save: 'uložit',
-    register: 'Registrovat se',
     set: {
       attendence: 'Zadat docházku',
       rewards: 'Rozdat odměny',
       note: 'Přidat poznámku',
-    }
+    },
+    add: {
+      default: 'Přidat',
+      to: {
+        calendar: 'Přidat do kalendáře',
+      }
+    },
+    show: {
+      onmap: 'Zobrazit na mapě',
+    },
+    choose: {
+      option: 'Vyber možnost',
+    },
+    send: 'odeslat',
+    save: 'uložit',
+    register: 'Registrovat se',
+    delete: 'Smazat',
   },
   email: {
     address: 'Emailová adresa'
@@ -54,6 +69,7 @@ export default {
         long: 'Adresa',
         short: 'Krátká adresa',
       },
+      survey_option: 'Nová odpověď',
     },
   },
   is: {
@@ -95,32 +111,61 @@ export default {
     comment: {
       write: 'Napsat komentář',
     },
+    survey: {
+      vote: 'Hlasovat',
+      votes: 'hlasy',
+    }
   },
   user: {
     full_name: 'Celé jméno',
+    role: {
+      admin: 'admin',
+      coach: 'trenér',
+      player: 'hráč',
+    }
   },
-
+  feed: {
+    filter: 'Filtr příspěvků',
+    noMorePosts: 'Žádné další příspěvky. Zkuste změnit nastavení filtru',
+  },
   tooltip: {
-    like: 'lajk',
     comment: {
       show: 'Zobrazit komentáře',
     },
     post: {
       show: 'Zobrazit příspěvek',
       delete: 'Smazat příspěvek',
+      edit: 'Upravit příspěvek',
     },
     set: {
       date: 'Nastavit datum',
       time: 'Nastavit čas',
     },
+    like: 'lajk',
+    close: 'zavřít',
   },
   event: {
     reaction: {
+      attend: 'jdu',
       going: 'jdu',
       not_going: 'nejdu',
+      dont_know: 'nevím',
       substitute: 'náhradník',
     },
     description: 'Popis',
+    price: {
+      free: 'Zdarma',
+    },
+    date: 'Datum',
+    time: 'Čas',
+    location: 'Lokalita',
+    address: 'Adresa',
+    type: {
+      trenink: 'Trénink',
+      kurz_pro_mladez: 'Kurz pro mládež',
+      turnaj: 'Turnaj',
+      jednorazova_akce: 'Jednorázová akce',
+    }
   },
   profile: {
     change: {
@@ -158,6 +203,14 @@ export default {
       },
     }
   },
+  EventListDrawer: {
+    events: 'Události',
+    noMoreEvents: 'Žádné další události',
+  },
+  formRules: {
+    isEmail: 'Zadejte platný email',
+    required: 'Povinné',
+  },
   settings: {
     email_notification: 'Upozornění e-mailem',
     push_notification: 'Upozornění push',
@@ -166,6 +219,13 @@ export default {
   admin: {
     today: 'Dnešní program',
     attendence: 'Docházka',
+  },
+  prompt: {
+    AreYouSure: {
+      remove: {
+        post: 'Opravdu chcete smazat tento příspěvek?',
+      }
+    }
   },
   dayofweek: {
     Sunday: 'Neděle',
@@ -177,9 +237,18 @@ export default {
     Saturday: 'Sobota',
   },
   weeks: 'týdny',
-  role: {
-    admin: 'admin',
-    coach: 'trenér',
-    player: 'hráč',
-  }
+  loading: 'Načítání',
+  heading: {
+    createOrUpdate: {
+      group: 'Vytvořit nebo upravit skupinu',
+      event: 'Vytvořit nebo upravit událost',
+      post: 'Vytvořit nebo upravit příspěvek',
+    }
+  },
+  navBar: {
+    btn: {
+      createPost: 'Napsat příspěvek',
+      createEvent: 'Vytvořit událost',
+    }
+  },
 };

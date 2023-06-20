@@ -9,7 +9,7 @@
     "
   >
     {{ props.user.full_name }}
-    <sup class="superscript">{{ props.user.role }}</sup>
+    <sup class="superscript">{{ $t('user.role.' + props.user.role) }}</sup>
   </div>
 </template>
 

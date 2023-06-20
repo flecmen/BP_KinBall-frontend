@@ -5,7 +5,7 @@
     color="grey-5"
     text-color="grey"
     icon="event"
-    :label="$t('Add.to.calendar')"
+    :label="$t('btn.add.to.calendar')"
     @click="openGoogle()"
     flat
   />

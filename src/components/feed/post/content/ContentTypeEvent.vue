@@ -5,24 +5,27 @@
         <!-- Date -->
         <div class="row items-center">
           <div id="Event_date" class="text-h6">
-            {{ $t('Date') }}: {{ dateTimeFormat.date(event.time) }}
+            {{ $t('event.date') }}: {{ dateTimeFormat.date(event.time) }}
           </div>
         </div>
         <!-- Time -->
         <div class="text-h6">
-          {{ $t('Time') }}: {{ dateTimeFormat.time(event.time) }}
+          {{ $t('event.time') }}: {{ dateTimeFormat.time(event.time) }}
         </div>
         <!-- Location -->
         <div class="text-h6">
-          <div class="text-h6">{{ $t('Address') }}: {{ event?.address }}</div>
-          {{ $t('Location') }}: {{ event?.address_short }}
+          <div>{{ $t('event.address') }}: {{ event?.address }}</div>
+          <div v-if="event?.address_short">
+            {{ $t('event.location') }}: {{ event?.address_short }}
+          </div>
         </div>
       </div>
 
       <EventPrice :price="event?.price" />
     </q-card-section>
-    <q-card-section>
-      <p>{{ eventStore.getEvent(props.eventId)?.description }}</p>
+
+    <q-card-section v-if="event?.description">
+      <p>{{ event?.description }}</p>
     </q-card-section>
 
     <q-card-section>
@@ -51,7 +54,7 @@
   </q-card>
   <q-card flat v-else>
     <q-card-section>
-      <div class="text-h6">Loading...</div>
+      <div class="text-h6">{{ $t('loading') }}...</div>
     </q-card-section>
   </q-card>
 </template>

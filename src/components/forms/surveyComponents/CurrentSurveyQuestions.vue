@@ -11,7 +11,7 @@
       <q-item-section>
         <q-btn
           @click="postStore.removeSurvey_option(index)"
-          label="Remove"
+          :label="$t('btn.delete')"
           color="primary"
           flat
         ></q-btn>

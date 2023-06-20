@@ -3,7 +3,7 @@
     >{{ props.price }} Kč</q-chip
   >
   <q-chip v-else class="col-auto" color="green" outline>{{
-    $t('free')
+    $t('event.price.free')
   }}</q-chip>
 </template>
 

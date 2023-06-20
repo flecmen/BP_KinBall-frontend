@@ -24,7 +24,7 @@
       <q-card v-if="postStore.areWeOnFeedBedrock" class="q-mt-md" flat>
         <q-card-section>
           <div class="text-h5 text-center">
-            No more posts to display. Try changing the filters.
+            {{ $t('feed.noMorePosts') }}
           </div>
         </q-card-section>
       </q-card>

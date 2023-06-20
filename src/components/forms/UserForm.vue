@@ -64,10 +64,12 @@ const props = defineProps<{
     groupSelector: boolean;
     roleSelector: boolean;
   };
+  newUser?: boolean;
 }>();
 
 const emit = defineEmits<{
   (event: 'close-dialog'): void;
+  (event: 'shake'): void;
 }>();
 
 const userStore = useUserStore();
@@ -92,8 +94,8 @@ const isUserEdittingHimself = computed(() => {
 });
 
 const isThisNewUser = computed(() => {
-  if (props.user) return false;
-  else return true;
+  if (props.newUser) return true;
+  else return false;
 });
 
 const userRoleOptions = Object.entries(role).map(([key, value]) => ({
@@ -120,10 +122,14 @@ async function createOrUpdateUser() {
     // user edits his profile
     await userStore.updateUserProfile(user.value);
   } else {
+    console.log(props.user);
     if (isThisNewUser.value) {
-      console.log(props.user);
       // admin creates new user
-      await adminStore.createNewUser();
+      if (!(await adminStore.createNewUser())) {
+        emit('shake');
+        isLoading.value = false;
+        return;
+      }
     } else {
       // admin edits user
       await adminStore.updateUser(user.value);

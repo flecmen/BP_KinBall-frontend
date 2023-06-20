@@ -6,7 +6,7 @@
       :players="
         event?.players.filter((p) => p.status === 'going').map((p) => p.user)
       "
-      :label="$t('Attend')"
+      :label="$t('event.reaction.attend')"
       :icon="'mood'"
       :isLoading="isLoading.going"
       :disable="blocked"
@@ -27,7 +27,7 @@
           .filter((p) => p.status === 'dont_know')
           .map((p) => p.user)
       "
-      :label="$t('Dont know')"
+      :label="$t('event.reaction.dont_know')"
       :icon="'sentiment_neutral'"
       :isLoading="isLoading.dont_know"
       :disable="blocked"
@@ -48,7 +48,7 @@
           .filter((p) => p.status === 'not_going')
           .map((p) => p.user)
       "
-      :label="$t('Can\'t go')"
+      :label="$t('event.reaction.not_going')"
       :icon="'mood_bad'"
       :isLoading="isLoading.not_going"
       :disable="blocked"
@@ -62,12 +62,6 @@
       @react="react"
     />
   </div>
-  <q-linear-progress
-    v-if="event?.people_limit"
-    color="primary"
-    :value="percentage"
-    rounded
-  />
 </template>
 
 <script setup lang="ts">

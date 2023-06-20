@@ -2,12 +2,17 @@
   <q-form class="row justify-between">
     <q-input
       v-model="survey_option"
-      label="New survey question"
+      :label="$t('form.input.survey_option')"
       :error-message="props.errorMessage"
       :error="props.error"
       @vnode-updated="checkNewOptionValidity()"
     ></q-input>
-    <q-btn @click="addSurveyOption()" label="Add" color="primary" flat></q-btn>
+    <q-btn
+      @click="addSurveyOption()"
+      :label="$t('btn.add.default')"
+      color="primary"
+      flat
+    ></q-btn>
   </q-form>
 </template>
 

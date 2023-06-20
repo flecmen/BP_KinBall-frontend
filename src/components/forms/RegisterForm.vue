@@ -38,6 +38,12 @@
         @click="register()"
       ></q-btn>
     </q-form>
+    {{ $t('have_account') }}
+    <router-link
+      :to="{ name: 'login' }"
+      style="text-decoration: none; color: inherit"
+      >{{ $t('btn.log.in') }}</router-link
+    >
   </q-card>
 </template>
 

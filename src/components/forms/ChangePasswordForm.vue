@@ -1,11 +1,11 @@
 <template>
   <q-form ref="form">
-    <PasswordInput @update:password="(psw) => (password = psw)" />
+    <PasswordInput @update:password="(psw: string) => (password = psw)" />
     <PasswordInput
       :showError="showError"
       :errorMessage="errorMessage"
       :label="$t('form.input.password.confirm')"
-      @update:password="(psw) => (passwordConfirm = psw)"
+      @update:password="(psw: string) => (passwordConfirm = psw)"
     />
 
     <div align="right">

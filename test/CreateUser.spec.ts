@@ -13,10 +13,9 @@ test('test', async ({ page }) => {
   await page.getByLabel('Name').press('Tab');
   await page.getByLabel('Email').fill('TEST@email.com');
   await page.locator('label:nth-child(3) > .q-field__inner > .q-field__control > .q-field__control-container > .q-field__native').click();
-  await page.getByRole('option', { name: 'hráč' }).getByText('hráč').click();
+  await page.getByRole('option', { name: 'player' }).getByText('player').click();
   await page.getByLabel('Groups').click();
   await page.getByRole('option', { name: 'all' }).getByText('all').click();
-  await page.getByText('newcommers').click();
   await page.getByRole('combobox', { name: 'Groups' }).press('Escape');
   await page.getByRole('button', { name: 'Submit' }).click();
   await page.getByPlaceholder('Search').click()
@@ -26,8 +25,9 @@ test('test', async ({ page }) => {
 
   expect(page.getByRole('cell', { name: 'TEST_name' })).toBeTruthy();
 
+
   // EDIT USER
-  await page.getByRole('button').filter({ hasText: 'edit' }).click();
+  await page.getByRole('button').filter({ hasText: /^edit$/ }).click();
   await page.getByLabel('Email').click();
   await page.getByLabel('Email').fill('TEST@TEST.com');
   await page.getByRole('button', { name: 'Submit' }).click();

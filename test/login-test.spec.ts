@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
-import { login } from './helpers';
+import { loginAdmin } from './helpers';
 
 test('test', async ({ page }) => {
-  await login(page, 'davidovkyflekovky@gmail.com', 'heslo')
+  await loginAdmin(page)
 
   // notify working
   const alertMessage = await page.textContent('[role="alert"]');

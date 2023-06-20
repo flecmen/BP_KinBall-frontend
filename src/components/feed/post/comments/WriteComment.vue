@@ -16,7 +16,7 @@
       >
       </q-input>
     </q-item-section>
-    <div class="q-ml-md">
+    <div class="q-ml-md q-mt-xs">
       <q-btn
         :label="$t('btn.send')"
         :loading="isCommentBeingSent"

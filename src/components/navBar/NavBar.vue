@@ -19,7 +19,7 @@
         <q-btn
           v-for="button in navButtons"
           :key="button.title"
-          :label="button.title"
+          :label="$t(button.title)"
           :icon="button.icon"
           flat
           dense

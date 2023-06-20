@@ -17,7 +17,7 @@
             class="text-h6 bold col-12"
             color="primary"
             text-color="white"
-            :label="$t('Events')"
+            :label="$t('EventListDrawer.events')"
           ></q-chip>
         </div>
         <EventComponent
@@ -26,7 +26,7 @@
           :event="event"
         />
         <div v-if="eventStore.areWeOnEventsFeedBedrock">
-          <div class="text-h6">No more events to see</div>
+          <div class="text-h6">{{ $t('EventListDrawer.noMoreEvents') }}</div>
         </div>
       </q-infinite-scroll>
     </q-scroll-area>

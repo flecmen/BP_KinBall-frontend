@@ -12,15 +12,15 @@ export interface NavigationButton {
 
 export const buttons = [
   {
-    title: 'Write a post',
-    icon: 'edit',
+    title: 'navBar.btn.createPost',
+    icon: 'edit_square',
     handler: () => {
       usePostStore().openPostDialog();
     },
     roles: [role.admin, role.coach, role.player],
   },
   {
-    title: 'Create an event',
+    title: 'navBar.btn.createEvent',
     icon: 'event',
     handler: () => {
       useEventStore().openEventDialog();

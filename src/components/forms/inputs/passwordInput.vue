@@ -3,7 +3,7 @@
     <q-input
       v-model="password"
       :type="showPassword ? 'text' : 'password'"
-      :label="$t('label')"
+      :label="$t(props.label)"
       :rules="[formRules.required]"
       @update:model-value="emit('update:password', password)"
       :error="showError"

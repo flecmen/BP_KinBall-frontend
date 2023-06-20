@@ -5,7 +5,9 @@
         <UserForm
           :user="user"
           :include="{ groupSelector: true, roleSelector: true }"
+          :newUser="isThisNewUser"
           @close-dialog="dialog.hide()"
+          @shake="dialog.shake()"
         />
       </q-card-section>
     </q-card>
@@ -20,6 +22,7 @@ import UserForm from '../forms/UserForm.vue';
 
 const props = defineProps<{
   userId: User_extended['id'];
+  newUser?: boolean;
 }>();
 
 const adminStore = useAdminStore();

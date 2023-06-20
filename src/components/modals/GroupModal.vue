@@ -2,7 +2,7 @@
   <q-dialog ref="dialog">
     <q-card>
       <q-card-section>
-        <div class="text-h6">Create or update group</div>
+        <div class="text-h6">{{ $t('heading.createOrUpdate.group') }}</div>
       </q-card-section>
 
       <q-card-section class="q-pt-none">

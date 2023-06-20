@@ -15,19 +15,13 @@
         :title="event.address_short ? event.address_short : event.address"
         :subtitle="dateFormat(event.time)"
       >
-        <div
-          class="q-gutter-sm"
-          style="
-            display: flex;
-            justify-content: space-between;
-            max-width: 500px;
-          "
-        >
+        <div class="q-gutter-sm">
           <q-btn
             :label="$t('btn.set.attendence')"
             @click="showAttendenceModal(event.id)"
+            class="row"
           />
-          <q-btn :label="$t('btn.set.rewards')" />
+          <q-btn :label="$t('btn.set.rewards')" class="row" />
           <q-btn :label="$t('btn.set.note')" />
         </div>
       </q-timeline-entry>
