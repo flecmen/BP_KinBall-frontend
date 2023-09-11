@@ -1,3 +1,3 @@
 export default {
-  backendUrl: process.env.VITE_BACK_ROOT_URL,
+  backendUrl: 'https://bpkinball-backend-production.up.railway.app',
 }
