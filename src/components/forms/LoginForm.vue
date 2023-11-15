@@ -36,6 +36,7 @@ import { ref } from 'vue';
 import formRules from 'src/helpers/formRules';
 import useNotify from 'src/composables/useNotify';
 import { useUserStore } from 'src/stores/user-store';
+import { router } from 'src/router/index'
 
 const userStore = useUserStore();
 const notify = useNotify();
@@ -55,5 +56,6 @@ async function login() {
   }
   await userStore.login(email.value, password.value);
   isLoading.value = false;
+  router.push(userStore.afterLoginRoute ?? { name: 'home' });
 }
 </script>

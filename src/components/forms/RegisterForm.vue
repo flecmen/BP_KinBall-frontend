@@ -55,6 +55,7 @@ import { useUserStore } from 'src/stores/user-store';
 import { i18n } from 'src/utils/i18n';
 import { debounce } from 'lodash';
 import PasswordInput from './inputs/passwordInput.vue';
+import { router } from 'src/router/index'
 
 const userStore = useUserStore();
 const notify = useNotify();
@@ -97,6 +98,7 @@ async function register() {
 
   await userStore.register(email.value, password.value, full_name.value);
   isLoading.value = false;
+  router.push({ name: 'login' });
 }
 
 // Create a debounced function using Lodash's debounce
