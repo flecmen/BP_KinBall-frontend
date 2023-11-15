@@ -34,7 +34,7 @@
         color="primary"
         :label="$t('btn.register')"
         type="submit"
-        :loading="userStore.isProcessing"
+        :loading="isLoading"
         @click="register()"
       ></q-btn>
     </q-form>
@@ -80,19 +80,23 @@ const password = ref('');
 const password2 = ref('');
 const full_name = ref('');
 const emailLoading = ref(false);
+const isLoading = ref(false);
 
 const emailMessage = ref('');
 
 const form = ref();
 
 async function register() {
+  isLoading.value = true;
   // Validace formuláře
   if (!(await form.value.validate()) || error.password.show) {
     notify.fail(i18n.t('failed'));
+    isLoading.value = false;
     return;
   }
 
   await userStore.register(email.value, password.value, full_name.value);
+  isLoading.value = false;
 }
 
 // Create a debounced function using Lodash's debounce

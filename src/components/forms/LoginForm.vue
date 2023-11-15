@@ -19,7 +19,7 @@
         color="primary"
         :label="$t('btn.log.in')"
         type="submit"
-        :loading="userStore.isProcessing"
+        :loading="isLoading"
       ></q-btn>
     </q-form>
     {{ $t('no_account') }}
@@ -42,14 +42,18 @@ const notify = useNotify();
 
 const email = ref('');
 const password = ref('');
+const isLoading = ref(false);
 
 const loginForm = ref();
 async function login() {
+  isLoading.value = true;
   // Validace formuláře
   if (!loginForm.value.validate()) {
     notify.fail('failed');
+    isLoading.value = false;
     return;
   }
   await userStore.login(email.value, password.value);
+  isLoading.value = false;
 }
 </script>
