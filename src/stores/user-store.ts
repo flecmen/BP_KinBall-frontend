@@ -100,6 +100,7 @@ export const useUserStore = defineStore('userStore', () => {
     } catch (error) {
       console.log(error)
     }
+
   }
 
   async function updateSettings(settings: Settings) {
